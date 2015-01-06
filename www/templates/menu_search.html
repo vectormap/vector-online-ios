@@ -1,0 +1,39 @@
+<ion-side-menus enable-menu-with-back-views="false">
+  <ion-side-menu-content>
+    <div class="bar-stable">
+      <div class="bar-stable bar bar-header item-input-inset">
+        <button class="button button-icon button-clear ion-ios7-arrow-back" menu-toggle="left">
+        </button>
+          <label class="item-input-wrapper">
+            <input type="search" placeholder="Search">
+            <i class="icon ion-ios7-search placeholder-icon"></i>
+          </label>
+      </div>
+    </div>
+    <ion-nav-view name="menuContent"></ion-nav-view>
+  </ion-side-menu-content>
+
+  <ion-side-menu side="left">
+    <ion-header-bar class="bar-stable">
+      <h1 class="title">Вектор</h1>
+    </ion-header-bar>
+    <ion-content>
+      <ion-list>
+        <ion-item nav-clear menu-close ng-click="login()">
+          Сургут
+          <span class="item-note">Сменить город</span>
+        </ion-item>
+        <ion-item nav-clear menu-close href="#/search/main">
+          <span class="badge badge-assertive">RU</span>
+          Язык
+        </ion-item>
+
+        <a class="item item-icon-left" nav-clear menu-close href="#/app/browse">
+          <i class="icon ion-ios7-star"></i>
+          Избранное
+        </a>
+
+      </ion-list>
+    </ion-content>
+  </ion-side-menu>
+</ion-side-menus>
