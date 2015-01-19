@@ -11,8 +11,31 @@
     <script src="build/external-libs-bundle.js"></script>
     <script src="build/app.js"></script>
 
-    <div class="view-container"><div class="pane view" nav-view="active" style="-webkit-transition: 0ms; transition: 0ms; opacity: 1; -webkit-transform: translate3d(0%, 0px, 0px);">
-      <div class="menu-content pane menu-animated" style="-webkit-transform: translate3d(275px, 0px, 0px);">
+    <div class="view-container" nav-view-transition="ios" nav-view-direction="none"><div class="pane view" nav-view="active" style="-webkit-transition: 0ms; transition: 0ms; opacity: 1; -webkit-transform: translate3d(0%, 0px, 0px);">
+      <div class="menu menu-left" style="width: 275px; z-index: 0;">
+        <div class="bar-stable bar bar-header disable-user-behavior">
+          <h1 class="title">Вектор</h1>
+        </div>
+        <div class="scroll-content ionic-scroll  has-header"><div class="scroll" style="-webkit-transform: translate3d(0px, 0px, 0px) scale(1);">
+          <div class="disable-user-behavior"><div class="list">
+            <div nav-clear="" menu-close="" ng-click="login()" class="item">
+              Сургут
+              <span class="item-note">Сменить город</span>
+            </div>
+            <div nav-clear="" menu-close="" href="#/search/main" class="item item-complex"><a class="item-content" ng-href="#/search/main" target="_self" href="#/search/main">
+              <span class="badge badge-assertive">RU</span>
+              Язык
+            </a></div>
+
+            <a class="item item-icon-left" nav-clear="" menu-close="" href="#/app/browse">
+              <i class="icon ion-ios7-star"></i>
+              Избранное
+            </a>
+
+          </div></div>
+        </div><div class="scroll-bar scroll-bar-v"><div class="scroll-bar-indicator scroll-bar-fade-out" style="-webkit-transform: translate3d(0px, 0px, 0px) scaleY(1); height: 0px;"></div></div></div>
+      </div>
+	  <div class="menu-content pane menu-animated" style="-webkit-transform: translate3d(275px, 0px, 0px);">
         <div class="bar-stable">
           <div class="bar-stable bar bar-header item-input-inset">
             <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
@@ -183,29 +206,7 @@
         </div>
       </div><div class="scroll-bar scroll-bar-v"><div class="scroll-bar-indicator scroll-bar-fade-out" style="-webkit-transform: translate3d(0px, 0px, 0px) scaleY(1); height: 0px;"></div></div></div>
     </div></div>
-      <div class="menu menu-left" style="width: 275px; z-index: 0;">
-        <div class="bar-stable bar bar-header disable-user-behavior">
-          <h1 class="title">Вектор</h1>
-        </div>
-        <div class="scroll-content ionic-scroll  has-header"><div class="scroll" style="-webkit-transform: translate3d(0px, 0px, 0px) scale(1);">
-          <div class="disable-user-behavior"><div class="list">
-            <div nav-clear="" menu-close="" ng-click="login()" class="item">
-              Сургут
-              <span class="item-note">Сменить город</span>
-            </div>
-            <div nav-clear="" menu-close="" href="#/search/main" class="item item-complex"><a class="item-content" ng-href="#/search/main" target="_self" href="#/search/main">
-              <span class="badge badge-assertive">RU</span>
-              Язык
-            </a></div>
-
-            <a class="item item-icon-left" nav-clear="" menu-close="" href="#/app/browse">
-              <i class="icon ion-ios7-star"></i>
-              Избранное
-            </a>
-
-          </div></div>
-        </div><div class="scroll-bar scroll-bar-v"><div class="scroll-bar-indicator scroll-bar-fade-out" style="-webkit-transform: translate3d(0px, 0px, 0px) scaleY(1); height: 0px;"></div></div></div>
-      </div>
+      
     </div></div>
   </body>
 </html>
