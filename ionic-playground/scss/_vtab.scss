@@ -1,0 +1,16 @@
+.tabs.has-header {
+  top: 0;
+  bottom: auto;
+}
+
+.tabs-text-only {
+  .badge {
+    position: static;
+  }
+}
+
+.item.item-text {
+  overflow: auto;
+  text-overflow: auto;
+  white-space: normal;
+}

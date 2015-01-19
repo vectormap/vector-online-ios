@@ -3,13 +3,11 @@
   bottom: auto;
 }
 
-.tabs-text-only {
-  .badge {
-    position: static;
-  }
+.tabs-text-only .badge {
+  position: static;
 }
 
-.item.item-text{
+.item.item-text {
   overflow: auto;
   text-overflow: auto;
   white-space: normal;
