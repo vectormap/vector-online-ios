@@ -1,0 +1,17 @@
+@import "./vtab";
+
+.item-desc {
+  float: none;
+  display: block;
+  color: #aaa;
+  font-size: 14px;
+}
+
+.vmp-menu-open {
+  transform: translate3d(275px, 0, 0);
+}
+
+.leaflet-container {
+  cursor: auto;
+  background: url('/images/vmp_map_back.png');
+}

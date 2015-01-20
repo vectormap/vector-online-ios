@@ -3,8 +3,10 @@
   bottom: auto;
 }
 
-.tabs-text-only .badge {
-  position: static;
+.tabs-text-only {
+  .badge {
+    position: static;
+  }
 }
 
 .item.item-text {
