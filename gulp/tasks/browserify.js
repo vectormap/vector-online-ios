@@ -18,7 +18,7 @@ gulp.task('browserify', function() {
 		entries: ['./src/scripts/app.jsx'],
 		// Add file extentions to make optional in your requires
 		extensions: ['.js', '.jsx', /*'.css', '.scss'*/],
-		debug: !gulp.env.production, // enable source maps
+		debug: false, //!gulp.env.production, // enable source maps
     //global: true, // global transforms
     paths: ['./src/scripts'],
     fast: true,

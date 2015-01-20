@@ -1,14 +1,27 @@
-var _            = require('lodash');
-var B            = require('backbone');
-var $            = require('jquery');
-var M            = require('morearty');
-var MoreartySync = require ('morearty-sync');
-var React        = require('react');
-var Imm          = require('immutable');
-var moment       = require('moment');
-var MainLayout   = require('./ui/MainLayout');
-var MenuLayout   = require('./ui/MenuLayout');
-var L            = require('leaflet');
+var M = require('morearty');
+
+// TODO: push to Morearty repo
+M.Callback.toggle = function (binding, subpath) {
+  var args = M.Util.resolveArgs(
+    arguments,
+    function (x) { return x instanceof M.Binding ? 'binding' : null; }, '?subpath'
+  );
+
+  return function () {
+    var value = args.binding.get(args.subpath);
+    args.binding.set(args.subpath, !value);
+  };
+};
+
+var _          = require('lodash');
+var B          = require('backbone');
+var $          = require('jquery');
+var React      = require('react');
+var Imm        = require('immutable');
+var moment     = require('moment');
+var MainLayout = require('./ui/MainLayout');
+var MenuLayout = require('./ui/MenuLayout');
+var L          = require('leaflet');
 
 L.Icon.Default.imagePath = 'node_modules/leaflet/dist/images'
 
@@ -25,7 +38,7 @@ window.B      = window.Backbone = B;
 window.moment = moment;
 
 var AppState = {
-
+  menuOpen: false
 };
 
 var Ctx = M.createContext({
@@ -38,6 +51,8 @@ var Ctx = M.createContext({
 });
 
 window.Ctx = Ctx; // for debug
+
+var rootBinding = Ctx.getBinding();
 
 var App = React.createClass({
   displayName: 'App',
@@ -63,10 +78,10 @@ var App = React.createClass({
       <div className="view-container" nav-view-transition="ios" nav-view-direction="none">
         <div className="pane view" nav-view="active">
           <div className="menu menu-left">
+            <MenuLayout />
           </div>
-          <div className="menu-content pane menu-animated">
-            <MainLayout />
-          </div>
+
+          <MainLayout binding={binding} />
         </div>
       </div>
     );
