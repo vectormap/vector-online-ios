@@ -4,7 +4,7 @@ var bundleLogger = require('../util/bundleLogger');
 var gulp         = require('gulp');
 var handleErrors = require('../util/handleErrors');
 var source       = require('vinyl-source-stream');
-var to5          = require('6to5-browserify');
+var _6to5        = require('6to5ify');
 var aliasify     = require('aliasify');
 var externalLibs = require('../external-libs');
 var cssify       = require('cssify');
@@ -17,7 +17,7 @@ gulp.task('browserify', function() {
 		// Specify the entry point of your app
 		entries: ['./src/scripts/app.jsx'],
 		// Add file extentions to make optional in your requires
-		extensions: ['.js', '.jsx', '.css', '.scss'],
+		extensions: ['.js', '.jsx', /*'.css', '.scss'*/],
 		debug: !gulp.env.production, // enable source maps
     //global: true, // global transforms
     paths: ['./src/scripts'],
@@ -33,11 +33,11 @@ gulp.task('browserify', function() {
     return bundler
       .external(externalLibs)
       // .transform({global: true}, aliasify)
-      .transform(reactify)
-      .transform(cssify)
-      /*.transform(to5.configure({
-        sourceMap: false // 'inline'
-      }))*/
+      // .transform(reactify)
+      // .transform(cssify)
+      .transform(_6to5.configure({
+        sourceMap: 'inline'
+      }))
 			.bundle()
       // Report compile errors
       .on('error', handleErrors)

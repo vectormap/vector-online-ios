@@ -7,5 +7,6 @@ module.exports = [
   'immutable',
   'morearty',
   'moment',
-  'moment/locale/ru'
+  'moment/locale/ru',
+  'leaflet'
 ];

@@ -9,18 +9,18 @@ var concat       = require('gulp-concat');
 var plumber      = require('gulp-plumber');
 
 gulp.task('sass', function () {
-  return gulp.src('./src/**/*.scss')
+  return gulp.src('./src/styles/**/*.scss')
     .pipe(plumber())
-    .pipe(changed('./build/scripts', {extension: '.scss'}))
+    // .pipe(changed('./build/scripts', {extension: '.scss'}))
     .pipe(sass({
-      sourcemap: false,
-      sourcemapPath: './build/',
-      loadPath: [
-        './node_modules/bootstrap-sass/assets/stylesheets/'
-      ]
+      // errLogToConsole: true,
+
+      // sass.renderSync will be called, instead of sass.render.
+      // This should help when memory and/or cpu usage is getting very high when rendering many and/or big files.
+      // sync: true
     }))
     .pipe(prefix())
-    .pipe(filter('**/*.css'))
+    // .pipe(filter('**/*.css'))
     .pipe(concat('app.css'))
     .pipe(gulp.dest('./build/'))
     .pipe(browserSync.reload({stream:true}))

@@ -3,12 +3,20 @@ var merge = require('merge-stream');
 
 gulp.task('copy', function() {
 	var html = gulp
-    .src(['index.html'])
+    .src('index.html')
 		.pipe(gulp.dest('build'));
 
-  //var fonts = gulp
-  //  .src('./libs/PixelAdmin-1.3.0/help/assets/fontawesome/**')
-  //  .pipe(gulp.dest('build/fonts/font-awesome'));
+  var images = gulp
+   .src('src/images/**/*')
+   .pipe(gulp.dest('build/images'));
 
-  return merge(html /*, fonts*/);
+  var styles = gulp
+   .src(['src/styles/ionic.css', 'node_modules/leaflet/dist/leaflet.css'])
+   .pipe(gulp.dest('build'));
+
+  var fonts = gulp
+   .src('src/fonts/**/*')
+   .pipe(gulp.dest('build/fonts'));
+
+  return merge(html, styles, images, fonts);
 });
