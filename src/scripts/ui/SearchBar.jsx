@@ -9,7 +9,7 @@ var SearchBar = React.createClass({
     var binding = this.getBinding();
 
     return (
-      <div className="bar-stable">
+      <div className="vmp-search-bar bar-stable">
         <div className="bar-stable bar bar-header item-input-inset">
           <button className="button button-icon button-clear ion-navicon" onClick={toggle(binding, 'menuOpen')} />
           <label className="item-input-wrapper">

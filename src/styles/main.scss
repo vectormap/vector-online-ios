@@ -15,3 +15,11 @@
   cursor: auto;
   background: url('/images/vmp_map_back.png');
 }
+
+.has-map .vmp-search-bar {
+  z-index: 100;
+  top: 0;
+  right: 0;
+  position: absolute;
+  left: 0;
+}
