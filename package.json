@@ -40,6 +40,7 @@
     "react-bootstrap": "^0.13.2"
   },
   "devDependencies": {
+    "6to5-core": "^2.13.5",
     "6to5ify": "^3.1.2",
     "aliasify": "^1.5.1",
     "browser-sync": "^1.9.0",
@@ -66,6 +67,8 @@
     "pretty-hrtime": "^1.0.0",
     "reactify": "^0.17.1",
     "sassify": "^0.5.2",
+    "through": "^2.3.6",
+    "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.0.0",
     "vinyl-transform": "1.0.0",
     "watchify": "^2.2.1"
