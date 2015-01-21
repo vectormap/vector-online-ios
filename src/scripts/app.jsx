@@ -16,12 +16,14 @@ M.Callback.toggle = function (binding, subpath) {
 var _          = require('lodash');
 var B          = require('backbone');
 var $          = require('jquery');
-var React      = require('react');
+var React      = require('react/addons');
 var Imm        = require('immutable');
 var moment     = require('moment');
 var MainLayout = require('./ui/MainLayout');
 var MenuLayout = require('./ui/MenuLayout');
 var L          = require('leaflet');
+var cx         = React.addons.classSet;
+var controller = require('./controller');
 
 L.Icon.Default.imagePath = 'node_modules/leaflet/dist/images'
 
@@ -38,7 +40,14 @@ window.B      = window.Backbone = B;
 window.moment = moment;
 
 var AppState = {
-  menuOpen: false
+  menuOpen: false,
+  search: {
+    view: '', // history, suggestions, results
+    term: '',
+    suggestions: [{title: 'Вектор'}, {title: 'Аврора'}, {title: 'Сити Молл'}],
+    results: [],
+  },
+  status: ''
 };
 
 var Ctx = M.createContext({
@@ -51,8 +60,9 @@ var Ctx = M.createContext({
 });
 
 window.Ctx = Ctx; // for debug
+var rootBinding = window.rootBinding = Ctx.getBinding();
 
-var rootBinding = Ctx.getBinding();
+controller.init(rootBinding);
 
 var App = React.createClass({
   displayName: 'App',
@@ -73,6 +83,7 @@ var App = React.createClass({
 
   render: function () {
     var binding = this.getBinding();
+    var menuOpenCls = cx({'vmp-menu-open': binding.get('menuOpen')})
 
     return (
       <div className="view-container" nav-view-transition="ios" nav-view-direction="none">
@@ -81,7 +92,9 @@ var App = React.createClass({
             <MenuLayout />
           </div>
 
-          <MainLayout binding={binding} />
+          <div className={'menu-content pane menu-animated ' + menuOpenCls}>
+            <MainLayout binding={binding} />
+          </div>
         </div>
       </div>
     );

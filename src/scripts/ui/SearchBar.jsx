@@ -1,6 +1,8 @@
-var M        = require('morearty');
-var React    = require('react');
-var {toggle} = M.Callback;
+var M          = require('morearty');
+var React      = require('react');
+
+var {toggle, set: linkTo} = M.Callback;
+var {showSearchHistoryOrSuggestions} = require('controller');
 
 var SearchBar = React.createClass({
   mixins: [M.Mixin],
@@ -11,9 +13,12 @@ var SearchBar = React.createClass({
     return (
       <div className="vmp-search-bar bar-stable">
         <div className="bar-stable bar bar-header item-input-inset">
-          <button className="button button-icon button-clear ion-navicon" onClick={toggle(binding, 'menuOpen')} />
+          <button className="button button-icon button-clear ion-navicon"
+            onClick={toggle(binding, 'menuOpen')} />
           <label className="item-input-wrapper">
-            <input type="search" placeholder="Search" />
+            <input type="search" placeholder="Поиск"
+              onFocus={showSearchHistoryOrSuggestions}
+              onChange={linkTo(binding, 'search.term')} />
             <i className="icon ion-ios7-search placeholder-icon"></i>
           </label>
         </div>
