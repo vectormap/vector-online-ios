@@ -1,6 +1,8 @@
 var React = require('react');
+var M = require('morearty');
 
 var SearchSuggestionsView = React.createClass({
+  mixins: [M.Mixin],
 
   render: function() {
     return (

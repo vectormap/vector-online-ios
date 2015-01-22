@@ -15,9 +15,22 @@ var searchViews = {
 var MainLayout = React.createClass({
   mixins: [M.Mixin],
 
-  render: function() {
+  renderSearchView () {
+    var bSearch    = this.getBinding().sub('search');
+    var dataKey    = bSearch.get('view');
+    var SearchView = resolveView(searchViews, bSearch, 'view');
+    var bData      = bSearch.sub(dataKey);
+    var hasData    = bData.get() && bData.get().size > 0;
+
+    return {
+      SearchView: hasData && SearchView,
+      searchDataBinding: bData
+    };
+  },
+
+  render () {
     var binding = this.getBinding();
-    var SearchView = resolveView(searchViews, binding, 'search.view');
+    var {SearchView, searchDataBinding} = this.renderSearchView();
 
     return (
       <div>
@@ -25,7 +38,7 @@ var MainLayout = React.createClass({
         <div id="map" className="view-container" nav-view-transition="ios" nav-view-direction="none"></div>
         {SearchView &&
           <div className="view-container has-header" nav-view-transition="ios" nav-view-direction="none">
-            <SearchView />
+            <SearchView binding={searchDataBinding} />
           </div>}
       </div>
     );

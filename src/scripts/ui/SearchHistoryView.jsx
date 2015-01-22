@@ -1,22 +1,21 @@
 var React = require('react');
+var M = require('morearty');
 
 var SearchHistoryView = React.createClass({
+  mixins: [M.Mixin],
 
   render: function() {
+    var history = this.getBinding().get();
+
+    var historyItems = history.map(item =>
+      <a className="item">
+        {item.get('title')}
+      </a>
+    ).toJS();
+
     return (
       <div className="list">
-        <a className="item">
-          История поиска
-        </a>
-        <a className="item">
-          Вектор
-        </a>
-        <a className="item">
-          кино
-        </a>
-        <a className="item">
-          бары
-        </a>
+        {historyItems}
       </div>
     );
   }

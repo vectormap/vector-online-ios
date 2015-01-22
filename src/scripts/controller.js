@@ -1,13 +1,8 @@
+var api = require('api');
+
 var rootBinding;
 var bSearch;
 var bSearchTerm;
-
-// TODO: export vmp API
-var Catalog = {
-  quickSearch () {
-    return 'TODO';
-  }
-};
 
 function attachListeners () {
   // if we typed something, request suggestions, then show it
@@ -31,6 +26,10 @@ var Controller = {
     bSearch = rootBinding.sub('search');
     bSearchTerm = bSearch.sub('term');
     attachListeners();
+  },
+
+  start () {
+
   },
 
   showSearchHistoryOrSuggestions () {

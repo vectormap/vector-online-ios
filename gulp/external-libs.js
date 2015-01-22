@@ -8,5 +8,7 @@ module.exports = [
   'morearty',
   'moment',
   'moment/locale/ru',
-  'leaflet'
+  'leaflet',
+  'reqwest',
+  'q'
 ];

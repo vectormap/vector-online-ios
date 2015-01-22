@@ -22,8 +22,9 @@ var moment     = require('moment');
 var MainLayout = require('./ui/MainLayout');
 var MenuLayout = require('./ui/MenuLayout');
 var L          = require('leaflet');
-var cx         = React.addons.classSet;
 var controller = require('./controller');
+var api        = require('api');
+var cx         = React.addons.classSet;
 
 L.Icon.Default.imagePath = 'node_modules/leaflet/dist/images'
 
@@ -38,12 +39,17 @@ window.React  = React;
 window.$      = $;
 window.B      = window.Backbone = B;
 window.moment = moment;
+window.api    = api;
 
 var AppState = {
+  cityConfig: {
+    status: 'loading' // waiting for config by default
+  },
   menuOpen: false,
   search: {
     view: '', // history, suggestions, results
     term: '',
+    history: [{title: 'история поиска [stub]'}, {title: 'ленина 45 [stub]'}, {title: 'аура [stub]'}],
     suggestions: [{title: 'Вектор'}, {title: 'Аврора'}, {title: 'Сити Молл'}],
     results: [],
   },
@@ -65,7 +71,6 @@ var rootBinding = window.rootBinding = Ctx.getBinding();
 controller.init(rootBinding);
 
 var App = React.createClass({
-  displayName: 'App',
   mixins: [M.Mixin],
 
   componentDidMount: function () {
