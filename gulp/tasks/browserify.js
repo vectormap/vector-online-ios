@@ -35,7 +35,7 @@ gulp.task('browserify', function() {
 
     return bundler
       .external(externalLibs)
-			.bundle()
+      .bundle()
       .on('error', handleErrors)
       .pipe(source('app.js'))
       .pipe(gulp.dest('./build/'))

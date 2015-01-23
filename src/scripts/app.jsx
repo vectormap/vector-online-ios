@@ -50,7 +50,7 @@ var AppState = {
     view: '', // history, suggestions, results
     term: '',
     history: [{title: 'история поиска [stub]'}, {title: 'ленина 45 [stub]'}, {title: 'аура [stub]'}],
-    suggestions: [{title: 'Вектор'}, {title: 'Аврора'}, {title: 'Сити Молл'}],
+    suggestions: [],
     results: [],
   },
   status: ''

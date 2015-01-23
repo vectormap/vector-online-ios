@@ -5,8 +5,6 @@ var $   = require('jquery');
 var city = 'surgut';
 
 function _get (url, data) {
-  // return $.get(url, data);
-
   return req({
     method: 'get',
     url,
@@ -14,14 +12,23 @@ function _get (url, data) {
   });
 }
 
-function get (cityRelativeApiUrl, data) {
+function get (cityRelativeApiUrl, ...other) {
+  var data, parseFn;
+
+  if (other.length >= 1) {
+    [data] = other;
+  }
+
   return _get(`http://api.vmp.ru/v1/city/${city}${cityRelativeApiUrl}`, data)
 }
 
-function getRoot (rootRelativeApiUrl, data) {
-  return _get(`http://api.vmp.ru/v1{cityRelativeApiUrl}`, data)
+function getRoot (rootRelativeApiUrl, data, parseFn) {
+  return _get(`http://api.vmp.ru/v1{cityRelativeApiUrl}`, data, parseFn)
 }
 
+function result (apiObject) {
+  return apiObject.data.result;
+}
 
 var Api = {
   getCityConfig: city => get(`/city/${city}`),
@@ -33,11 +40,16 @@ var Api = {
 
   Catalog: {
     quickSearch: function (q, page = 0) {
+      var params = {q, page, suggest: true, per: 10};
+
       return Q.when([
-        get('/search/organizations', {q, page, suggest: true}),
-        get('/search/rubrics', {q, page, suggest: true}),
-        get('/search/addresses', {q, page, suggest: true})
-      ]).spread((x,y,z) => console.log('quickSearch', x,y,z));
+        get('/search/organizations', params),
+        get('/search/rubrics', params),
+        get('/search/addresses', params)
+      ]).spread((...data) => {
+        var [organizations, rubrics, addresses] = data.map(result);
+        return {organizations, rubrics, addresses};
+      });
     },
 
     getFromCollection: function (collection, ids) {
