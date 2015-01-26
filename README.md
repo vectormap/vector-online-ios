@@ -3,4 +3,5 @@
 - Screen resolutions, retina images
 - Touch gestures: http://hammerjs.github.io/, https://github.com/JedWatson/react-hammerjs
 - Text selection with enabled touch events
+- i18n with ICU format: http://formatjs.io/react/
 

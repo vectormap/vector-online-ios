@@ -10,5 +10,5 @@ module.exports = [
   'moment/locale/ru',
   'leaflet',
   'reqwest',
-  'q'
+  'bluebird'
 ];

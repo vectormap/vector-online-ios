@@ -1,38 +1,31 @@
 var req = require('reqwest');
-var Q   = require('q');
+var Q   = require('bluebird');
 var $   = require('jquery');
 
 var city = 'surgut';
 
 function _get (url, data) {
-  return req({
-    method: 'get',
-    url,
-    data
-  });
+  return $.get(url, data);
+
+  // return req({
+  //   method: 'get',
+  //   url,
+  //   data
+  // });
 }
 
-function get (cityRelativeApiUrl, ...other) {
-  var data, parseFn;
-
-  if (other.length >= 1) {
-    [data] = other;
-  }
-
+function get (cityRelativeApiUrl, data) {
   return _get(`http://api.vmp.ru/v1/city/${city}${cityRelativeApiUrl}`, data)
 }
 
-function getRoot (rootRelativeApiUrl, data, parseFn) {
-  return _get(`http://api.vmp.ru/v1{cityRelativeApiUrl}`, data, parseFn)
-}
-
-function result (apiObject) {
-  return apiObject.data.result;
+function getRoot (rootRelativeApiUrl, data) {
+  return _get(`http://api.vmp.ru/v1{rootRelativeApiUrl}`, data)
 }
 
 var Api = {
   getCityConfig: city => get(`/city/${city}`),
   getAllCityConfigs: () => getRoot('/cities'),
+  result: (apiObject = {}) => (apiObject.data || {}).result,
 
   GeoCoder: {
 
@@ -40,15 +33,18 @@ var Api = {
 
   Catalog: {
     quickSearch: function (q, page = 0) {
-      var params = {q, page, suggest: true, per: 10};
+      if (!q || q.length < 3) {
+        return [];
+      }
 
-      return Q.when([
+      var params = {q: q.trim(), page, suggest: true, per: 10};
+
+      return Q.all([
         get('/search/organizations', params),
         get('/search/rubrics', params),
         get('/search/addresses', params)
-      ]).spread((...data) => {
-        var [organizations, rubrics, addresses] = data.map(result);
-        return {organizations, rubrics, addresses};
+      ]).spread((organizations, rubrics, addresses) => {
+        return [organizations, rubrics, addresses];
       });
     },
 

@@ -24,13 +24,13 @@ var MainLayout = React.createClass({
 
     return {
       SearchView: hasData && SearchView,
-      searchDataBinding: bData
+      dataBinding: bData
     };
   },
 
   render () {
     var binding = this.getBinding();
-    var {SearchView, searchDataBinding} = this.renderSearchView();
+    var {SearchView, dataBinding} = this.renderSearchView();
 
     return (
       <div>
@@ -38,7 +38,7 @@ var MainLayout = React.createClass({
         <div id="map" className="view-container" nav-view-transition="ios" nav-view-direction="none"></div>
         {SearchView &&
           <div className="view-container has-header" nav-view-transition="ios" nav-view-direction="none">
-            <SearchView binding={searchDataBinding} />
+            <SearchView binding={dataBinding} />
           </div>}
       </div>
     );

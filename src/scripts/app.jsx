@@ -19,14 +19,12 @@ var $          = require('jquery');
 var React      = require('react/addons');
 var Imm        = require('immutable');
 var moment     = require('moment');
-var MainLayout = require('./ui/MainLayout');
-var MenuLayout = require('./ui/MenuLayout');
 var L          = require('leaflet');
 var controller = require('./controller');
 var api        = require('api');
 var cx         = React.addons.classSet;
 
-L.Icon.Default.imagePath = 'node_modules/leaflet/dist/images'
+L.Icon.Default.imagePath = 'node_modules/leaflet/dist/images';
 
 require('moment/locale/ru');
 
@@ -45,6 +43,7 @@ var AppState = {
   cityConfig: {
     status: 'loading' // waiting for config by default
   },
+  lang: 'ru',
   menuOpen: false,
   search: {
     view: '', // history, suggestions, results
@@ -70,6 +69,11 @@ var rootBinding = window.rootBinding = Ctx.getBinding();
 
 controller.init(rootBinding);
 
+window.collections = require('models/collections');
+
+var MainLayout = require('./ui/MainLayout');
+var MenuLayout = require('./ui/MenuLayout');
+
 var App = React.createClass({
   mixins: [M.Mixin],
 
@@ -88,7 +92,7 @@ var App = React.createClass({
 
   render: function () {
     var binding = this.getBinding();
-    var menuOpenCls = cx({'vmp-menu-open': binding.get('menuOpen')})
+    var menuOpenCls = cx({'vmp-menu-open': binding.get('menuOpen')});
 
     return (
       <div className="view-container" nav-view-transition="ios" nav-view-direction="none">

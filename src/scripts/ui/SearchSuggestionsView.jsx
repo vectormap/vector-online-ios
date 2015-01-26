@@ -1,28 +1,35 @@
 var React = require('react');
 var M = require('morearty');
+var collections = require('models/collections');
 
 var SearchSuggestionsView = React.createClass({
   mixins: [M.Mixin],
 
-  render: function() {
+  renderSuggestionItem (collection, suggestion) {
+    var s     = suggestion.toJS();
+    var title = collections.formatTitle(collection, s);
+    var type  = collections.translate(collection).singular();
+    var id    = collections.uniqId(collection, s);
+
     return (
-      <div className="list">
-        <a className="item">
-          Ленина проспект 45
-          <span className="item-desc">Адрес</span>
-        </a>
-        <a className="item">
-          Вектор, ООО
-          <span className="item-desc">Адрес</span>
-        </a>
-        <a className="item">
-          Рога и Копыта, ООО
-          <span className="item-desc">Адрес</span>
-        </a>
-        <a className="item">
-          Одиннадцатиклассница Одиннадцатиклассница Одиннадцатиклассница
-          <span className="item-desc">Адрес</span>
-        </a>
+      <a className="item" key={id}>
+        {title}
+        <span className="item-desc">{type}</span>
+      </a>
+    );
+  },
+
+  render () {
+    var bSuggestions = this.getBinding();
+    var list = bSuggestions.get().map((suggestions, collection) => {
+      return suggestions.map(s => this.renderSuggestionItem(collection, s));
+    }).flatten().toJS();
+
+    console.log('>>', list);
+
+    return (
+      <div className="SearchSuggestions list">
+        {list}
       </div>
     );
   }

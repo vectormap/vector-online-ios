@@ -7,7 +7,7 @@ var OrgModel = {
     return Number(org.priority) > 1000;
   },
 
-  randomizeOrgsInOneLevel: function (orgs) {
+  randomizeOrgsInOneLevel: function (orgs = []) {
     var after1000 = [], other = [];
 
     orgs.forEach(function (org) {
