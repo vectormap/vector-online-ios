@@ -5,7 +5,7 @@ var handleErrors = require('../util/handleErrors');
 var source       = require('vinyl-source-stream');
 var aliasify     = require('aliasify');
 
-var externalLibs = require('../external-libs');
+var externalLibs = require('../../package.json').externalLibs || [];
 
 gulp.task('browserify-external-libs', function() {
 

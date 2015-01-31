@@ -7,12 +7,37 @@ var SearchModel = {
 
   },
 
-  prepareQuickSearch (data) {
-    var [organizations = [], rubrics = [], addresses = []] = data.map(result);
-    organizations = randomizeOrgsInOneLevel(organizations);
+  prepareSearchSuggestions ([organizations = [], rubrics = [], addresses = []]) {
+    // put rubrics first
+    var suggestions = [].concat(rubrics, organizations, addresses);
 
-    return {organizations, rubrics, addresses};
+    suggestions = suggestions.map(s => {
+      var suggestionList = result(s);
+      var {collection} = s;
+
+      if (collection === 'organizations') {
+        suggestionList = randomizeOrgsInOneLevel(suggestionList);
+      }
+
+      suggestionList.forEach(item => item.collection = collection);
+
+      return suggestionList;
+    });
+
+    return _.flatten(suggestions);
   },
+
+  prepareSearchResults (results = []) {
+    results = results.map(result => {
+      if (result.collection === 'organizations') {
+        result.data.result = randomizeOrgsInOneLevel(result.data.result);
+      }
+
+      return result;
+    })
+
+    return _.indexBy(results, 'collection');
+  }
 };
 
 module.exports = SearchModel;

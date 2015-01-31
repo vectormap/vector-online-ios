@@ -1,15 +1,15 @@
-var M                     = require('morearty');
-var React                 = require('react/addons');
-var SearchBar             = require('./SearchBar');
-var SearchHistoryView     = require('./SearchHistoryView');
-var SearchSuggestionsView = require('./SearchSuggestionsView');
-var SearchResultsView     = require('./SearchResultsView');
-var {resolveView}         = require('utils');
+var M                 = require('morearty');
+var React             = require('react/addons');
+var SearchBar         = require('./SearchBar');
+var ItemView          = require('./ItemView');
+var ErrorView         = require('./ErrorView');
+var SearchResultsView = require('./SearchResultsView');
+var {resolveView}     = require('utils');
 
 var searchViews = {
-  'history': SearchHistoryView,
-  'suggestions': SearchSuggestionsView,
-  'results': SearchResultsView
+  'results': SearchResultsView,
+  'item': ItemView,
+  'error': ErrorView
 };
 
 var MainLayout = React.createClass({

@@ -1,18 +1,24 @@
-var React = require('react');
-var M = require('morearty');
+var React       = require('react');
+var M           = require('morearty');
 var collections = require('models/collections');
+var controller  = require('controller');
 
 var SearchSuggestionsView = React.createClass({
   mixins: [M.Mixin],
 
-  renderSuggestionItem (collection, suggestion) {
-    var s     = suggestion.toJS();
-    var title = collections.formatTitle(collection, s);
-    var type  = collections.translate(collection).singular();
-    var id    = collections.uniqId(collection, s);
+  onSuggestionClick (suggestionBinding) {
+    controller.loadSelectedSuggestionItem(suggestionBinding.toJS());
+  },
+
+  renderSuggestionItem (suggestionBinding) {
+    var suggestion   = suggestionBinding.toJS();
+    var {collection} = suggestion;
+    var title        = collections.formatTitle(collection, suggestion);
+    var type         = collections.translate(collection).singular();
+    var id           = collections.uniqId(collection, suggestion);
 
     return (
-      <a className="item" key={id}>
+      <a className="item" key={id} onTouchEnd={this.onSuggestionClick.bind(this, suggestionBinding)}>
         {title}
         <span className="item-desc">{type}</span>
       </a>
@@ -21,11 +27,9 @@ var SearchSuggestionsView = React.createClass({
 
   render () {
     var bSuggestions = this.getBinding();
-    var list = bSuggestions.get().map((suggestions, collection) => {
-      return suggestions.map(s => this.renderSuggestionItem(collection, s));
-    }).flatten().toJS();
-
-    console.log('>>', list);
+    var list = bSuggestions.get().map(
+      (suggestion, i) => this.renderSuggestionItem(bSuggestions.sub(i))
+    ).toJS();
 
     return (
       <div className="SearchSuggestions list">

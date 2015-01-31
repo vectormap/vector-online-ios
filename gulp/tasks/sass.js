@@ -1,5 +1,6 @@
 var gulp         = require('gulp');
-var sass         = require('gulp-ruby-sass');
+// var sass         = require('gulp-ruby-sass');
+var sass         = require('gulp-sass');
 var changed      = require('gulp-changed');
 var handleErrors = require('../util/handleErrors');
 var filter       = require('gulp-filter');
@@ -13,7 +14,7 @@ gulp.task('sass', function () {
     .pipe(plumber())
     // .pipe(changed('./build/scripts', {extension: '.scss'}))
     .pipe(sass({
-      // errLogToConsole: true,
+      errLogToConsole: true,
 
       // sass.renderSync will be called, instead of sass.render.
       // This should help when memory and/or cpu usage is getting very high when rendering many and/or big files.

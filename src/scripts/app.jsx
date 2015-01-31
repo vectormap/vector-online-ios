@@ -14,8 +14,6 @@ M.Callback.toggle = function (binding, subpath) {
 };
 
 var _          = require('lodash');
-var B          = require('backbone');
-var $          = require('jquery');
 var React      = require('react/addons');
 var Imm        = require('immutable');
 var moment     = require('moment');
@@ -30,27 +28,24 @@ require('moment/locale/ru');
 
 moment.locale('ru');
 
-B.$           = $;
 window._      = _;
 window.Imm    = Imm;
 window.React  = React;
-window.$      = $;
-window.B      = window.Backbone = B;
 window.moment = moment;
 window.api    = api;
 
+// TODO: load saved settings to state from localStorage
+
 var AppState = {
-  cityConfig: {
-    status: 'loading' // waiting for config by default
-  },
+  cityConfig: {},
+  currentCity: 'surgut',
   lang: 'ru',
   menuOpen: false,
   search: {
-    view: '', // history, suggestions, results
+    view: '', // results, item, error
     term: '',
-    history: [{title: 'история поиска [stub]'}, {title: 'ленина 45 [stub]'}, {title: 'аура [stub]'}],
-    suggestions: [],
     results: [],
+    item: null
   },
   status: ''
 };
@@ -112,5 +107,6 @@ var App = React.createClass({
 
 var Bootstrap = Ctx.bootstrap(App);
 
+React.initializeTouchEvents(true);
 React.render(<Bootstrap />, document.getElementById('root'));
 

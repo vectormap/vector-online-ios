@@ -1,3 +1,4 @@
+var _ = require('lodash');
 var U = require('utils');
 
 var OrgModel = {

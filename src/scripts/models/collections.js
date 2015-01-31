@@ -1,5 +1,4 @@
 var {t} = require('controller');
-var controller = require('controller')
 
 var noop = () => {};
 
@@ -24,7 +23,7 @@ var Collections = {
   organizations: {
     formatTitle: (org) => org.title || '',
 
-    formatAdditionalInfo: (org) => defaultAdditionalFormatter(this, org),
+    formatAdditionalInfo: (org) => defaultAdditionalFormatter(Collections.organizations, org),
 
     translation: {
       singular: () => t('card.organization'),
@@ -35,7 +34,7 @@ var Collections = {
   rubrics: {
     formatTitle: (rubric) => rubric.name || '',
 
-    formatAdditionalInfo: (rubric) => defaultAdditionalFormatter(this, rubric),
+    formatAdditionalInfo: (rubric) => defaultAdditionalFormatter(Collections.rubrics, rubric),
 
     translation: {
       singular: () => t('card.rubric'),

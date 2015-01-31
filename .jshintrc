@@ -15,7 +15,6 @@
   "strict"     : false,
   "maxparams"  : 5,
   "debug"      : false,
-  "es5"        : true,
   "esnext"     : true,
   "browser"    : true,
   "browserify" : true

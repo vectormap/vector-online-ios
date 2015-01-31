@@ -4,12 +4,8 @@ var bundleLogger = require('../util/bundleLogger');
 var gulp         = require('gulp');
 var handleErrors = require('../util/handleErrors');
 var source       = require('vinyl-source-stream');
-var _6to5        = require('./6to5ify');
-var aliasify     = require('aliasify');
-var externalLibs = require('../external-libs');
-var cssify       = require('cssify');
-var reactify     = require('reactify');
-var buffer       = require('vinyl-buffer');
+var _6to5        = require('6to5ify');
+var externalLibs = require('../../package.json').externalLibs || [];
 
 gulp.task('browserify', function() {
 

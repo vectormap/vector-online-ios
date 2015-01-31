@@ -1,29 +1,24 @@
-var req = require('reqwest');
-var Q   = require('bluebird');
-var $   = require('jquery');
-
-var city = 'surgut';
+var qwest = require('qwest');
+var P   = require('bluebird');
 
 function _get (url, data) {
-  return $.get(url, data);
-
-  // return req({
-  //   method: 'get',
-  //   url,
-  //   data
-  // });
+  return qwest.get(url, data, {responseType: 'json'});
 }
 
-function get (cityRelativeApiUrl, data) {
+function get (city, cityRelativeApiUrl, data) {
+  if (!city) {
+    throw new Error('City must be defined');
+  }
+
   return _get(`http://api.vmp.ru/v1/city/${city}${cityRelativeApiUrl}`, data)
 }
 
 function getRoot (rootRelativeApiUrl, data) {
-  return _get(`http://api.vmp.ru/v1{rootRelativeApiUrl}`, data)
+  return _get(`http://api.vmp.ru/v1${rootRelativeApiUrl}`, data)
 }
 
 var Api = {
-  getCityConfig: city => get(`/city/${city}`),
+  getCityConfig: city => getRoot(`/city/${city}`),
   getAllCityConfigs: () => getRoot('/cities'),
   result: (apiObject = {}) => (apiObject.data || {}).result,
 
@@ -32,79 +27,40 @@ var Api = {
   },
 
   Catalog: {
-    quickSearch: function (q, page = 0) {
+    search: function (city, q, {page = 0, suggest}) {
       if (!q || q.length < 3) {
         return [];
       }
 
-      var params = {q: q.trim(), page, suggest: true, per: 10};
+      var params = {q: q.trim(), page, suggest, per: 25, coords: false};
 
-      return Q.all([
-        get('/search/organizations', params),
-        get('/search/rubrics', params),
-        get('/search/addresses', params)
+      return P.all([
+        get(city, '/search/organizations', params),
+        get(city, '/search/rubrics', params),
+        get(city, '/search/addresses', params)
       ]).spread((organizations, rubrics, addresses) => {
         return [organizations, rubrics, addresses];
       });
     },
 
-    getFromCollection: function (collection, ids) {
-      return get('/' + collection + '/' + ids.join(','));
+    /*search: function (q, collection, page) {
+
+    },*/
+
+    searchAll: function (q, page) {
+
     },
 
-    getOrganization: function (orgId) {
-      return get('/organization/' + orgId);
-    },
-
-    getOrganizations: function (orgIdsStr) {
-      return get('/organizations/' + orgIdsStr);
-    },
-
-    getOrganizationsWithAddressBinding: function (orgIdsStr, addressCoords, zoomLevel) {
-      return get('/organizations/' + [orgIdsStr, addressCoords.lat, addressCoords.lng, zoomLevel].join('/'));
-    },
-
-    getRubric: function (rubricId) {
-      return get('/rubric/' + rubricId);
-    },
-
-    getAddress: function (addressId) {
-      return get('/address/' + addressId);
+    getFromCollection: function (city, collection, id) {
+      return get(city, `/${collection}`, {ids: id})
     },
 
     getOrganizationsInAddress: function (addressId) {
-      return get('/orgs_in_address/' + addressId);
+
     },
 
     getOrganizationsByRubric: function (rubricId) {
-      return get('/orgs_by_rubric/' + rubricId);
-    },
 
-    search: function (query, collection, page) {
-      return this._search('search', query, collection, page);
-    },
-
-    searchAll: function (query, pages) {
-      return get(
-        [
-          '/search_all', Utils.escapeQuery(query),
-          'orgs', pages.organizations,
-          'addresses', pages.addresses,
-          'rubrics', pages.rubrics
-        ]
-        .join('/'));
-    },
-
-    buildSearchUrl: function (searchPath, query, collection, _offset) {
-      var offset = _offset || 0;
-
-      return '/' + [searchPath, collection, Utils.escapeQuery(query), offset].join('/');
-    },
-
-    _search: function (path, query, collection, offset) {
-      var url = this.buildSearchUrl(path, query, collection, offset);
-
-      return get(url);
     },
 
     /*
