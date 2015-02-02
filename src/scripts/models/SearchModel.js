@@ -36,7 +36,7 @@ var SearchModel = {
       return result;
     })
 
-    return _.indexBy(results, 'collection');
+    return results;
   }
 };
 

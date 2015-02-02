@@ -4,11 +4,13 @@ var SearchBar         = require('./SearchBar');
 var ItemView          = require('./ItemView');
 var ErrorView         = require('./ErrorView');
 var SearchResultsView = require('./SearchResultsView');
+var NotFoundView      = require('./NotFoundView');
 var {resolveView}     = require('utils');
 
 var searchViews = {
   'results': SearchResultsView,
   'item': ItemView,
+  'notFound': NotFoundView,
   'error': ErrorView
 };
 
@@ -17,20 +19,14 @@ var MainLayout = React.createClass({
 
   renderSearchView () {
     var bSearch    = this.getBinding().sub('search');
-    var dataKey    = bSearch.get('view');
-    var SearchView = resolveView(searchViews, bSearch, 'view');
-    var bData      = bSearch.sub(dataKey);
-    var hasData    = bData.get() && bData.get().size > 0;
+    var SearchView = resolveView(searchViews, bSearch, 'view.name');
 
-    return {
-      SearchView: hasData && SearchView,
-      dataBinding: bData
-    };
+    return SearchView;
   },
 
   render () {
     var binding = this.getBinding();
-    var {SearchView, dataBinding} = this.renderSearchView();
+    var SearchView = this.renderSearchView();
 
     return (
       <div>
@@ -38,7 +34,7 @@ var MainLayout = React.createClass({
         <div id="map" className="view-container" nav-view-transition="ios" nav-view-direction="none"></div>
         {SearchView &&
           <div className="view-container has-header" nav-view-transition="ios" nav-view-direction="none">
-            <SearchView binding={dataBinding} />
+            <SearchView binding={binding.sub('search')} />
           </div>}
       </div>
     );

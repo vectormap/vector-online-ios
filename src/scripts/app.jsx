@@ -42,8 +42,12 @@ var AppState = {
   lang: 'ru',
   menuOpen: false,
   search: {
-    view: '', // results, item, error
-    term: '',
+    view: {
+      name: '', // results, item, notFound, error
+      tab: 'organizations' // organizations, rubrics, addresses
+    },
+    type: '', // query, address, rubric
+    query: '', // query string or item id
     results: [],
     item: null
   },

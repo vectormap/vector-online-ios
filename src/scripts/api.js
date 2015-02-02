@@ -27,7 +27,7 @@ var Api = {
   },
 
   Catalog: {
-    search: function (city, q, {page = 0, suggest}) {
+    search: function (city, q, {page = 0, suggest} = {}) {
       if (!q || q.length < 3) {
         return [];
       }
@@ -43,12 +43,15 @@ var Api = {
       });
     },
 
-    /*search: function (q, collection, page) {
+    // @itemType: address, rubric
+    getOrganizationsBy: function (city, itemType, itemId, {page = 0, suggest} = {}) {
+      if (itemType !== 'address' && itemType !== 'rubric') {
+        throw new Error(`getOrganizationsBy: incorrect item type: ${itemType}. Should be in: [address, rubric]`);
+      }
 
-    },*/
+      var params = {[itemType]: itemId, page, suggest, per: 25, coords: false};
 
-    searchAll: function (q, page) {
-
+      return get(city, `/organizations`, params);
     },
 
     getFromCollection: function (city, collection, id) {

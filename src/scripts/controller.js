@@ -5,7 +5,6 @@ var translator = require('i18n/translator');
 var page       = require('page');
 
 var {Catalog}  = Api;
-
 var {
   prepareSearchResults
 } = require('./models/SearchModel');
@@ -13,18 +12,19 @@ var {
 var rootBinding;
 var bCityConfig;
 var bSearch;
-var bSearchTerm;
+var bSearchQuery;
 var bSearchResults;
 var bSearchItem;
 
 const defaultLang = 'ru';
+const SEARCH_TYPES = ['query', 'address', 'rubric'];
 
 function setSearchView (view) {
-  bSearch.set('view', view);
+  bSearch.set('view.name', view);
 }
 
 function unsetSearchView () {
-  bSearch.clear('view');
+  bSearch.clear('view.name');
 }
 
 function setStatus (status) {
@@ -34,6 +34,10 @@ function setStatus (status) {
 var status = {
   loading () {
     setStatus('loading');
+  },
+
+  error (err) {
+    setStatus(imm(err));
   },
 
   clear () {
@@ -50,7 +54,7 @@ function navigate (route) {
 function navigateSilent (route) {
   var city = bCityConfig.get('city.alias');
 
-  page.show(`/city/${city}${route}`, null, false);
+  page.replace(`/city/${city}${route}`, null, null, false);
 }
 
 function city () {
@@ -62,7 +66,7 @@ var Controller = {
     rootBinding    = binding;
     bCityConfig    = rootBinding.sub('cityConfig');
     bSearch        = rootBinding.sub('search');
-    bSearchTerm    = bSearch.sub('term');
+    bSearchQuery   = bSearch.sub('query');
     bSearchItem    = bSearch.sub('item');
     bSearchResults = bSearch.sub('results');
 
@@ -71,6 +75,14 @@ var Controller = {
     // All routes will flow through the base '/city/:city/(.*)?' route
 
     page.redirect('/', `/city/${rootBinding.get('currentCity')}`);
+
+    // page('/', () => {
+    //   // manual redirect, need to put this route to history instead of replace it
+    //   if (!redirectedFromRoot) {
+    //     page(`/city/${rootBinding.get('currentCity')}`);
+    //     redirectedFromRoot = true;
+    //   }
+    // });
 
     page('/city/:city/(.*)?', (ctx, next) => {
       var {city} = ctx.params;
@@ -85,18 +97,19 @@ var Controller = {
       P.resolve(this.loadCityConfig(city)).then(next);
     });
 
-    page('/city/:city/card/search/:query', ctx => {
-      var {city, query} = ctx.params;
+    // search by type: query, address, rubric
+    page('/city/:city/search/:type/:query', ctx => {
+      var {city, type, query} = ctx.params;
 
-      console.log('search route', `/city/${city}/card/search/${query}`);
+      console.log('search route', `/city/${city}/search/${type}/${query}`);
 
-      this.processSearch(query);
+      this.processSearch(type, query);
     });
 
-    page('/city/:city/card/item/:collection/:id', ctx => {
+    page('/city/:city/item/:collection/:id', ctx => {
       var {city, collection, id} = ctx.params;
 
-      console.log('item route', `/city/${city}/card/show/${collection}/${id}/`);
+      console.log('item route', `/city/${city}/show/${collection}/${id}/`);
 
       // setSearchView()
     });
@@ -122,14 +135,6 @@ var Controller = {
 
   },
 
-  toggleSearchResultsView () {
-    if (bSearchTerm.get()) {
-      setSearchView('results');
-    } else {
-      unsetSearchView();
-    }
-  },
-
   loadCityConfig (city) {
     if (bCityConfig.get('city.alias') === city) {
       return;
@@ -138,37 +143,70 @@ var Controller = {
     return Api
       .getCityConfig(city)
       .then(config => {
-        console.log('>>', config);
-
         bCityConfig.set(imm(config));
       });
+  },
+
+  startSearch () {
+    // Navigate once to search route when search field got focus.
+    // This is the fixed point to replace it with search/:query route
+    // that gives the ability to travel back to base /city/:city route
+    if (!page.current.match(/city\/.*\/search.*/)) {
+      console.log('Starting search [focus]');
+      navigate('/search');
+    }
   },
 
   onSearchTyped (event) {
     var query = event.target.value;
 
-    // bSearchTerm.set(query);
-    navigateSilent(`/card/search/${query}`);
-    this.processSearch(query);
+    if (query) {
+      navigateSilent(`/search/query/${query}`);
+      this.processSearch('query', query);
+    } /*else {
+      navigate('/');
+    }*/
+
   },
 
-  processSearch (query) {
-    // var query = bSearchTerm.get();
-
-    P.resolve(this.search(query))
+  processSearch (searchType, query) {
+    return P.resolve(this.search(searchType, query))
       .then(() => setSearchView('results'))
       .error(() => setSearchView('error'));
   },
 
-  search (query) {
+  search (searchType, query) {
+    var searchPromise;
+
+    if (SEARCH_TYPES.indexOf(searchType) < 0) {
+      throw new Error(`controller.search: incorrect search type: ${searchType}. Should be in: ${SEARCH_TYPES}`);
+    }
+
+    bSearch.set('type', searchType);
+    bSearch.set('query', query);
+
     status.loading();
 
-    P.resolve(Catalog.search(city(), query, {suggest: true})).then((results) => {
+    if (searchType === 'query') {
+      // standard search by query string
+      searchPromise = Catalog.search(city(), query, {suggest: true});
+    } else {
+      // get organizations by rubric or address id
+      var itemType = searchType;
+      var itemId = query;
+
+      searchPromise = Catalog.getOrganizationsBy(city(), itemType, itemId, {suggest: true});
+    }
+
+    P.resolve(searchPromise).then((results) => {
       results = prepareSearchResults(results);
       bSearchResults.set(imm(results));
+      status.clear();
     })
-    .error(err => console.error('search', err))
-    .finally(status.clear);
+    .catch(err => {
+      status.error(err);
+      console.error('search', err);
+    });
   },
 
 

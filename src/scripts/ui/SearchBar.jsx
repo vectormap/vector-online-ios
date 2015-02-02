@@ -4,13 +4,14 @@ var controller = require('controller');
 
 var cx = React.addons.classSet;
 var {toggle, set: linkTo} = M.Callback;
-var {onSearchTyped} = controller;
+var {onSearchTyped, startSearch} = controller;
 
 var SearchBar = React.createClass({
   mixins: [M.Mixin],
 
   render () {
     var binding = this.getBinding();
+    var query = binding.get('search.query');
     var isLoading = this.getBinding().get('status') === 'loading';
     var searchIcon = cx({
       'ion-ios7-search': !isLoading,
@@ -22,7 +23,10 @@ var SearchBar = React.createClass({
         <div className="bar-stable bar bar-header item-input-inset">
           <button className="button button-icon button-clear ion-navicon" onClick={toggle(binding, 'menuOpen')} />
           <label className="item-input-wrapper">
-            <input type="search" onChange={onSearchTyped.bind(controller)} />
+            <input type="search"
+              value={query}
+              onChange={onSearchTyped.bind(controller)}
+              onFocus={startSearch} />
             <i className={searchIcon}></i>
           </label>
         </div>
