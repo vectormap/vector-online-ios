@@ -11,9 +11,10 @@ var ItemsListView = React.createClass({
     var model = models.getByCollection(collection);
     var title = collections.formatTitle(collection, item);
     var subtitle = model.formatSearchSubtitle(item);
+    var key = `item-${collection}-${item.int_id}`;
 
     return (
-      <a className="item">
+      <a className="item vmp-list-item" key={key}>
         <span>{title}</span>
         <span className="item-desc">{subtitle}</span>
       </a>
@@ -27,8 +28,10 @@ var ItemsListView = React.createClass({
     var list = result && result.map(item => this.renderItem(collection, item));
 
     return (
-      <div className="list">
-        {list.toJS()}
+      <div className="pane vmp-list">
+        <div className="list has-header">
+          {list && list.toJS()}
+        </div>
       </div>
     );
   }
