@@ -29,6 +29,19 @@
   height: 100%;
   overflow-y: auto;
 }
+
 .vmp-list {
   overflow-y: scroll;
 }
+
+.vmp-list-item {
+  white-space: pre-line;
+  transition: all 300ms ease-out; // Doesn't fade out in mobile mode after :hover
+  background-color: #fff;
+}
+
+.vmp-list-item:active {
+  transition: background-color 70ms ease-in;
+  background-color: rgba(79, 173, 255, 0.43);
+}
+
