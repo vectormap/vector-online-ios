@@ -151,21 +151,21 @@ var Controller = {
     // Navigate once to search route when search field got focus.
     // This is the fixed point to replace it with search/:query route
     // that gives the ability to travel back to base /city/:city route
-    if (!page.current.match(/city\/.*\/search.*/)) {
+    if (!page.current.match(/city\/.*\/search\/query.*/)) {
       console.log('Starting search [focus]');
-      navigate('/search');
+      navigate('/search/query');
     }
   },
 
   onSearchTyped (event) {
     var query = event.target.value;
 
-    if (query) {
+    // if (query) {
       navigateSilent(`/search/query/${query}`);
       this.processSearch('query', query);
-    } /*else {
-      navigate('/');
-    }*/
+    // } else {
+    //   navigate('/');
+    // }
 
   },
 

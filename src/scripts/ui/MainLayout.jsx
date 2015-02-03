@@ -33,7 +33,7 @@ var MainLayout = React.createClass({
         <SearchBar binding={binding} />
         <div id="map" className="view-container" nav-view-transition="ios" nav-view-direction="none"></div>
         {SearchView &&
-          <div className="view-container has-header" nav-view-transition="ios" nav-view-direction="none">
+          <div className="view-container" nav-view-transition="ios" nav-view-direction="none">
             <SearchView binding={binding.sub('search')} />
           </div>}
       </div>

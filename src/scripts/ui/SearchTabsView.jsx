@@ -11,12 +11,17 @@ var SearchTabsView = React.createClass({
     this.getBinding().set('view.tab', collection);
   },
 
+  renderTab () {
+
+  },
+
   render: function() {
     var searchBinding = this.getBinding();
     var results = searchBinding.get('results');
+
     var activeTab = searchBinding.get('view.tab');
 
-    var tabs = results.map(r => {
+    var tabs = results.map((r) => {
       var collection = r.get('collection');
       var resultsCount = r.getIn(['data', 'result_count']);
 

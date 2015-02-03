@@ -5,3 +5,13 @@
 .ion-loading-b {
   animation: spin 2s infinite linear;
 }
+
+.badge.header {
+  background-color: #444;
+  color: #f8f8f8;
+  position: static;
+  margin-left: 3px;
+  font-size: 8pt;
+  height: 17px;
+  line-height: 13px;
+}

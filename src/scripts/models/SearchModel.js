@@ -28,7 +28,7 @@ var SearchModel = {
   },
 
   prepareSearchResults (results = []) {
-    results = results.map(result => {
+    results = [].concat(results).map(result => {
       if (result.collection === 'organizations') {
         result.data.result = randomizeOrgsInOneLevel(result.data.result);
       }

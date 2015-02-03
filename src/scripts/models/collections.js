@@ -4,7 +4,7 @@ var noop = () => {};
 
 function defaultAdditionalFormatter (collectionObj, doc) {
   return {
-    type: collectionObj.translation.singular + ':',
+    type: collectionObj.translation.singular() + ':',
     describe: collectionObj.formatTitle(doc)
   };
 }

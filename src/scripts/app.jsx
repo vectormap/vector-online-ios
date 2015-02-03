@@ -44,7 +44,7 @@ var AppState = {
   search: {
     view: {
       name: '', // results, item, notFound, error
-      tab: 'organizations' // organizations, rubrics, addresses
+      tab: '' // organizations, rubrics, addresses
     },
     type: '', // query, address, rubric
     query: '', // query string or item id

@@ -1,5 +1,6 @@
 var _ = require('lodash');
 var U = require('utils');
+var AddressModel = require('./AddressModel');
 
 var OrgModel = {
 
@@ -92,6 +93,17 @@ var OrgModel = {
       org: org.title,
       org_id: org.int_id
     }, params);
+  },
+
+  formatSearchSubtitle: function (org) {
+    if (org && org.department) {
+      var firstAddress = (org.department[0] || {}).address;
+      var addressLine = AddressModel.formatAddress(firstAddress);
+
+      return addressLine; // TODO: Ленина 45 (+3 филиала/адреса)
+    }
+
+    return '';
   }
 };
 

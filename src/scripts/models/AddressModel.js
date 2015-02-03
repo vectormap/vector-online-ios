@@ -6,11 +6,11 @@ var AddressModel = {
            address.pos.lng !== 0;
   },
 
-  formatAddress: function (address) {
+  formatAddress: function (address, {withOffice = true}) {
     if (address) {
       var formatted = address.street + ', ' + address.house;
 
-      if (address.office) {
+      if (withOffice && address.office) {
         formatted += ' - ' + address.office;
       }
 
@@ -20,6 +20,15 @@ var AddressModel = {
 
       return formatted;
     }
+
+    return '';
+  },
+
+  formatSearchSubtitle: function (address) {
+    // TODO: need inflections: 'организация, организаций, организации'
+    // if (address) {
+
+    // }
 
     return '';
   }
