@@ -54,8 +54,8 @@ var Api = {
       return get(city, `/organizations`, params);
     },
 
-    getFromCollection: function (city, collection, id) {
-      return get(city, `/${collection}`, {ids: id})
+    getFromCollection: function (city, collection, id, {coords} = {}) {
+      return get(city, `/${collection}`, {ids: id, coords})
     },
 
     getOrganizationsInAddress: function (addressId) {

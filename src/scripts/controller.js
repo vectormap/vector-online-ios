@@ -209,11 +209,12 @@ var Controller = {
   loadItem (collection, itemId) {
     status.loading();
 
-    return P.resolve(Catalog.getFromCollection(city(), collection, itemId)).then(item => {
-      bSearch.set('item', imm(item));
-      setSearchView('item');
-      status.clear();
-    }).error(status.error);
+    return P.resolve(
+      Catalog.getFromCollection(city(), collection, itemId, {coords: false})).then(item => {
+        bSearch.set('item', imm(item));
+        setSearchView('item');
+        status.clear();
+      }).error(status.error);
   },
 
   navToSearchByItem (collection, itemId) {
