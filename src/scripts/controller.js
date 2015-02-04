@@ -3,6 +3,7 @@ var imm        = require('immutable').fromJS;
 var P          = require('bluebird');
 var translator = require('i18n/translator');
 var page       = require('page');
+var _          = require('lodash');
 
 var {Catalog}  = Api;
 var {
@@ -15,6 +16,11 @@ var bSearch;
 var bSearchQuery;
 var bSearchResults;
 var bSearchItem;
+
+var searchRouteTransitions = {
+  'rubrics': 'rubric',
+  'addresses': 'address'
+};
 
 const defaultLang = 'ru';
 const SEARCH_TYPES = ['query', 'address', 'rubric'];
@@ -72,18 +78,9 @@ var Controller = {
 
     this.attachListeners();
 
-    // All routes will flow through the base '/city/:city/(.*)?' route
-
     page.redirect('/', `/city/${rootBinding.get('currentCity')}`);
 
-    // page('/', () => {
-    //   // manual redirect, need to put this route to history instead of replace it
-    //   if (!redirectedFromRoot) {
-    //     page(`/city/${rootBinding.get('currentCity')}`);
-    //     redirectedFromRoot = true;
-    //   }
-    // });
-
+    // All routes will flow through the base '/city/:city/(.*)?' route
     page('/city/:city/(.*)?', (ctx, next) => {
       var {city} = ctx.params;
       var restRoute = ctx.params[0];
@@ -106,12 +103,12 @@ var Controller = {
       this.processSearch(type, query);
     });
 
-    page('/city/:city/item/:collection/:id', ctx => {
+    page('/city/:city/search/item/:collection/:id', ctx => {
       var {city, collection, id} = ctx.params;
 
-      console.log('item route', `/city/${city}/show/${collection}/${id}/`);
+      console.log('item route', `/city/${city}/item/${collection}/${id}/`);
 
-      // setSearchView()
+      this.loadItem(collection, id);
     });
 
     page('*', () => console.log('Route: *'));
@@ -171,8 +168,7 @@ var Controller = {
 
   processSearch (searchType, query) {
     return P.resolve(this.search(searchType, query))
-      .then(() => setSearchView('results'))
-      .error(() => setSearchView('error'));
+      .then(() => setSearchView('results'));
   },
 
   search (searchType, query) {
@@ -198,9 +194,10 @@ var Controller = {
       searchPromise = Catalog.getOrganizationsBy(city(), itemType, itemId, {suggest: true});
     }
 
-    P.resolve(searchPromise).then((results) => {
+    P.resolve(searchPromise).then(results => {
       results = prepareSearchResults(results);
       bSearchResults.set(imm(results));
+      bSearch.set('view.tab', (_.first(results) || {}).collection);
       status.clear();
     })
     .catch(err => {
@@ -209,6 +206,32 @@ var Controller = {
     });
   },
 
+  loadItem (collection, itemId) {
+    status.loading();
+
+    return P.resolve(Catalog.getFromCollection(city(), collection, itemId)).then(item => {
+      bSearch.set('item', imm(item));
+      setSearchView('item');
+      status.clear();
+    }).error(status.error);
+  },
+
+  navToSearchByItem (collection, itemId) {
+    var route;
+
+    if (collection === 'organizations') {
+      route = `/search/item/organizations/${itemId}`;
+    } else {
+      var searchType = searchRouteTransitions[collection];
+      route = `/search/${searchType}/${itemId}`;
+    }
+
+    navigate(route);
+  },
+
+  navToMapAddress (addressId) {
+
+  }
 
 };
 

@@ -6,7 +6,7 @@ var AddressModel = {
            address.pos.lng !== 0;
   },
 
-  formatAddress: function (address, {withOffice = true}) {
+  formatAddress: function (address, {withOffice = true} = {}) {
     if (address) {
       var formatted = address.street + ', ' + address.house;
 

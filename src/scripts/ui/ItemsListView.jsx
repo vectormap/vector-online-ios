@@ -3,6 +3,9 @@ var M = require('morearty');
 var models = require('models');
 var collections = require('models/collections');
 
+var controller = require('controller');
+var {navToSearchByItem} = controller;
+
 var ItemsListView = React.createClass({
   mixins: [M.Mixin],
 
@@ -14,7 +17,8 @@ var ItemsListView = React.createClass({
     var key = `item-${collection}-${item.int_id}`;
 
     return (
-      <a className="item vmp-list-item" key={key}>
+      <a className="item vmp-list-item" key={key}
+        onClick={navToSearchByItem.bind(controller, collection, item.int_id)}>
         <span>{title}</span>
         <span className="item-desc">{subtitle}</span>
       </a>
@@ -27,8 +31,9 @@ var ItemsListView = React.createClass({
 
     var list = result && result.map(item => this.renderItem(collection, item));
 
+    // set key to wrapper div to prevent scroll position saving after dom diff
     return (
-      <div className="pane vmp-list">
+      <div className="pane vmp-list" key={`${collection}-list`}>
         <div className="list has-header">
           {list && list.toJS()}
         </div>

@@ -23,7 +23,7 @@ var SearchBar = React.createClass({
         <div className="bar-stable bar bar-header item-input-inset">
           <button className="button button-icon button-clear ion-navicon" onClick={toggle(binding, 'menuOpen')} />
           <label className="item-input-wrapper">
-            <input type="search"
+            <M.DOM.input type="search"
               value={query}
               onChange={onSearchTyped.bind(controller)}
               onFocus={startSearch} />
