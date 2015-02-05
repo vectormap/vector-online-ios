@@ -25,6 +25,10 @@ var searchRouteTransitions = {
 const defaultLang = 'ru';
 const SEARCH_TYPES = ['query', 'address', 'rubric'];
 
+function setPageView (view) {
+  rootBinding.set('pageView', view);
+}
+
 function setSearchView (view) {
   bSearch.set('view.name', view);
 }
@@ -94,16 +98,25 @@ var Controller = {
       P.resolve(this.loadCityConfig(city)).then(next);
     });
 
+    page('/city/:city/view/:view/(.*)?', (ctx, next) => {
+      var {view} = ctx.params;
+
+      console.log('view route', `/city/:city/view/${view}/`);
+
+      setPageView(view);
+      next();
+    });
+
     // search by type: query, address, rubric
-    page('/city/:city/search/:type/:query', ctx => {
+    page('/city/:city/view/search/:type/:query', ctx => {
       var {city, type, query} = ctx.params;
 
-      console.log('search route', `/city/${city}/search/${type}/${query}`);
+      console.log('search route', `/city/${city}/view/search/${type}/${query}`);
 
       this.processSearch(type, query);
     });
 
-    page('/city/:city/search/item/:collection/:id', ctx => {
+    page('/city/:city/view/search/item/:collection/:id', ctx => {
       var {city, collection, id} = ctx.params;
 
       console.log('item route', `/city/${city}/item/${collection}/${id}/`);
@@ -147,23 +160,18 @@ var Controller = {
   startSearch () {
     // Navigate once to search route when search field got focus.
     // This is the fixed point to replace it with search/:query route
-    // that gives the ability to travel back to base /city/:city route
-    if (!page.current.match(/city\/.*\/search\/query.*/)) {
+    // that gives the ability to travel back to base previous route.
+    if (!page.current.match(/city\/.*\/view\/search\/query.*/)) {
       console.log('Starting search [focus]');
-      navigate('/search/query');
+      navigate('/view/search/query');
     }
   },
 
   onSearchTyped (event) {
     var query = event.target.value;
 
-    // if (query) {
-      navigateSilent(`/search/query/${query}`);
-      this.processSearch('query', query);
-    // } else {
-    //   navigate('/');
-    // }
-
+    navigateSilent(`/view/search/query/${query}`);
+    this.processSearch('query', query);
   },
 
   processSearch (searchType, query) {
@@ -221,10 +229,10 @@ var Controller = {
     var route;
 
     if (collection === 'organizations') {
-      route = `/search/item/organizations/${itemId}`;
+      route = `/view/search/item/organizations/${itemId}`;
     } else {
       var searchType = searchRouteTransitions[collection];
-      route = `/search/${searchType}/${itemId}`;
+      route = `/view/search/${searchType}/${itemId}`;
     }
 
     navigate(route);

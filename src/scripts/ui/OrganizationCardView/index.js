@@ -15,8 +15,6 @@ var OrganizationCard = React.createClass({
 
     var commonContactsBinding = orgBinding.sub('contact');
 
-    console.log('>>>', orgBinding.toJS());
-
     // for context ads
     // <div dangerouslySetInnerHTML={{__html: 'First &middot; Second'}} />
 

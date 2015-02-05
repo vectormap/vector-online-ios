@@ -20,7 +20,6 @@ var moment     = require('moment');
 var L          = require('leaflet');
 var controller = require('./controller');
 var api        = require('api');
-var cx         = React.addons.classSet;
 var MainLayout = require('./ui/MainLayout');
 
 L.Icon.Default.imagePath = 'node_modules/leaflet/dist/images';
@@ -41,6 +40,7 @@ var AppState = {
   cityConfig: {},
   currentCity: 'surgut',
   lang: 'ru',
+  pageView: 'map', // default view is map
   search: {
     view: {
       name: '', // results, item, notFound, error
@@ -91,13 +91,7 @@ var App = React.createClass({
     var binding = this.getBinding();
 
     return (
-      <div className="view-container" nav-view-transition="ios" nav-view-direction="none">
-        <div className="pane view" nav-view="active">
-          <div className={'menu-content pane menu-animated'}>
-            <MainLayout binding={binding} />
-          </div>
-        </div>
-      </div>
+      <MainLayout binding={binding} />
     );
   }
 });
