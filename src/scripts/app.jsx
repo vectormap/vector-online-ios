@@ -21,6 +21,7 @@ var L          = require('leaflet');
 var controller = require('./controller');
 var api        = require('api');
 var cx         = React.addons.classSet;
+var MainLayout = require('./ui/MainLayout');
 
 L.Icon.Default.imagePath = 'node_modules/leaflet/dist/images';
 
@@ -40,7 +41,6 @@ var AppState = {
   cityConfig: {},
   currentCity: 'surgut',
   lang: 'ru',
-  menuOpen: false,
   search: {
     view: {
       name: '', // results, item, notFound, error
@@ -68,11 +68,6 @@ var rootBinding = window.rootBinding = Ctx.getBinding();
 
 controller.init(rootBinding);
 
-window.collections = require('models/collections');
-
-var MainLayout = require('./ui/MainLayout');
-var MenuLayout = require('./ui/MenuLayout');
-
 var App = React.createClass({
   mixins: [M.Mixin],
 
@@ -85,22 +80,20 @@ var App = React.createClass({
     L.tileLayer('http://tiles.{s}.st.vmp.ru/{z}/{x}/{y}.png', {
       minZoom: 10,
       maxZoom: 18,
-      detectRetina: true
+      detectRetina: true,
+      updateWhenIdle: false
     }).addTo(map);
+
+    map.on('click', (e) => alert(e.latlng));
   },
 
   render: function () {
     var binding = this.getBinding();
-    var menuOpenCls = cx({'vmp-menu-open': binding.get('menuOpen')});
 
     return (
       <div className="view-container" nav-view-transition="ios" nav-view-direction="none">
         <div className="pane view" nav-view="active">
-          <div className="menu menu-left">
-            <MenuLayout />
-          </div>
-
-          <div className={'menu-content pane menu-animated ' + menuOpenCls}>
+          <div className={'menu-content pane menu-animated'}>
             <MainLayout binding={binding} />
           </div>
         </div>

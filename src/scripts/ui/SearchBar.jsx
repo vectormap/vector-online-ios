@@ -3,7 +3,6 @@ var React      = require('react/addons');
 var controller = require('controller');
 
 var cx = React.addons.classSet;
-var {toggle, set: linkTo} = M.Callback;
 var {onSearchTyped, startSearch} = controller;
 
 var SearchBar = React.createClass({
@@ -21,7 +20,6 @@ var SearchBar = React.createClass({
     return (
       <div className="vmp-search-bar bar-stable">
         <div className="bar-stable bar bar-header item-input-inset">
-          <button className="button button-icon button-clear ion-navicon" onClick={toggle(binding, 'menuOpen')} />
           <label className="item-input-wrapper">
             <M.DOM.input type="search"
               value={query}
