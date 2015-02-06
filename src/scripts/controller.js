@@ -82,14 +82,14 @@ var Controller = {
 
     this.attachListeners();
 
-    page.redirect('/', `/city/${rootBinding.get('currentCity')}`);
+    page.redirect('/', `/city/${rootBinding.get('currentCity')}/view/map`);
 
     // All routes will flow through the base '/city/:city/(.*)?' route
     page('/city/:city/(.*)?', (ctx, next) => {
       var {city} = ctx.params;
       var restRoute = ctx.params[0];
 
-      console.log('city route', `/city/${city}`);
+      console.log('city route', `/city/${city}`, '->');
 
       if (!restRoute) {
         unsetSearchView();
@@ -101,7 +101,7 @@ var Controller = {
     page('/city/:city/view/:view/(.*)?', (ctx, next) => {
       var {view} = ctx.params;
 
-      console.log('view route', `/city/:city/view/${view}/`);
+      console.log('view route', `/city/:city/view/${view}/`, '->');
 
       setPageView(view);
       next();
@@ -186,6 +186,10 @@ var Controller = {
       throw new Error(`controller.search: incorrect search type: ${searchType}. Should be in: ${SEARCH_TYPES}`);
     }
 
+    if (bSearch.get('type') === searchType && bSearch.get('query') === query) {
+      return;
+    }
+
     bSearch.set('type', searchType);
     bSearch.set('query', query);
 
@@ -204,8 +208,9 @@ var Controller = {
 
     P.resolve(searchPromise).then(results => {
       results = prepareSearchResults(results);
+      var firstResult = _.find(results, r => r.data.result_count > 0) || {};
       bSearchResults.set(imm(results));
-      bSearch.set('view.tab', (_.first(results) || {}).collection);
+      bSearch.set('view.tab', firstResult.collection);
       status.clear();
     })
     .catch(err => {
@@ -223,6 +228,34 @@ var Controller = {
         setSearchView('item');
         status.clear();
       }).error(status.error);
+  },
+
+  navToPage (page) {
+    if (page === rootBinding.get('pageView')) {
+      return;
+    }
+
+    // Pass only 'map' and 'search' views through router.
+    // Bookmarks and settings acts as "modal" views.
+    if (page === 'map') {
+      navigate('/view/map');
+    } else if (page === 'search') {
+      var route = '/view/search';
+      var searchType = bSearch.get('type');
+      var query = bSearch.get('query');
+
+      if (searchType) {
+        route += `/${searchType}`;
+      }
+
+      if (query) {
+        route += `/${query}`;
+      }
+
+      navigate(route);
+    } else {
+      setPageView(page);
+    }
   },
 
   navToSearchByItem (collection, itemId) {

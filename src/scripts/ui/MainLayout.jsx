@@ -26,13 +26,10 @@ var pageViews = {
     tabIcon: 'ion-ios7-gear-outline'
   }
 };
+var controller = require('controller');
 
 var MainLayout = React.createClass({
   mixins: [M.Mixin],
-
-  onTabClicked (page) {
-    this.getBinding().set('pageView', page);
-  },
 
   renderTab (page, activePage) {
     var icon = pageViews[page].tabIcon;
@@ -42,7 +39,7 @@ var MainLayout = React.createClass({
     });
 
     return (
-      <a className={cls} key={`tab-page-${page}`} onClick={this.onTabClicked.bind(this, page)}>
+      <a className={cls} key={`tab-page-${page}`} onClick={controller.navToPage.bind(controller, page)}>
         <i className={`icon ${icon}`}></i>
       </a>
     );
