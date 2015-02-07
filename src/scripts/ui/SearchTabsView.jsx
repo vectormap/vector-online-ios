@@ -21,7 +21,7 @@ var SearchTabsView = React.createClass({
 
     var activeTab = searchBinding.get('view.tab');
 
-    var tabs = results.map((r) => {
+    var tabs = results.map(r => {
       var collection = r.get('collection');
       var resultsCount = r.getIn(['data', 'result_count']);
 
@@ -44,7 +44,7 @@ var SearchTabsView = React.createClass({
     });
 
     return (
-      <div className="tabs tabs-text-only has-header">
+      <div className="tabs tabs-text-only vmp-search-tabs has-header">
         {tabs.toJS()}
       </div>
     );

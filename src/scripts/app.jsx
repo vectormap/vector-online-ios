@@ -19,6 +19,7 @@ var Imm        = require('immutable');
 var moment     = require('moment');
 var L          = require('leaflet');
 var controller = require('./controller');
+var mapController = require('map-controller');
 var api        = require('api');
 var MainLayout = require('./ui/MainLayout');
 
@@ -51,6 +52,12 @@ var AppState = {
     results: [],
     item: null
   },
+  map: {
+    popup: {
+      address: {},
+      organization: {} // show selected organization info with address
+    }
+  },
   status: ''
 };
 
@@ -67,31 +74,17 @@ window.Ctx = Ctx; // for debug
 var rootBinding = window.rootBinding = Ctx.getBinding();
 
 controller.init(rootBinding);
+mapController.init(rootBinding);
+
+window.controller = controller;
+window.mapController = mapController;
 
 var App = React.createClass({
   mixins: [M.Mixin],
 
-  componentDidMount: function () {
-    var map = L.map('map', {
-      zoomControl: false,
-      attributionControl: false
-    }).setView([61.253983635981406, 73.39646100997925], 16);
-
-    L.tileLayer('http://tiles.{s}.st.vmp.ru/{z}/{x}/{y}.png', {
-      minZoom: 10,
-      maxZoom: 18,
-      detectRetina: true,
-      updateWhenIdle: false
-    }).addTo(map);
-
-    map.on('click', (e) => alert(e.latlng));
-  },
-
   render: function () {
-    var binding = this.getBinding();
-
     return (
-      <MainLayout binding={binding} />
+      <MainLayout binding={this.getBinding()} />
     );
   }
 });

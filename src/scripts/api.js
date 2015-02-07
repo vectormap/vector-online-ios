@@ -23,7 +23,9 @@ var Api = {
   result: (apiObject = {}) => (apiObject.data || {}).result,
 
   GeoCoder: {
-
+    getInfo (city, {lat, lng}, zoom = '') {
+      return get(city, `/geo/${lat}/${lng}/${zoom}`)
+    }
   },
 
   Catalog: {

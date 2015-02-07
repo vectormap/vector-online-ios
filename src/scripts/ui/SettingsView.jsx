@@ -6,7 +6,9 @@ var SettingsView = React.createClass({
 
   render () {
     return (
-      <h1>SettingsView</h1>
+      <div className="pane">
+        <h1>SettingsView</h1>
+      </div>
     );
   }
 });

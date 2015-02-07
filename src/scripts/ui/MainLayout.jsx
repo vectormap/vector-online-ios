@@ -10,7 +10,7 @@ var cx = React.addons.classSet;
 var pages = ['map', 'search', 'bookmarks', 'settings'];
 var pageViews = {
   'map': {
-    view: MapView,
+    view: 'div',
     tabIcon: 'ion-map'
   },
   'search': {
@@ -55,16 +55,18 @@ var MainLayout = React.createClass({
     var tabs = pages.map(page => this.renderTab(page, currentPage));
 
     return (
-      <div className="view-container" nav-view-transition="ios" nav-view-direction="none">
-        {showSearchBar &&
-          <SearchBar binding={binding} />}
-        <div id="map" className="view-container" />
-        <div className="view-container" nav-view-transition="ios" nav-view-direction="none">
-          <PageView binding={pageBinding} />
-        </div>
+      <div>
+        <MapView binding={binding.sub('map')} />
+        <div className="view-container" nav-view-transition="ios" nav-view-direction="none" key={`lang-${binding.get('lang')}`}>
+          {showSearchBar &&
+            <SearchBar binding={binding} />}
+          <div className="view-container" nav-view-transition="ios" nav-view-direction="none">
+            <PageView binding={pageBinding} />
+          </div>
 
-        <div className="tabs tabs-icon-only">
-          {tabs}
+          <div className="tabs tabs-icon-only">
+            {tabs}
+          </div>
         </div>
       </div>
     );

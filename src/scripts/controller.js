@@ -1,9 +1,10 @@
-var Api        = require('api');
-var imm        = require('immutable').fromJS;
-var P          = require('bluebird');
-var translator = require('i18n/translator');
-var page       = require('page');
-var _          = require('lodash');
+var _             = require('lodash');
+var Api           = require('api');
+var imm           = require('immutable').fromJS;
+var P             = require('bluebird');
+var translator    = require('i18n/translator');
+var page          = require('page');
+var mapController = require('map-controller');
 
 var {Catalog}  = Api;
 var {
@@ -11,7 +12,6 @@ var {
 } = require('./models/SearchModel');
 
 var rootBinding;
-var bCityConfig;
 var bSearch;
 var bSearchQuery;
 var bSearchResults;
@@ -55,26 +55,22 @@ var status = {
   }
 };
 
-function navigate (route) {
-  var city = bCityConfig.get('city.alias');
+function currentCity () {
+  return rootBinding.get('currentCity');
+}
 
-  page(`/city/${city}${route}`);
+function navigate (route) {
+  page(`/city/${currentCity()}${route}`);
 }
 
 function navigateSilent (route) {
-  var city = bCityConfig.get('city.alias');
-
-  page.replace(`/city/${city}${route}`, null, null, false);
+  page.replace(`/city/${currentCity()}${route}`, null, null, false);
 }
 
-function city () {
-  return bCityConfig.get('city.alias');
-}
 
 var Controller = {
   init (binding) {
     rootBinding    = binding;
-    bCityConfig    = rootBinding.sub('cityConfig');
     bSearch        = rootBinding.sub('search');
     bSearchQuery   = bSearch.sub('query');
     bSearchItem    = bSearch.sub('item');
@@ -82,7 +78,9 @@ var Controller = {
 
     this.attachListeners();
 
-    page.redirect('/', `/city/${rootBinding.get('currentCity')}/view/map`);
+    var currentCity = rootBinding.get('currentCity');
+
+    page.redirect('/', `/city/${currentCity}/view/map`);
 
     // All routes will flow through the base '/city/:city/(.*)?' route
     page('/city/:city/(.*)?', (ctx, next) => {
@@ -90,10 +88,12 @@ var Controller = {
       var restRoute = ctx.params[0];
 
       console.log('city route', `/city/${city}`, '->');
+      console.log('>>> rest route', restRoute);
 
-      if (!restRoute) {
-        unsetSearchView();
-      }
+      // if (!restRoute) {
+      //   console.log('replacing view to map');
+      //   page.replace(`/city/${city}/view/map`, null, null, false);
+      // }
 
       P.resolve(this.loadCityConfig(city)).then(next);
     });
@@ -146,14 +146,16 @@ var Controller = {
   },
 
   loadCityConfig (city) {
-    if (bCityConfig.get('city.alias') === city) {
+    if (currentCity() === rootBinding.get('cityConfig.city.alias')) {
       return;
     }
 
     return Api
       .getCityConfig(city)
       .then(config => {
-        bCityConfig.set(imm(config));
+        rootBinding.set('cityConfig', imm(config));
+        rootBinding.set('currentCity', config.city.alias);
+        mapController.updateMap();
       });
   },
 
@@ -197,13 +199,13 @@ var Controller = {
 
     if (searchType === 'query') {
       // standard search by query string
-      searchPromise = Catalog.search(city(), query, {suggest: true});
+      searchPromise = Catalog.search(currentCity(), query, {suggest: true});
     } else {
       // get organizations by rubric or address id
       var itemType = searchType;
       var itemId = query;
 
-      searchPromise = Catalog.getOrganizationsBy(city(), itemType, itemId, {suggest: true});
+      searchPromise = Catalog.getOrganizationsBy(currentCity(), itemType, itemId, {suggest: true});
     }
 
     P.resolve(searchPromise).then(results => {
@@ -223,7 +225,7 @@ var Controller = {
     status.loading();
 
     return P.resolve(
-      Catalog.getFromCollection(city(), collection, itemId, {coords: false})).then(item => {
+      Catalog.getFromCollection(currentCity(), collection, itemId, {coords: false})).then(item => {
         bSearch.set('item', imm(item));
         setSearchView('item');
         status.clear();

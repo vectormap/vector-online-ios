@@ -6,7 +6,9 @@ var BookmarksView = React.createClass({
 
   render () {
     return (
-      <h1>BookmarksView</h1>
+      <div className="pane">
+        <h1>BookmarksView</h1>
+      </div>
     );
   }
 });
