@@ -10,7 +10,7 @@ var concat       = require('gulp-concat');
 var plumber      = require('gulp-plumber');
 
 gulp.task('sass', function () {
-  return gulp.src('./src/styles/**/*.scss')
+  return gulp.src('./src/styles/main.scss')
     .pipe(plumber())
     // .pipe(changed('./build/scripts', {extension: '.scss'}))
     .pipe(sass({

@@ -11,11 +11,11 @@ gulp.task('copy', function() {
    .pipe(gulp.dest('build/images'));
 
   var styles = gulp
-   .src(['src/styles/ionic.css', 'node_modules/leaflet/dist/leaflet.css'])
+   .src([/*'src/styles/ionic.css',*/ 'node_modules/leaflet/dist/leaflet.css'])
    .pipe(gulp.dest('build'));
 
   var fonts = gulp
-   .src('src/fonts/**/*')
+   .src('src/styles/fonts/**/*')
    .pipe(gulp.dest('build/fonts'));
 
   return merge(html, styles, images, fonts);
