@@ -15,12 +15,11 @@ $royal:                           #886aea !default;
 $dark:                            #444 !default;
 */
 
-// The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "./fonts" !default;
 
-// Include all of Ionic
-@import "./ionic/ionic";
-@import "./vtab";
+@import './ionic/ionic';
+@import './vtab';
+@import './vmp-modal';
 @import './ui-elements';
 
 .item-desc {

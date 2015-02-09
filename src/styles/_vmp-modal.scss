@@ -1,0 +1,25 @@
+.vmp-modal-enter {
+  @include translate3d(0, 100%, 0);
+  @include transition(all cubic-bezier(.1, .7, .1, 1) 400ms);
+}
+
+.vmp-modal-enter.vmp-modal-enter-active {
+  @include translate3d(0, 0, 0);
+}
+
+.vmp-modal-leave {
+  @include translate3d(0, 100%, 0);
+  @include transition(all ease-in-out 250ms);
+}
+
+.vmp-modal-leave.vmp-modal-leave-active {
+
+}
+
+.vmp-modal-close-button {
+  font-size: 20pt;
+}
+
+.vmp-modal-close-button:active {
+  color: #4F8EF7;
+}

@@ -1,7 +1,7 @@
-var React = require('react/addons');
-var M     = require('morearty');
+var React         = require('react/addons');
+var M             = require('morearty');
+var Modal         = require('./Modal');
 var mapController = require('map-controller');
-var {CSSTransitionGroup} = React.addons;
 
 var MapView = React.createClass({
   mixins: [M.Mixin],
@@ -11,20 +11,14 @@ var MapView = React.createClass({
   },
 
   render () {
+    var popupToggleBinding = this.getBinding().sub('popup.open');
+
     return (
       <div>
         <div ref="map" className="pane" />
-          <CSSTransitionGroup transitionName="vmp-modal" component="div">
-            {this.getBinding().get('modal') &&
-              <div className="modal vmp-modal" key={`modal-${Date.now()}`}>
-                <div className="bar bar-header disable-user-behavior">
-                  <h1 className="title">Geo popup [test]</h1>
-                  <div className="buttons">
-                    <button className="button button-clear" ng-click="closeLogin()">Отмена</button>
-                  </div>
-                </div>
-              </div>}
-          </CSSTransitionGroup>
+        <Modal binding={popupToggleBinding} className="vmp-map-popup-modal" title="Modal title">
+
+        </Modal>
       </div>
     );
   }
