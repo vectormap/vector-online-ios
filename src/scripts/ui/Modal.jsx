@@ -26,14 +26,9 @@ var Modal = React.createClass({
       <CSSTransitionGroup {...this.props.transitionGroup}>
         {modalToggleBinding.get() &&
           <div className={cx('modal', this.props.className)} key="vmp-modal">
-            <div className="bar">
-              <h1 className="title">{this.props.title}</h1>
-              <div className="buttons">
-                <button className="button button-clear" onClick={toggle(modalToggleBinding)}>
-                  <i className="ion-ios7-close-outline vmp-modal-close-button"></i>
-                </button>
-              </div>
-            </div>
+            <button className="button button-clear vmp-modal-close-button" onClick={toggle(modalToggleBinding)}>
+              <i className="ion-ios7-close-outline vmp-modal-close-button-icon"></i>
+            </button>
             <div className="vmp-modal-body">
               {this.props.children}
             </div>

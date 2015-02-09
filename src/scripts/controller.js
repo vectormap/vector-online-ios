@@ -138,7 +138,11 @@ var Controller = {
   },
 
   attachListeners () {
-
+    rootBinding.addListener('pageView', () => {
+      if (rootBinding.get('pageView') !== 'map') {
+        rootBinding.set('map.popup.open', false);
+      }
+    });
   },
 
   start () {
@@ -156,13 +160,15 @@ var Controller = {
         rootBinding.set('cityConfig', imm(config));
         rootBinding.set('currentCity', config.city.alias);
         mapController.updateMap();
+      }).catch((err, x) => {
+        console.log('error >>>', err, x);
       });
   },
 
   startSearch () {
     // Navigate once to search route when search field got focus.
     // This is the fixed point to replace it with search/:query route
-    // that gives the ability to travel back to base previous route.
+    // that gives the ability to travel back to previous route.
     if (!page.current.match(/city\/.*\/view\/search\/query.*/)) {
       console.log('Starting search [focus]');
       navigate('/view/search/query');

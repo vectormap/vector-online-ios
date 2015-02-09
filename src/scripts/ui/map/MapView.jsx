@@ -1,7 +1,7 @@
 var React         = require('react/addons');
 var M             = require('morearty');
-var Modal         = require('./Modal');
 var mapController = require('map-controller');
+var MapPopup      = require('./MapPopup');
 
 var MapView = React.createClass({
   mixins: [M.Mixin],
@@ -11,14 +11,10 @@ var MapView = React.createClass({
   },
 
   render () {
-    var popupToggleBinding = this.getBinding().sub('popup.open');
-
     return (
       <div>
         <div ref="map" className="pane" />
-        <Modal binding={popupToggleBinding} className="vmp-map-popup-modal" title="Modal title">
-
-        </Modal>
+        <MapPopup binding={this.getBinding().sub('popup')} />
       </div>
     );
   }

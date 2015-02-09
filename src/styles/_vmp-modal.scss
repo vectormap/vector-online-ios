@@ -17,6 +17,12 @@
 }
 
 .vmp-modal-close-button {
+  display: block;
+  float: right;
+  z-index: 10;
+}
+
+.vmp-modal-close-button-icon {
   font-size: 20pt;
 }
 

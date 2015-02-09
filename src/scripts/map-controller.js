@@ -1,6 +1,8 @@
-var L = require('leaflet');
+var L          = require('leaflet');
 var {GeoCoder} = require('api');
-var AppConfig = require('config');
+var AppConfig  = require('config');
+var imm        = require('immutable').fromJS;
+var P          = require('bluebird');
 
 var map;
 var rootBinding;
@@ -13,7 +15,7 @@ var MapController = {
   },
 
   initMap (mapContainer) {
-    window.map = map = L.map(mapContainer, {
+    map = L.map(mapContainer, {
       zoomControl: false,
       attributionControl: false
     });
@@ -25,11 +27,11 @@ var MapController = {
       updateWhenIdle: false
     }).addTo(map);
 
-    this.bindEvents();
+    this.bindMapEvents();
   },
 
-  bindEvents () {
-    map.on('click', e => this.showPopup({mapEvent: e}));
+  bindMapEvents () {
+    map.on('click', e => this.loadGeoDataAndShowPopup({mapEvent: e}));
   },
 
   updateMap () {
@@ -41,21 +43,36 @@ var MapController = {
     map.setView([lat, lng], zoom);
   },
 
-  showPopup ({mapEvent, address, organization}) {
+  loadGeoDataAndShowPopup ({mapEvent, address, organization}) {
     if (mapEvent) {
       var {latlng} = mapEvent;
       var city = rootBinding.get('currentCity');
 
-      GeoCoder.getInfo(city, latlng, map.getZoom()).then(geoInfo => {
-        console.log('showPopup', geoInfo);
+      if (this.isPopupOpen()) {
+        mapBinding.set('popup.loading', true);
+      }
+
+      P.resolve(GeoCoder.getInfo(city, latlng, map.getZoom())).then(geoData => {
+        console.log('loadGeoDataAndShowPopup: map click', geoData);
+        mapBinding.set('popup.geoData', imm(geoData));
+        mapBinding.set('popup.loading', false);
+        this.openPopup();
       });
     } else if (address) {
 
     }
   },
 
+  openPopup () {
+    mapBinding.set('popup.open', true);
+  },
+
   closePopup () {
 
+  },
+
+  isPopupOpen () {
+    return mapBinding.get('popup.open');
   }
 };
 
