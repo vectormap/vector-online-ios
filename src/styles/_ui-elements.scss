@@ -1,4 +1,4 @@
-$modal-height: 150px;
+$map-popup-height: 200px;
 
 .vmp-icon {
   text-align: center;
@@ -18,7 +18,41 @@ $modal-height: 150px;
 
 .vmp-map-popup-modal {
   min-height: 0;
-  height: 150px;
-  top: calc(100% - #{$modal-height} - 49px /* TODO: $tabs-height */);
+  height: $map-popup-height;
+  top: calc(100% - #{$map-popup-height} - #{$tabs-height});
   z-index: 4; // hide modal behind bottom tabs
+}
+
+.vmp-map-popup-description {
+  color: #818085;
+}
+
+.vmp-map-popup-content {
+  padding-top: 5px;
+  padding-left: 5px;
+}
+
+.vmp-map-popup-row {
+  margin-top: 3px;
+  padding-left: 5px;
+}
+
+.vmp-address-popup-semantic-name {
+  display: table;
+  padding-bottom: 3px;
+  font-size: 14pt;
+}
+
+.vmp-map-popup-icon {
+  padding-left: 5px;
+  padding-right: 5px;
+  color: $positive;
+}
+
+.vmp-map-popup-button {
+  padding-top: 7px;
+}
+
+.vmp-map-popup-title-icon {
+  padding-right: 5px;
 }

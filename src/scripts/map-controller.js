@@ -7,11 +7,13 @@ var P          = require('bluebird');
 var map;
 var rootBinding;
 var mapBinding;
+var popupBinding;
 
 var MapController = {
   init (_rootBinding) {
-    rootBinding = _rootBinding;
-    mapBinding = rootBinding.sub('map');
+    rootBinding  = _rootBinding;
+    mapBinding   = rootBinding.sub('map');
+    popupBinding = mapBinding.sub('popup');
   },
 
   initMap (mapContainer) {
@@ -31,7 +33,7 @@ var MapController = {
   },
 
   bindMapEvents () {
-    map.on('click', e => this.loadGeoDataAndShowPopup({mapEvent: e}));
+    map.on('click', e => this.showPopup({mapEvent: e}));
   },
 
   updateMap () {
@@ -43,19 +45,23 @@ var MapController = {
     map.setView([lat, lng], zoom);
   },
 
-  loadGeoDataAndShowPopup ({mapEvent, address, organization}) {
+  showPopup ({mapEvent, address, organization}) {
+    this.clearPopupData();
+
     if (mapEvent) {
       var {latlng} = mapEvent;
       var city = rootBinding.get('currentCity');
 
       if (this.isPopupOpen()) {
-        mapBinding.set('popup.loading', true);
+        popupBinding.set('loading', true);
       }
 
       P.resolve(GeoCoder.getInfo(city, latlng, map.getZoom())).then(geoData => {
-        console.log('loadGeoDataAndShowPopup: map click', geoData);
-        mapBinding.set('popup.geoData', imm(geoData));
-        mapBinding.set('popup.loading', false);
+        // alert(geoData.collection + ' ' + geoData.data.result[0]);
+
+        console.log('showPopup: map click', geoData);
+        popupBinding.set('geoData', imm(geoData));
+        popupBinding.set('loading', false);
         this.openPopup();
       });
     } else if (address) {
@@ -64,7 +70,7 @@ var MapController = {
   },
 
   openPopup () {
-    mapBinding.set('popup.open', true);
+    popupBinding.set('open', true);
   },
 
   closePopup () {
@@ -72,7 +78,14 @@ var MapController = {
   },
 
   isPopupOpen () {
-    return mapBinding.get('popup.open');
+    return popupBinding.get('open');
+  },
+
+  clearPopupData () {
+    popupBinding
+      .clear('geoData')
+      .clear('address')
+      .clear('organization');
   }
 };
 

@@ -19,7 +19,7 @@ var SearchBar = React.createClass({
 
     return (
       <div className="vmp-search-bar bar-stable">
-        <div className="bar-stable bar bar-header item-input-inset">
+        <div className="bar item-input-inset">
           <label className="item-input-wrapper">
             <M.DOM.input type="search"
               value={query}
