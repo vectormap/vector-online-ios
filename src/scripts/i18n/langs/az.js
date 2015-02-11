@@ -87,6 +87,7 @@ var az = {
   'geo.routes'                    : 'Marşrutlar',
   'geo.unknown'                   : 'naməlum',
   'geo.unknown2'                  : 'naməlum',
+  'geo.building'                  : 'Bina',
 
   'map.control.support.name'      : 'İdeyanız var? Onları deyin!',
 

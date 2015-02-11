@@ -3,11 +3,19 @@ var {GeoCoder} = require('api');
 var AppConfig  = require('config');
 var imm        = require('immutable').fromJS;
 var P          = require('bluebird');
+var status     = require('status-controller');
+
+var {isValidAddress} = require('models/AddressModel');
 
 var map;
 var rootBinding;
 var mapBinding;
 var popupBinding;
+
+function popupOverlapsClickedPoint (mapEvent) {
+  return true;
+}
+
 
 var MapController = {
   init (_rootBinding) {
@@ -46,24 +54,37 @@ var MapController = {
   },
 
   showPopup ({mapEvent, address, organization}) {
-    this.clearPopupData();
-
     if (mapEvent) {
+      if (status.is('loading')) {
+        return;
+      }
+
       var {latlng} = mapEvent;
       var city = rootBinding.get('currentCity');
 
-      if (this.isPopupOpen()) {
-        popupBinding.set('loading', true);
-      }
+      status.loading();
 
       P.resolve(GeoCoder.getInfo(city, latlng, map.getZoom())).then(geoData => {
-        // alert(geoData.collection + ' ' + geoData.data.result[0]);
+        var result = geoData.data.result[0];
 
+        if (!result || result && result.layer === 'area') {
+          this.closePopup();
+          return;
+        }
+
+        this.clearPopupData();
+
+        // alert(geoData.collection + ' ' + geoData.data.result[0]);
         console.log('showPopup: map click', geoData);
         popupBinding.set('geoData', imm(geoData));
-        popupBinding.set('loading', false);
         this.openPopup();
-      });
+
+
+        if (isValidAddress(result) && popupOverlapsClickedPoint(mapEvent)) {
+          map.setView(result.pos);
+        }
+      })
+      .finally(status.clear);
     } else if (address) {
 
     }
@@ -74,7 +95,7 @@ var MapController = {
   },
 
   closePopup () {
-
+    popupBinding.set('open', false);
   },
 
   isPopupOpen () {

@@ -87,6 +87,7 @@ var ru = {
   'geo.routes'                    : 'Маршруты',
   'geo.unknown'                   : 'неизвестно',
   'geo.unknown2'                  : 'неизвестен',
+  'geo.building'                  : 'Сооружение',
 
   'map.control.support.name'      : 'Есть идеи? Выскажите их!',
 

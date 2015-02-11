@@ -1,4 +1,4 @@
-var React         = require('react');
+var React         = require('react/addons');
 var M             = require('morearty');
 var Modal         = require('ui/Modal');
 var AddressPopup  = require('./popups/AddressPopup');
@@ -7,7 +7,7 @@ var StationPopup  = require('./popups/StationPopup');
 var AreaPopup     = require('./popups/AreaPopup');
 var RoadPopup     = require('./popups/RoadPopup');
 
-
+var cx = React.addons.classSet;
 var layerPopups = {
   'buildings': BuildingPopup,
   'station': StationPopup,
@@ -24,6 +24,7 @@ var MapPopup = React.createClass({
     var PopupContentView = null;
     var bGeoData = popupBinding.sub('geoData');
     var bAddress = popupBinding.sub('address');
+    var modalSizeCls = '';
 
     if (bGeoData.get()) {
       var resultBinding = bGeoData.sub('data.result.0');
@@ -34,25 +35,27 @@ var MapPopup = React.createClass({
 
       if (bGeoData.get('collection') === 'geometries') {
         var LayerPopup = layerPopups[resultBinding.get('layer')];
+
         PopupContentView = LayerPopup && <LayerPopup binding={resultBinding} />;
+        modalSizeCls = 'popup-small';
       }
     } else if (bAddress.get()) {
       PopupContentView = <AddressPopup binding={bAddress} />;
     }
 
-    return PopupContentView;
+    return {PopupContentView, modalSizeCls};
   },
 
   render () {
     var popupBinding = this.getBinding();
     var popupToggleBinding = popupBinding.sub('open');
-    var PopupContentView = this.popupContentView();
+    var {PopupContentView, modalSizeCls} = this.popupContentView();
 
     return (
       <Modal
         binding={popupBinding}
         toggleBinding={popupToggleBinding}
-        className="vmp-map-popup-modal" title="Modal title">
+        className={cx('vmp-map-popup-modal', modalSizeCls)} title="Modal title">
         {PopupContentView}
       </Modal>
     );

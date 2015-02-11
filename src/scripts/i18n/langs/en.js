@@ -91,6 +91,7 @@ var en = {
   'geo.routes'                    : 'Routes',
   'geo.unknown'                   : 'unknown',
   'geo.unknown2'                  : 'unknown',
+  'geo.building'                  : 'Building',
 
   'map.control.support.name'      : 'Any ideas? Post them!',
 

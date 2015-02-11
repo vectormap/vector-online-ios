@@ -3,8 +3,6 @@ var M = require('morearty');
 var {formatAddress} = require('models/AddressModel');
 var controller = require('controller');
 var {t, navToSearchByItem} = controller;
-var {toggle} = M.Callback;
-var cx = React.addons.classSet;
 
 var AddressPopup = React.createClass({
   mixins: [M.Mixin],
@@ -20,9 +18,6 @@ var AddressPopup = React.createClass({
 
     var title = formatAddress(address);
     var {semantic} = address;
-    var orgBtnMeta = this.getBinding().meta().sub('orgsButtonToggle');
-    var activeCls = cx({'active': orgBtnMeta.get()});
-    var orgsButtonToggle = toggle(orgBtnMeta);
 
     return (
       <div>
@@ -37,8 +32,8 @@ var AddressPopup = React.createClass({
             {semantic &&
               <div>
                 {semantic.name &&
-                  <div className="vmp-address-popup-semantic-name">
-                    <div className="ion-ios7-information-outline vmp-map-popup-icon vmp-cell"></div>
+                  <div className="vmp-address-popup-semantic-name vmp-table">
+                    <div className="ion-ios-information-outline vmp-map-popup-icon vmp-cell"></div>
                     <div className="vmp-cell">{semantic.name}</div>
                   </div>}
 
@@ -67,9 +62,7 @@ var AddressPopup = React.createClass({
           {address.orgs_count > 0 &&
             <div className="vmp-center vmp-map-popup-row vmp-map-popup-button">
               <button
-                className={"button button-small button-outline button-positive " + activeCls}
-                onTouchStart={orgsButtonToggle}
-                onTouchEnd={orgsButtonToggle}
+                className="button button-small button-outline button-positive"
                 onClick={navToSearchByItem.bind(controller, 'addresses', address.int_id)}
                 >
                 {`${t('geo.show_orgs')} (${address.orgs_count})`}

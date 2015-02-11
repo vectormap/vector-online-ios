@@ -13,15 +13,16 @@ M.Callback.toggle = function (binding, subpath) {
   };
 };
 
-var _             = require('lodash');
-var React         = require('react/addons');
-var Imm           = require('immutable');
-var moment        = require('moment');
-var L             = require('leaflet');
-var controller    = require('./controller');
-var mapController = require('map-controller');
-var api           = require('api');
-var MainLayout    = require('./ui/MainLayout');
+var _                = require('lodash');
+var React            = require('react/addons');
+var Imm              = require('immutable');
+var moment           = require('moment');
+var L                = require('leaflet');
+var api              = require('api');
+var MainLayout       = require('./ui/MainLayout');
+var controller       = require('./controller');
+var mapController    = require('map-controller');
+var statusController = require('status-controller');
 
 L.Icon.Default.imagePath = 'node_modules/leaflet/dist/images';
 
@@ -78,6 +79,7 @@ var rootBinding = window.rootBinding = Ctx.getBinding();
 
 controller.init(rootBinding);
 mapController.init(rootBinding);
+statusController.init(rootBinding.sub('status'));
 
 window.controller = controller;
 window.mapController = mapController;

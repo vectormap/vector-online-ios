@@ -5,6 +5,7 @@ var P             = require('bluebird');
 var translator    = require('i18n/translator');
 var page          = require('page');
 var mapController = require('map-controller');
+var status        = require('status-controller');
 
 var {Catalog}  = Api;
 var {
@@ -36,24 +37,6 @@ function setSearchView (view) {
 function unsetSearchView () {
   bSearch.clear('view.name');
 }
-
-function setStatus (status) {
-  rootBinding.set('status', status);
-}
-
-var status = {
-  loading () {
-    setStatus('loading');
-  },
-
-  error (err) {
-    setStatus(imm(err));
-  },
-
-  clear () {
-    setStatus(null);
-  }
-};
 
 function currentCity () {
   return rootBinding.get('currentCity');
