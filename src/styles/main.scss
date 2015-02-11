@@ -21,6 +21,11 @@ $ionicons-font-path: "./fonts" !default;
 @import './vtab';
 @import './vmp-modal';
 @import './ui-elements';
+@import './map-popups';
+
+a {
+  cursor: pointer;
+}
 
 .item-desc {
   float: none;
@@ -87,6 +92,18 @@ $ionicons-font-path: "./fonts" !default;
   box-align:center;
 }
 
+.vmp-table {
+  display: table;
+}
+
 .vmp-cell {
   display: table-cell;
+  padding-right: 2px;
 }
+
+.button.button-positive.button-outline:active {
+  background-color: $button-positive-bg;
+  box-shadow: none;
+  color: #fff;
+}
+
