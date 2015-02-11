@@ -23,7 +23,7 @@ var AddressPopup = React.createClass({
       <div>
         <div className="bar bar-stable">
           <h1 className="title">
-            <i className="ion-ios7-home-outline vmp-map-popup-title-icon"></i>
+            <i className="ion-ios-home-outline vmp-map-popup-title-icon"></i>
             {title}
           </h1>
         </div>

@@ -33,7 +33,7 @@ var Modal = React.createClass({
         {toggleBinding.get() &&
           <div className={cx('modal', this.props.className)} key={this.props.key}>
             <button className="button button-clear vmp-modal-close-button" onClick={toggle(toggleBinding)}>
-              <i className="ion-ios7-close-outline vmp-modal-close-button-icon"></i>
+              <i className="ion-ios-close-outline vmp-modal-close-button-icon"></i>
             </button>
             <div className="vmp-modal-body">
               {this.props.children}

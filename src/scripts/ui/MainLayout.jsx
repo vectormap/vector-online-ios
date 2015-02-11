@@ -15,15 +15,15 @@ var pageViews = {
   },
   'search': {
     view: SearchView,
-    tabIcon: 'ion-ios7-search-strong'
+    tabIcon: 'ion-ios-search-strong'
   },
   'bookmarks': {
     view: BookmarksView,
-    tabIcon: 'ion-ios7-star-outline'
+    tabIcon: 'ion-ios-star-outline'
   },
   'settings': {
     view: SettingsView,
-    tabIcon: 'ion-ios7-gear-outline'
+    tabIcon: 'ion-ios-gear-outline'
   }
 };
 var controller = require('controller');
@@ -64,7 +64,7 @@ var MainLayout = React.createClass({
             <PageView binding={pageBinding} />
           </div>
 
-          <div className="tabs tabs-icon-only">
+          <div className="tabs tabs-icon-only disable-user-behavior">
             {tabs}
           </div>
         </div>

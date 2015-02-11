@@ -13,7 +13,7 @@ var SearchBar = React.createClass({
     var query = binding.get('search.query');
     var isLoading = this.getBinding().get('status') === 'loading';
     var searchIcon = cx({
-      'ion-ios7-search': !isLoading,
+      'ion-ios-search': !isLoading,
       'ion-loading-b': isLoading
     });
 

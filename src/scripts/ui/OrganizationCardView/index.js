@@ -32,19 +32,19 @@ var OrganizationCard = React.createClass({
           </div>
 
           <div className="item item-icon-left item-divider">
-            <i className="icon ion-ios7-home"></i>
+            <i className="icon ion-ios-home"></i>
             30 лет победы, 19 - оф. 302a
           </div>
           <div className="item item-icon-left">
-            <i className="icon ion-ios7-telephone"></i>
+            <i className="icon ion-ios-telephone"></i>
             44-20-22
           </div>
           <div className="item item-icon-left">
-            <i className="icon ion-ios7-telephone"></i>
+            <i className="icon ion-ios-telephone"></i>
             44-20-22
           </div>
           <div className="item item-icon-left">
-            <i className="icon ion-ios7-telephone"></i>
+            <i className="icon ion-ios-telephone"></i>
             44-20-22
           </div>
         </div>

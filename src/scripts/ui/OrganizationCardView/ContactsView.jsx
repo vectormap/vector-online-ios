@@ -23,7 +23,7 @@ var ContactsView = React.createClass({
 
     return (
       <a href={href} className="item item-icon-left vmp-list-item" key={key}>
-        <i className={`icon ion-ios7-${icon}-outline`}></i>
+        <i className={`icon ion-ios-${icon}-outline`}></i>
         <span>{alias}</span>
         {owner &&
           <span className="item-desc">{owner}</span>}
