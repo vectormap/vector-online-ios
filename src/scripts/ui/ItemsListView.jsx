@@ -33,7 +33,7 @@ var ItemsListView = React.createClass({
 
     // set key to wrapper div to prevent scroll position saving after dom diff
     return (
-      <div className="pane vmp-list" key={`${collection}-list`}>
+      <div className="pane vmp-list scroll overflow-scroll" key={`${collection}-list`}>
         <div className="list has-header">
           {list && list.toJS()}
         </div>
