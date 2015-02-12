@@ -21,3 +21,13 @@
   line-height: 13px;
 }
 
+.vmp-tabs {
+  .tab-item {
+    color: $positive;
+
+    &.active {
+      color: $button-positive-active-bg;
+    }
+  }
+}
+

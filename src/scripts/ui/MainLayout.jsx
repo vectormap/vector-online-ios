@@ -15,7 +15,7 @@ var pageViews = {
   },
   'search': {
     view: SearchView,
-    tabIcon: 'ion-ios-search-strong'
+    tabIcon: 'ion-ios-search'
   },
   'bookmarks': {
     view: BookmarksView,
@@ -64,7 +64,7 @@ var MainLayout = React.createClass({
             <PageView binding={pageBinding} />
           </div>
 
-          <div className="tabs tabs-icon-only disable-user-behavior">
+          <div className="tabs tabs-icon-only disable-user-behavior vmp-tabs">
             {tabs}
           </div>
         </div>
