@@ -50,6 +50,9 @@ function navigateSilent (route) {
   page.replace(`/city/${currentCity()}${route}`, null, null, false);
 }
 
+function collectionResultsIndex (collection) {
+  return bSearch.get('results').findIndex(r => r.get('collection') === collection);
+}
 
 var Controller = {
   init (binding) {
@@ -181,14 +184,15 @@ var Controller = {
       return;
     }
 
+    this.resetPages();
+    status.loading();
+
     bSearch.set('type', searchType);
     bSearch.set('query', query);
 
-    status.loading();
-
     if (searchType === 'query') {
       // standard search by query string
-      searchPromise = Catalog.search(currentCity(), query, {suggest: true});
+      searchPromise = Catalog.searchAll(currentCity(), query, {suggest: true});
     } else {
       // get organizations by rubric or address id
       var itemType = searchType;
@@ -204,10 +208,7 @@ var Controller = {
       bSearch.set('view.tab', firstResult.collection);
       status.clear();
     })
-    .catch(err => {
-      status.error(err);
-      console.error('search', err);
-    });
+    .catch(status.error);
   },
 
   loadItem (collection, itemId) {
@@ -219,6 +220,67 @@ var Controller = {
         setSearchView('item');
         status.clear();
       }).error(status.error);
+  },
+
+  loadNextPage () {
+    if (!this.hasNextPage()) {
+      return;
+    }
+
+    status.loadingNextPage();
+
+    var searchType = bSearch.get('type');
+    var searchPromise;
+    var resultsBinding;
+
+    if (searchType === 'query') {
+      var q = bSearch.get('query');
+      var collection = bSearch.get('view.tab');
+      var pageBinding = bSearch.sub(`pages.query.${collection}`);
+      var nextPage = pageBinding.get() + 1;
+      var resultsIndex = collectionResultsIndex(collection);
+
+      resultsBinding = bSearch.sub(`results.${resultsIndex}.data.result`);
+      searchPromise = Catalog.search(currentCity(), collection, q, {page: nextPage, suggest: true});
+    }
+
+    P.resolve(searchPromise).then(nextResults => {
+      [nextResults] = prepareSearchResults(nextResults);
+      pageBinding.set(nextPage);
+
+      resultsBinding.update(results => {
+        return results.concat(imm(nextResults.data.result));
+      });
+
+      status.clear();
+    })
+    .catch(status.error);
+  },
+
+  hasNextPage () {
+    var result;
+    var hasNextPage;
+
+    if (bSearch.get('type') === 'query') {
+      var collection = bSearch.get('view.tab');
+      var currentPage = bSearch.get(`pages.query.${collection}`);
+
+      result = bSearch.get('results').find(r => r.get('collection') === collection);
+      hasNextPage = result && (currentPage < result.getIn(['data', 'page_count']));
+    }
+
+    return hasNextPage;
+  },
+
+  resetPages () {
+    bSearch.set('pages', imm({
+      query: {
+        organizations: 1,
+        addresses: 1,
+        rubrics: 1
+      },
+      byItemType: 1
+    }));
   },
 
   navToPage (page) {

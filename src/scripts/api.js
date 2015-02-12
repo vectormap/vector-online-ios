@@ -1,6 +1,8 @@
 var qwest = require('qwest');
 var P   = require('bluebird');
 
+var PAGE_LIMIT = 25;
+
 function _get (url, data) {
   return qwest.get(url, data, {responseType: 'json'});
 }
@@ -29,12 +31,12 @@ var Api = {
   },
 
   Catalog: {
-    search: function (city, q, {page = 0, suggest} = {}) {
+    searchAll: function (city, q, {page = 0, suggest} = {}) {
       if (!q || q.length < 3) {
         return [];
       }
 
-      var params = {q: q.trim(), page, suggest, per: 25, coords: false};
+      var params = {q: q.trim(), page, suggest, per: PAGE_LIMIT, coords: false};
 
       return P.all([
         get(city, '/search/organizations', params),
@@ -45,18 +47,24 @@ var Api = {
       });
     },
 
+    search: function (city, collection, q, {page = 0, suggest}) {
+      var params = {q: q.trim(), page, suggest, per: PAGE_LIMIT, coords: false};
+
+      return get(city, `/search/${collection}`, params);
+    },
+
     // @itemType: address, rubric
     getOrganizationsBy: function (city, itemType, itemId, {page = 0, suggest} = {}) {
       if (itemType !== 'address' && itemType !== 'rubric') {
         throw new Error(`getOrganizationsBy: incorrect item type: ${itemType}. Should be in: [address, rubric]`);
       }
 
-      var params = {[itemType]: itemId, page, suggest, per: 25, coords: false};
+      var params = {[itemType]: itemId, page, suggest, per: PAGE_LIMIT, coords: false};
 
       return get(city, `/organizations`, params);
     },
 
-    getFromCollection: function (city, collection, id, {coords} = {}) {
+    getFromCollection: function (city, collection, id, {coords, page = 0} = {}) {
       return get(city, `/${collection}`, {ids: id, coords})
     },
 

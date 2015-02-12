@@ -15,6 +15,10 @@ var StatusController = {
     setStatus('loading');
   },
 
+  loadingNextPage () {
+    setStatus('loadingNextPage');
+  },
+
   error (err) {
     setStatus(imm(err));
   },
@@ -29,6 +33,10 @@ var StatusController = {
 
   getStatus () {
     return statusBinding.get();
+  },
+
+  getBinding () {
+    return statusBinding;
   }
 };
 

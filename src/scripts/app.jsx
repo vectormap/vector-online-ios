@@ -51,7 +51,15 @@ var AppState = {
     type: '', // query, address, rubric
     query: '', // query string or item id
     results: [],
-    item: null
+    item: null,
+    pages: {
+      query: {
+        organizations: 1,
+        addresses: 1,
+        rubrics: 1
+      },
+      byItemType: 1
+    }
   },
   map: {
     popup: {

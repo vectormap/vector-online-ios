@@ -77,6 +77,7 @@ var az = {
   'card.streets'                  : 'Küçələr',
   'card.select_city'              : 'Şəhəri seçin',
   'card.increase_org_effectiveness': 'Təşkilatın əffektliliyini artırmag',
+  'card.load_more'                : 'Load more', // TODO: translate to az
 
   // geocoding/templates/popups*
   'geo.area'                      : 'Rayon',

@@ -77,6 +77,7 @@ var ru = {
   'card.streets'                  : 'Улицы',
   'card.select_city'              : 'Выберите город',
   'card.increase_org_effectiveness': 'Повысить эффективность организации',
+  'card.load_more'                : 'Загрузить еще',
 
   // geocoding/templates/popups*
   'geo.area'                      : 'Район',

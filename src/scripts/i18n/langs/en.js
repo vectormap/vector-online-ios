@@ -81,6 +81,7 @@ var en = {
   'card.streets'                  : 'Streets',
   'card.select_city'              : 'Select the city',
   'card.increase_org_effectiveness': 'Get the most out of your advertising',
+  'card.load_more'                : 'Load more',
 
   // geocoding/templates/popups*
   'geo.area'                      : 'District',
