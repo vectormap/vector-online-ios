@@ -2,8 +2,13 @@
   text-align: center;
 }
 
-.ion-loading-b {
+.vmp-anim-spin {
   animation: spin 2s infinite linear;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0); }
+  100% { transform: rotate(359deg); }
 }
 
 .badge.header {

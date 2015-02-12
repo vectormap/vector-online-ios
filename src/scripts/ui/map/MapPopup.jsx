@@ -1,11 +1,12 @@
-var React         = require('react/addons');
-var M             = require('morearty');
-var Modal         = require('ui/Modal');
-var AddressPopup  = require('./popups/AddressPopup');
-var BuildingPopup = require('./popups/BuildingPopup');
-var StationPopup  = require('./popups/StationPopup');
-var AreaPopup     = require('./popups/AreaPopup');
-var RoadPopup     = require('./popups/RoadPopup');
+var React             = require('react/addons');
+var M                 = require('morearty');
+var Modal             = require('ui/Modal');
+var AddressPopup      = require('./popups/AddressPopup');
+var OrganizationPopup = require('./popups/OrganizationPopup');
+var BuildingPopup     = require('./popups/BuildingPopup');
+var StationPopup      = require('./popups/StationPopup');
+var AreaPopup         = require('./popups/AreaPopup');
+var RoadPopup         = require('./popups/RoadPopup');
 
 var cx = React.addons.classSet;
 var layerPopups = {
@@ -23,10 +24,10 @@ var MapPopup = React.createClass({
     var popupBinding = this.getBinding();
     var PopupContentView = null;
     var bGeoData = popupBinding.sub('geoData');
-    var bAddress = popupBinding.sub('address');
+    var bOrgData = popupBinding.sub('orgData');
     var modalSizeCls = '';
 
-    if (bGeoData.get()) {
+    if (bGeoData.get() && bGeoData.get().size > 0) {
       var resultBinding = bGeoData.sub('data.result.0');
 
       if (bGeoData.get('collection') === 'addresses') {
@@ -39,8 +40,9 @@ var MapPopup = React.createClass({
         PopupContentView = LayerPopup && <LayerPopup binding={resultBinding} />;
         modalSizeCls = 'popup-small';
       }
-    } else if (bAddress.get()) {
-      PopupContentView = <AddressPopup binding={bAddress} />;
+    } else if (bOrgData.get() && bOrgData.get().size > 0) {
+      PopupContentView = <OrganizationPopup binding={bOrgData} />;
+      // modalSizeCls = 'popup-small';
     }
 
     return {PopupContentView, modalSizeCls};

@@ -1,6 +1,7 @@
 var React = require('react');
 var M = require('morearty');
 var ContactsView = require('./ContactsView');
+var DepartmentsView = require('./DepartmentsView');
 
 var OrganizationCard = React.createClass({
   mixins: [M.Mixin],
@@ -28,25 +29,10 @@ var OrganizationCard = React.createClass({
           <ContactsView binding={commonContactsBinding} />
 
           <div className="item item-text">
-            Справочники, разработка программного обеспечения
+            [TODO] Справочники, разработка программного обеспечения
           </div>
 
-          <div className="item item-icon-left item-divider">
-            <i className="icon ion-ios-home"></i>
-            30 лет победы, 19 - оф. 302a
-          </div>
-          <div className="item item-icon-left">
-            <i className="icon ion-ios-telephone"></i>
-            44-20-22
-          </div>
-          <div className="item item-icon-left">
-            <i className="icon ion-ios-telephone"></i>
-            44-20-22
-          </div>
-          <div className="item item-icon-left">
-            <i className="icon ion-ios-telephone"></i>
-            44-20-22
-          </div>
+          <DepartmentsView binding={orgBinding.sub('department')} organization={org.toJS()} />
         </div>
       </div>
     );

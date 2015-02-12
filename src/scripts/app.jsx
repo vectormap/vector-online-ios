@@ -58,8 +58,10 @@ var AppState = {
       open: false,
       loading: false,
       geoData: {},
-      address: {},
-      organization: {} // show selected organization info with address
+      orgData: {
+        address: {},
+        organization: {} // show selected organization info with address
+      }
     }
   },
   status: ''

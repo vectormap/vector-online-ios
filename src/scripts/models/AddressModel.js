@@ -2,8 +2,12 @@ var AddressModel = {
   isValidAddress: function (address) {
     return address &&
            address.pos &&
-           address.pos.lat !== 0 &&
-           address.pos.lng !== 0;
+           AddressModel.isValidCoords(address.pos);
+  },
+
+  isValidCoords: function ({lat, lng}) {
+    return lat !== 0 &&
+           lng !== 0;
   },
 
   formatAddress: function (address, {withOffice = true} = {}) {

@@ -5,17 +5,12 @@ var imm        = require('immutable').fromJS;
 var P          = require('bluebird');
 var status     = require('status-controller');
 
-var {isValidAddress} = require('models/AddressModel');
+var {isValidCoords} = require('models/AddressModel');
 
 var map;
 var rootBinding;
 var mapBinding;
 var popupBinding;
-
-function popupOverlapsClickedPoint (mapEvent) {
-  return true;
-}
-
 
 var MapController = {
   init (_rootBinding) {
@@ -53,7 +48,11 @@ var MapController = {
     map.setView([lat, lng], zoom);
   },
 
-  showPopup ({mapEvent, address, organization}) {
+  showPopup ({mapEvent, orgData}) {
+    if (!mapEvent && !orgData) {
+      return;
+    }
+
     if (mapEvent) {
       if (status.is('loading')) {
         return;
@@ -67,26 +66,27 @@ var MapController = {
       P.resolve(GeoCoder.getInfo(city, latlng, map.getZoom())).then(geoData => {
         var result = geoData.data.result[0];
 
-        if (!result || result && result.layer === 'area') {
+        // skip area and roads
+        if (!result || result && result.layer === 'area' || result.layer === 'axis') {
           this.closePopup();
           return;
         }
 
-        this.clearPopupData();
-
-        // alert(geoData.collection + ' ' + geoData.data.result[0]);
         console.log('showPopup: map click', geoData);
+
+        this.clearPopupData();
         popupBinding.set('geoData', imm(geoData));
+        this.setMapView(result.pos);
         this.openPopup();
-
-
-        if (isValidAddress(result) && popupOverlapsClickedPoint(mapEvent)) {
-          map.setView(result.pos);
-        }
       })
       .finally(status.clear);
-    } else if (address) {
+    } else if (orgData) {
+      var {address = {}, organization = {}} = orgData;
 
+      this.clearPopupData();
+      popupBinding.set('orgData', imm(orgData));
+      this.openPopup();
+      this.setMapView(address.pos);
     }
   },
 
@@ -103,10 +103,13 @@ var MapController = {
   },
 
   clearPopupData () {
-    popupBinding
-      .clear('geoData')
-      .clear('address')
-      .clear('organization');
+    popupBinding.clear();
+  },
+
+  setMapView (latlng) {
+    if (isValidCoords(latlng)) {
+      map.setView(latlng);
+    }
   }
 };
 

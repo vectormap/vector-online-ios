@@ -262,8 +262,9 @@ var Controller = {
     navigate(route);
   },
 
-  navToMapAddress (addressId) {
-
+  navToMapWithPopup ({address, organization}) {
+    this.navToPage('map');
+    mapController.showPopup({orgData: {address, organization}});
   }
 
 };
