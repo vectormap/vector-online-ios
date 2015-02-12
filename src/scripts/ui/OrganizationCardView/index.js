@@ -20,10 +20,10 @@ var OrganizationCard = React.createClass({
     // <div dangerouslySetInnerHTML={{__html: 'First &middot; Second'}} />
 
     return (
-      <div className="pane vmp-list" nav-view="active">
-        <div className="list">
-          <div className="item">
-            <h3>{org.get('title')}</h3>
+      <div className="pane" nav-view="active">
+        <div className="list vmp-list">
+          <div className="item vmp-list-item">
+            <span>{org.get('title')}</span>
           </div>
 
           <ContactsView binding={commonContactsBinding} />

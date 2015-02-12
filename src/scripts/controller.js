@@ -265,6 +265,14 @@ var Controller = {
   navToMapWithPopup ({address, organization}) {
     this.navToPage('map');
     mapController.showPopup({orgData: {address, organization}});
+  },
+
+  navBack () {
+    page.back();
+  },
+
+  hasNavHistory () {
+    return page.len > 0;
   }
 
 };

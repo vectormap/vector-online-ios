@@ -27,5 +27,9 @@
 }
 
 .vmp-modal-close-button:active {
-  color: #4F8EF7;
+  color: $positive;
+}
+
+.button-clear:active {
+  @extend .button-clear.active;
 }
