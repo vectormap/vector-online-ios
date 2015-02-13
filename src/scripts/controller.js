@@ -341,9 +341,9 @@ var Controller = {
     navigate(route);
   },
 
-  navToMapWithPopup ({address, organization}) {
+  navToMapWithPopup ({latlng, addressId, address, organization, marker}) {
     this.navToPage('map');
-    mapController.showPopup({orgData: {address, organization}});
+    mapController.showPopup({latlng, addressId, orgData: {address, organization}, marker});
   },
 
   navBack () {

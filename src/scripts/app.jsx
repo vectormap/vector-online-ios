@@ -24,7 +24,7 @@ var controller       = require('./controller');
 var mapController    = require('map-controller');
 var statusController = require('status-controller');
 
-L.Icon.Default.imagePath = 'node_modules/leaflet/dist/images';
+L.Icon.Default.imagePath = '/images';
 
 require('moment/locale/ru');
 

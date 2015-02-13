@@ -16,7 +16,7 @@ var DepartmentsView = React.createClass({
     var onAddressClicked = null;
 
     if (isValidAddress(address)) {
-      onAddressClicked = navToMapWithPopup.bind(controller, {address, organization});
+      onAddressClicked = navToMapWithPopup.bind(controller, {address, organization, marker: true});
     }
 
     return (

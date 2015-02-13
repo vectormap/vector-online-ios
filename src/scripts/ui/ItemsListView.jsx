@@ -5,11 +5,13 @@ var collections = require('models/collections');
 var status = require('status-controller');
 
 var controller = require('controller');
-var {navToSearchByItem, hasNextPage, loadNextPage, t} = controller;
+var {
+  navToSearchByItem, hasNextPage, loadNextPage, t, navToMapWithPopup
+} = controller;
 
 var ItemsListView = React.createClass({
   mixins: [M.Mixin],
-  observedBindings: [status.getBinding()],
+  // observedBindings: [status.getBinding()],
 
   renderItem (collection, _item) {
     var item = _item.toJS();
@@ -17,10 +19,16 @@ var ItemsListView = React.createClass({
     var title = collections.formatTitle(collection, item);
     var subtitle = model.formatSearchSubtitle(item);
     var key = `item-${collection}-${item.int_id}`;
+    var onItemClicked;
+
+    if (collection === 'addresses') {
+      onItemClicked = navToMapWithPopup.bind(controller, {addressId: item.int_id, marker: true});
+    } else {
+      onItemClicked = navToSearchByItem.bind(controller, collection, item.int_id);
+    }
 
     return (
-      <a className="item vmp-list-item" key={key}
-        onClick={navToSearchByItem.bind(controller, collection, item.int_id)}>
+      <a className="item vmp-list-item" key={key} onClick={onItemClicked}>
         <span>{title}</span>
         <span className="item-desc">{subtitle}</span>
       </a>
