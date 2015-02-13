@@ -26,9 +26,9 @@ var StationPopup = React.createClass({
         </div>
 
         <div className="content has-header vmp-map-popup-content">
-          <div className="vmp-map-popup-row vmp-table">
-            <span className="vmp-map-popup-description vmp-cell">{t('geo.routes')}: </span>
-            <span className="vmp-cell">{routes}</span>
+          <div className="vmp-map-popup-row">
+            <span className="vmp-map-popup-description">{t('geo.routes')}: </span>
+            <span className="">{routes}</span>
           </div>
 
         </div>
