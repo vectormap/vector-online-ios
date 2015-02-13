@@ -54,6 +54,10 @@ function collectionResultsIndex (collection) {
   return bSearch.get('results').findIndex(r => r.get('collection') === collection);
 }
 
+function _hasNextPage (result, currentPage) {
+  return result && (currentPage < result.getIn(['data', 'page_count']));
+}
+
 var Controller = {
   init (binding) {
     rootBinding    = binding;
@@ -232,21 +236,31 @@ var Controller = {
     var searchType = bSearch.get('type');
     var searchPromise;
     var resultsBinding;
+    var nextPage;
+    var pageBinding;
 
     if (searchType === 'query') {
       var q = bSearch.get('query');
       var collection = bSearch.get('view.tab');
-      var pageBinding = bSearch.sub(`pages.query.${collection}`);
-      var nextPage = pageBinding.get() + 1;
       var resultsIndex = collectionResultsIndex(collection);
 
+      pageBinding = bSearch.sub(`pages.query.${collection}`);
+      nextPage = pageBinding.get() + 1;
       resultsBinding = bSearch.sub(`results.${resultsIndex}.data.result`);
       searchPromise = Catalog.search(currentCity(), collection, q, {page: nextPage, suggest: true});
+    } else {
+      var itemType = searchType;
+      var itemId = bSearch.get('query');
+
+      pageBinding = bSearch.sub(`pages.byItemType`);
+      resultsBinding = bSearch.sub('results.0.data.result');
+      nextPage = pageBinding.get() + 1;
+      searchPromise = Catalog.getOrganizationsBy(currentCity(), itemType, itemId, {page: nextPage, suggest: true});
     }
 
     P.resolve(searchPromise).then(nextResults => {
       [nextResults] = prepareSearchResults(nextResults);
-      pageBinding.set(nextPage);
+      pageBinding.set(nextResults.data.page);
 
       resultsBinding.update(results => {
         return results.concat(imm(nextResults.data.result));
@@ -259,17 +273,20 @@ var Controller = {
 
   hasNextPage () {
     var result;
-    var hasNextPage;
+    var currentPage;
+    var results = bSearch.get('results');
 
     if (bSearch.get('type') === 'query') {
       var collection = bSearch.get('view.tab');
-      var currentPage = bSearch.get(`pages.query.${collection}`);
 
-      result = bSearch.get('results').find(r => r.get('collection') === collection);
-      hasNextPage = result && (currentPage < result.getIn(['data', 'page_count']));
+      currentPage = bSearch.get(`pages.query.${collection}`);
+      result = results.find(r => r.get('collection') === collection);
+    } else {
+      currentPage = bSearch.get('pages.byItemType');
+      result = results.get(0);
     }
 
-    return hasNextPage;
+    return _hasNextPage(result, currentPage);
   },
 
   resetPages () {
