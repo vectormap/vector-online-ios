@@ -98,12 +98,12 @@ var Controller = {
     });
 
     // search by type: query, address, rubric
-    page('/city/:city/view/search/:type/:query', ctx => {
-      var {city, type, query} = ctx.params;
+    page('/city/:city/view/search/:type/:queryOrItemId', ctx => {
+      var {city, type, queryOrItemId} = ctx.params;
 
-      console.log('search route', `/city/${city}/view/search/${type}/${query}`);
+      console.log('search route', `/city/${city}/view/search/${type}/${queryOrItemId}`);
 
-      this.processSearch(type, query);
+      this.processSearch(type, queryOrItemId);
     });
 
     page('/city/:city/view/search/item/:collection/:id', ctx => {
@@ -172,19 +172,20 @@ var Controller = {
     this.processSearch('query', query);
   },
 
-  processSearch (searchType, query) {
-    return P.resolve(this.search(searchType, query))
+  processSearch (searchType, queryOrItemId) {
+    return P.resolve(this.search(searchType, queryOrItemId))
       .then(() => setSearchView('results'));
   },
 
-  search (searchType, query) {
+  search (searchType, queryOrItemId) {
     var searchPromise;
 
     if (SEARCH_TYPES.indexOf(searchType) < 0) {
       throw new Error(`controller.search: incorrect search type: ${searchType}. Should be in: ${SEARCH_TYPES}`);
     }
 
-    if (bSearch.get('type') === searchType && bSearch.get('query') === query) {
+    if (bSearch.get('type') === searchType &&
+        (bSearch.get('query') === queryOrItemId || bSearch.get('itemId') === queryOrItemId)) {
       return;
     }
 
@@ -192,16 +193,19 @@ var Controller = {
     status.loading();
 
     bSearch.set('type', searchType);
-    bSearch.set('query', query);
 
     if (searchType === 'query') {
+      var query = queryOrItemId;
+
+      bSearch.set('query', query);
       // standard search by query string
       searchPromise = Catalog.searchAll(currentCity(), query, {suggest: true});
     } else {
       // get organizations by rubric or address id
       var itemType = searchType;
-      var itemId = query;
+      var itemId = queryOrItemId;
 
+      bSearch.set('itemId', itemId);
       searchPromise = Catalog.getOrganizationsBy(currentCity(), itemType, itemId, {suggest: true});
     }
 

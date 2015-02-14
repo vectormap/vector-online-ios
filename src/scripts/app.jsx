@@ -49,7 +49,8 @@ var AppState = {
       tab: '' // organizations, rubrics, addresses
     },
     type: '', // query, address, rubric
-    query: '', // query string or item id
+    query: '',
+    itemId : '',
     results: [],
     item: null,
     pages: {
