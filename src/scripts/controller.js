@@ -237,7 +237,7 @@ var Controller = {
       return;
     }
 
-    status.loadingNextPage();
+    status.loading();
 
     var searchType = bSearch.get('type');
     var searchPromise;
