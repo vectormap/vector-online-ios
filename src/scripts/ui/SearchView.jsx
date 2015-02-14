@@ -9,7 +9,7 @@ var {resolveView}     = require('utils');
 var searchViews = {
   'results': SearchResultsView,
   'item': ItemView,
-  'notFound': NotFoundView,
+  'noResults': NotFoundView,
   'error': ErrorView
 };
 

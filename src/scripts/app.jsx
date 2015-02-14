@@ -45,7 +45,7 @@ var AppState = {
   pageView: 'map', // default view is map
   search: {
     view: {
-      name: '', // results, item, notFound, error
+      name: '', // results, item, noResults, error
       tab: '' // organizations, rubrics, addresses
     },
     type: '', // query, address, rubric

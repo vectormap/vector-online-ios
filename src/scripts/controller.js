@@ -174,7 +174,9 @@ var Controller = {
 
   processSearch (searchType, queryOrItemId) {
     return P.resolve(this.search(searchType, queryOrItemId))
-      .then(() => setSearchView('results'));
+      .then(() => {
+        setSearchView(this.hasSearchResults() ? 'results' : 'noResults');
+      });
   },
 
   search (searchType, queryOrItemId) {
@@ -209,7 +211,7 @@ var Controller = {
       searchPromise = Catalog.getOrganizationsBy(currentCity(), itemType, itemId, {suggest: true});
     }
 
-    P.resolve(searchPromise).then(results => {
+    return P.resolve(searchPromise).then(results => {
       results = prepareSearchResults(results);
       var firstResult = _.find(results, r => r.data.result_count > 0) || {};
       bSearchResults.set(imm(results));
@@ -303,6 +305,18 @@ var Controller = {
       byItemType: 1
     }));
   },
+
+  hasSearchResults () {
+    var results = bSearch.get('results');
+    var resultsCount = results && results.reduce(
+      (count, result) => count + result.getIn(['data', 'result_count']), 0);
+
+    console.log('<>', resultsCount, results.toJS());
+
+    return resultsCount > 0;
+  },
+
+  // router navigation ----------------------------------------------------------------------------
 
   navToPage (page) {
     if (page === rootBinding.get('pageView')) {

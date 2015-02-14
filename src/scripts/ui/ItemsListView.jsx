@@ -38,10 +38,7 @@ var ItemsListView = React.createClass({
   render () {
     var collection = this.getBinding().get('collection');
     var result = this.getBinding().get('data.result');
-
     var list = result && result.map(item => this.renderItem(collection, item));
-
-    console.log('!!!! status', status.getStatus());
 
     // set key to wrapper div to prevent scroll position saving after dom diff
     return (
