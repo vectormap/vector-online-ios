@@ -103,7 +103,7 @@ var Controller = {
 
       console.log('search route', `/city/${city}/view/search/${type}/${queryOrItemId}`);
 
-      this.processSearch(type, queryOrItemId);
+      this.search(type, queryOrItemId);
     });
 
     page('/city/:city/view/search/item/:collection/:id', ctx => {
@@ -150,12 +150,13 @@ var Controller = {
         rootBinding.set('cityConfig', imm(config));
         rootBinding.set('currentCity', config.city.alias);
         mapController.updateMap();
-      }).catch((err, x) => {
-        console.log('error >>>', err, x);
-      });
+      })
+      .catch(status.error);
   },
 
-  startSearch () {
+  onSearchFocused () {
+    this.tryToSetSearchHistoryView();
+
     // Navigate once to search route when search field got focus.
     // This is the fixed point to replace it with search/:query route
     // that gives the ability to travel back to previous route.
@@ -169,14 +170,19 @@ var Controller = {
     var query = event.target.value;
 
     navigateSilent(`/view/search/query/${query}`);
-    this.processSearch('query', query);
+
+    if (!query) {
+      bSearch.set('query', query);
+      this.tryToSetSearchHistoryView();
+    } else {
+      this.search('query', query);
+    }
   },
 
-  processSearch (searchType, queryOrItemId) {
-    return P.resolve(this.search(searchType, queryOrItemId))
-      .then(() => {
-        setSearchView(this.hasSearchResults() ? 'results' : 'noResults');
-      });
+  tryToSetSearchHistoryView () {
+    if (!bSearch.get('query')) {
+      setSearchView('history');
+    }
   },
 
   search (searchType, queryOrItemId) {
@@ -186,10 +192,12 @@ var Controller = {
       throw new Error(`controller.search: incorrect search type: ${searchType}. Should be in: ${SEARCH_TYPES}`);
     }
 
-    if (bSearch.get('type') === searchType &&
-        (bSearch.get('query') === queryOrItemId || bSearch.get('itemId') === queryOrItemId)) {
-      return;
-    }
+    // if (bSearch.get('type') === searchType &&
+    //     (bSearch.get('query') === queryOrItemId || bSearch.get('itemId') === queryOrItemId)) {
+
+    //   setSearchView('results');
+    //   return;
+    // }
 
     this.resetPages();
     status.loading();
@@ -215,6 +223,7 @@ var Controller = {
       results = prepareSearchResults(results);
       var firstResult = _.find(results, r => r.data.result_count > 0) || {};
       bSearchResults.set(imm(results));
+      setSearchView(this.hasSearchResults() ? 'results' : 'noResults');
       bSearch.set('view.tab', firstResult.collection);
       status.clear();
     })
@@ -310,8 +319,6 @@ var Controller = {
     var results = bSearch.get('results');
     var resultsCount = results && results.reduce(
       (count, result) => count + result.getIn(['data', 'result_count']), 0);
-
-    console.log('<>', resultsCount, results.toJS());
 
     return resultsCount > 0;
   },

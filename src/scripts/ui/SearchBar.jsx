@@ -1,11 +1,13 @@
 var M          = require('morearty');
 var React      = require('react/addons');
 var controller = require('controller');
+var status     = require('status-controller');
 
 var cx = React.addons.classSet;
 var {
-  onSearchTyped, startSearch, navBack, hasNavHistory
+  onSearchTyped, onSearchFocused, navBack, hasNavHistory
 } = controller;
+var {onEnter} = M.Callback;
 
 var SearchBar = React.createClass({
   mixins: [M.Mixin],
@@ -13,11 +15,13 @@ var SearchBar = React.createClass({
   render () {
     var binding = this.getBinding();
     var query = binding.get('search.query');
-    var isLoading = this.getBinding().get('status') === 'loading';
+    var isLoading = status.is('loading');
     var searchIcon = cx({
       'ion-ios-search': !isLoading,
       'ion-load-b vmp-anim-spin': isLoading
     });
+
+    var _onSearchTyped = onSearchTyped.bind(controller);
 
     return (
       <div className="vmp-search-bar bar-stable">
@@ -30,8 +34,9 @@ var SearchBar = React.createClass({
           <label className="item-input-wrapper">
             <M.DOM.input type="search"
               value={query}
-              onChange={onSearchTyped.bind(controller)}
-              onFocus={startSearch.bind(controller)} />
+              onChange={_onSearchTyped}
+              onKeyPress={M.Callback.onEnter(_onSearchTyped)}
+              onFocus={onSearchFocused.bind(controller)} />
             <i className={searchIcon}></i>
           </label>
         </div>

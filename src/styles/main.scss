@@ -113,5 +113,10 @@ a {
 
 .vmp-title {
   font-weight: bold;
-  font-size: 13pt;
+  font-size: 12pt;
+}
+
+.vmp-bar-title {
+  @extend .vmp-title;
+  padding-left: 7px;
 }

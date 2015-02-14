@@ -19,10 +19,17 @@ var OrganizationCard = React.createClass({
     // for context ads
     // <div dangerouslySetInnerHTML={{__html: 'First &middot; Second'}} />
 
+    // <div className="bar">
+    //   <div className="title">
+    //     <span>{org.get('title')}</span>
+    //   </div>
+    // </div>
+
     return (
       <div className="pane" nav-view="active">
+
         <div className="list vmp-list">
-          <div className="item vmp-list-item">
+          <div className="item vmp-list-item vmp-title">
             <span>{org.get('title')}</span>
           </div>
 

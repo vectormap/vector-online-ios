@@ -3,13 +3,15 @@ var M                 = require('morearty');
 var ItemView          = require('./ItemView');
 var ErrorView         = require('./ErrorView');
 var SearchResultsView = require('./SearchResultsView');
-var NotFoundView      = require('./NotFoundView');
+var SearchHistoryView = require('./SearchHistoryView');
+var NoResultsView      = require('./NoResultsView');
 var {resolveView}     = require('utils');
 
 var searchViews = {
+  'history': SearchHistoryView,
   'results': SearchResultsView,
   'item': ItemView,
-  'noResults': NotFoundView,
+  'noResults': NoResultsView,
   'error': ErrorView
 };
 
