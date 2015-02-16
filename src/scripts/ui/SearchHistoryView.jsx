@@ -31,7 +31,7 @@ var SearchHistoryView = React.createClass({
     return (
       <div className="card">
         <div className="item item-text-wrap vmp-center">
-          <span className="vmp-title">Здесь будет храниться ваша история поиска.</span>
+          <span className="vmp-title">Здесь будет храниться ваша история поиска</span>
         </div>
       </div>
     );

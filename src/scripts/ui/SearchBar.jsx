@@ -5,12 +5,15 @@ var status     = require('status-controller');
 
 var cx = React.addons.classSet;
 var {
-  onSearchTyped, onSearchFocused, navBack, hasNavHistory
+  onSearchTyped, onSearchFocused, navBack, hasNavHistory, t
 } = controller;
-var {onEnter} = M.Callback;
 
 var SearchBar = React.createClass({
   mixins: [M.Mixin],
+
+  clearQuery () {
+    this.getBinding().clear('search.query');
+  },
 
   render () {
     var binding = this.getBinding();
@@ -18,26 +21,30 @@ var SearchBar = React.createClass({
     var isLoading = status.is('loading');
     var searchIcon = cx({
       'ion-ios-search': !isLoading,
-      'ion-load-b vmp-anim-spin': isLoading
+      'ion-load-b vmp-anim-spin': isLoading,
+      'icon': true
     });
 
     var _onSearchTyped = onSearchTyped.bind(controller);
 
     return (
-      <div className="vmp-search-bar bar-stable">
-        <div className="bar item-input-inset">
+      <div className="">
+        <div className="bar bar-header item-input-inset">
           {hasNavHistory() &&
             <a
               className="button icon-left ion-chevron-left button-clear button-positive vmp-back-button"
               onClick={navBack.bind(controller)}
             />}
           <label className="item-input-wrapper">
+            <i className={searchIcon}></i>
             <M.DOM.input type="search"
+              placeholder={t('card.search')}
               value={query}
               onChange={_onSearchTyped}
               onKeyPress={M.Callback.onEnter(_onSearchTyped)}
-              onFocus={onSearchFocused.bind(controller)} />
-            <i className={searchIcon}></i>
+              onFocus={onSearchFocused.bind(controller)}
+            />
+            {query && <i className="icon ion-close-round" onClick={this.clearQuery}></i>}
           </label>
         </div>
       </div>
