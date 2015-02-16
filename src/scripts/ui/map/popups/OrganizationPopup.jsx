@@ -15,6 +15,10 @@ var OrganizationPopup = React.createClass({
 
     var addressLine = formatAddress(address, {withOffice: false});
 
+    // <div className="vmp-cell">
+    //   <a className="button icon-right ion-chevron-right button-clear button-positive"></a>
+    // </div>
+
     return (
       <div>
         <div className="bar bar-stable">

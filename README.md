@@ -5,3 +5,6 @@
 - Text selection with enabled touch events
 - i18n with ICU format: http://formatjs.io/react/
 
+
+# Cordova plugins
+- connection state https://github.com/apache/cordova-plugin-network-information/blob/master/doc/index.md

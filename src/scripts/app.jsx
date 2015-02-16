@@ -53,6 +53,7 @@ var AppState = {
     itemId : '',
     results: [],
     item: null,
+    queryHistory: [],
     pages: {
       query: {
         organizations: 1,

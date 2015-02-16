@@ -32,7 +32,7 @@ var AddressPopup = React.createClass({
             {semantic &&
               <div>
                 {semantic.name &&
-                  <div className="vmp-map-popup-content-title vmp-table">
+                  <div className="vmp-table vmp-map-popup-content-title">
                     <div className="ion-ios-information-outline vmp-map-popup-icon vmp-cell"></div>
                     <div className="vmp-cell">{semantic.name}</div>
                   </div>}

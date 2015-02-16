@@ -120,3 +120,7 @@ a {
   @extend .vmp-title;
   padding-left: 7px;
 }
+
+.icon:active, .vmp-active-text:active {
+  color: $positive;
+}

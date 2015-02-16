@@ -1,12 +1,14 @@
 var _             = require('lodash');
 var Api           = require('api');
-var imm           = require('immutable').fromJS;
+var Imm           = require('immutable');
 var P             = require('bluebird');
 var translator    = require('i18n/translator');
 var page          = require('page');
 var mapController = require('map-controller');
 var status        = require('status-controller');
 
+var imm = Imm.fromJS;
+var {List} = Imm;
 var {Catalog}  = Api;
 var {
   prepareSearchResults
@@ -114,6 +116,12 @@ var Controller = {
       this.loadItem(collection, id);
     });
 
+    page.exit('/city/:city/view/search/query/(.*)?', (context, next) => {
+      console.log(`exiting from 'search/query/(.*)?' route, saving search '${bSearch.get('query')}'`);
+      this.saveSearchQuery();
+      next();
+    });
+
     page('*', () => console.log('Route: *'));
 
     page.start({click: false});
@@ -162,13 +170,19 @@ var Controller = {
     // that gives the ability to travel back to previous route.
     if (!page.current.match(/city\/.*\/view\/search\/query.*/)) {
       console.log('Starting search [focus]');
-      navigate('/view/search/query');
+      // var query = bSearch.get('query') || '';
+
+      navigate(`/view/search/query`);
     }
   },
 
   onSearchTyped (event) {
     var query = event.target.value;
 
+    this.searchByQuery(query);
+  },
+
+  searchByQuery (query) {
     navigateSilent(`/view/search/query/${query}`);
 
     if (!query) {
@@ -177,6 +191,7 @@ var Controller = {
     } else {
       this.search('query', query);
     }
+
   },
 
   tryToSetSearchHistoryView () {
@@ -318,9 +333,40 @@ var Controller = {
   hasSearchResults () {
     var results = bSearch.get('results');
     var resultsCount = results && results.reduce(
-      (count, result) => count + result.getIn(['data', 'result_count']), 0);
+      (count, result) => count + result.getIn(['data', 'result']).size, 0);
 
     return resultsCount > 0;
+  },
+
+  saveSearchQuery () {
+    var query = (bSearch.get('query') || '').trim();
+
+    if (!query) {
+      return;
+    }
+
+    bSearch.update('queryHistory', history => {
+      if (history) {
+        var queryIndex = history.indexOf(query);
+
+        // if query is already saved, remove it from its place
+        if (queryIndex >= 0) {
+          history = history.remove(queryIndex);
+        }
+
+        return history.unshift(query);
+      } else {
+        return List.of(query);
+      }
+    });
+  },
+
+  setSearchQuery (query) {
+    bSearch.set('query', query);
+  },
+
+  deleteHistoryItem (index) {
+    bSearch.update('queryHistory', history => history.remove(index));
   },
 
   // router navigation ----------------------------------------------------------------------------
