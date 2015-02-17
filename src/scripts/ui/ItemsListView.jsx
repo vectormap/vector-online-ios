@@ -11,7 +11,6 @@ var {
 
 var ItemsListView = React.createClass({
   mixins: [M.Mixin],
-  // observedBindings: [status.getBinding()],
 
   renderItem (collection, _item) {
     var item = _item.toJS();
@@ -53,8 +52,6 @@ var ItemsListView = React.createClass({
                 onClick={loadNextPage.bind(controller)}
               >
                 {t('card.load_more')}
-                {status.is('loadingNextPage') &&
-                  <i className="ion-load-b vmp-anim-spin"></i>}
               </button>
             </a>}
 

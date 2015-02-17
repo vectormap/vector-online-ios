@@ -1,7 +1,9 @@
 var React = require('react');
 var M = require('morearty');
 var controller = require('controller');
-var {setSearchQuery, deleteHistoryItem, searchByQuery} = controller;
+var {
+  setSearchQuery, deleteHistoryItem, searchByQuery, getCurrentSearchHistory
+} = controller;
 
 var SearchHistoryView = React.createClass({
   mixins: [M.Mixin],
@@ -38,7 +40,7 @@ var SearchHistoryView = React.createClass({
   },
 
   render () {
-    var history = this.getBinding().get('queryHistory');
+    var history = getCurrentSearchHistory();
     var hasHistory = history && history.size > 0;
     var historyView;
 

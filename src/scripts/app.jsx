@@ -60,7 +60,7 @@ var AppState = {
     itemId : '',
     results: [],
     item: null,
-    queryHistory: [],
+    queryHistory: {}, // save search history by city: {surgut: [...], ...}
     pages: {
       query: {
         organizations: 1,
@@ -86,7 +86,7 @@ var AppState = {
 
 AppState.currentCity = Store.get('currentCity') || 'surgut';
 AppState.lang = Store.get('lang') || 'ru';
-AppState.search.queryHistory = Store.get('search.queryHistory') || [];
+AppState.search.queryHistory = Store.get('search.queryHistory') || {};
 
 var Ctx = M.createContext({
   initialState: AppState,
