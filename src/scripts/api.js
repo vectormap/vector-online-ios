@@ -4,7 +4,7 @@ var P   = require('bluebird');
 var PAGE_LIMIT = 25;
 
 function _get (url, data) {
-  return qwest.get(url, data, {responseType: 'json'});
+  return qwest.get(url, data, {responseType: 'json', cache: true});
 }
 
 function get (city, cityRelativeApiUrl, data) {
