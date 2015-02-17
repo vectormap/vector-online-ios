@@ -5,6 +5,7 @@ var MapView       = require('./map/MapView');
 var SearchView    = require('./SearchView');
 var BookmarksView = require('./BookmarksView');
 var SettingsView  = require('./SettingsView');
+var ActiveModal   = require('./ActiveModal');
 
 var cx = React.addons.classSet;
 var pages = ['map', 'search', 'bookmarks', 'settings'];
@@ -64,6 +65,7 @@ var MainLayout = React.createClass({
             <PageView binding={pageBinding} />
           </div>
 
+          <ActiveModal binding={binding} />
           <div className="tabs tabs-icon-only disable-user-behavior vmp-tabs">
             {tabs}
           </div>

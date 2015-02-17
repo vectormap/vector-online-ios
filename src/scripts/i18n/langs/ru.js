@@ -101,6 +101,8 @@ var ru = {
 
   'measure.m': 'м',
   'measure.km': 'км',
+
+  'cancel': 'Отмена'
 };
 
 module.exports = ru;

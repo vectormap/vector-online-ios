@@ -73,6 +73,10 @@ a {
   background-color: rgba(79, 173, 255, 0.43);
 }
 
+.vmp-list-item-activated {
+  background-color: $energized;
+}
+
 .vmp-search-tabs {
   margin-top: -1px;
 }
@@ -123,4 +127,8 @@ a {
 
 .icon:active, .vmp-active-text:active {
   color: $positive;
+}
+
+.vmp-scroll {
+  overflow-y: scroll;
 }

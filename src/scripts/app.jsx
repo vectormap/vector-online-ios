@@ -47,6 +47,7 @@ function syncWithLocalStorage (binding, keys) {
 
 var AppState = {
   cityConfig: {},
+  allCityConfigs: [],
   currentCity: '',
   lang: 'ru',
   pageView: 'map', // default view is map
@@ -81,7 +82,8 @@ var AppState = {
       }
     }
   },
-  status: ''
+  status: '',
+  modal: ''
 };
 
 AppState.currentCity = Store.get('currentCity') || 'surgut';

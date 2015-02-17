@@ -171,6 +171,12 @@ var MapController = {
 
     markersLayer.clearLayers();
     markersLayer.addLayer(marker);
+  },
+
+  reset () {
+    this.closePopup();
+    this.clearPopupData();
+    markersLayer.clearLayers();
   }
 };
 

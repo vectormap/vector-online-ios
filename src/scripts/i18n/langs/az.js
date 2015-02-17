@@ -101,6 +101,8 @@ var az = {
 
   'measure.m' : 'm',
   'measure.km': 'km',
+
+  'cancel': 'Cancel'
 };
 
 module.exports = az;

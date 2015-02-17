@@ -70,9 +70,7 @@ var Controller = {
 
     this.attachListeners();
 
-    var currentCity = rootBinding.get('currentCity');
-
-    page.redirect('/', `/city/${currentCity}/view/map`);
+    page.redirect('/', `/city/${currentCity()}/view/map`);
 
     // All routes will flow through the base '/city/:city/(.*)?' route
     page('/city/:city/(.*)?', (ctx, next) => {
@@ -148,7 +146,8 @@ var Controller = {
   },
 
   loadCityConfig (city) {
-    if (currentCity() === rootBinding.get('cityConfig.city.alias')) {
+    // debugger;
+    if (city === rootBinding.get('cityConfig.city.alias')) {
       return;
     }
 
@@ -374,6 +373,25 @@ var Controller = {
 
   deleteHistoryItem (index) {
     bSearch.update('queryHistory', history => history.remove(index));
+  },
+
+  showCitySelectorModal () {
+    status.loading();
+    rootBinding.set('modal', 'citySelector');
+
+    P.resolve(Api.getAllCityConfigs()).then(cityConfigs => {
+      rootBinding.set('allCityConfigs', imm(cityConfigs));
+      status.clear();
+    })
+    .catch(status.error);
+  },
+
+  switchCity (cityAlias) {
+    // rootBinding.set('currentCity', cityAlias);
+    mapController.reset();
+    page(`/city/${cityAlias}/view/map`);
+    page.len = 0;
+    page.callbacks = [];
   },
 
   // router navigation ----------------------------------------------------------------------------
