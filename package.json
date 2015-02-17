@@ -39,12 +39,13 @@
     "page": "^1.6.0",
     "qwest": "^1.5.4",
     "react": "^0.12.2",
-    "react-spinner": "^0.2.1"
+    "react-spinner": "^0.2.1",
+    "store": "^1.3.17"
   },
   "devDependencies": {
-    "6to5-core": "^3.6.0",
-    "6to5ify": "^4.1.1",
     "aliasify": "^1.5.1",
+    "babel": "^4.0.2",
+    "babelify": "^5.0.3",
     "browser-sync": "^2.0.1",
     "browserify": "^8.1.3",
     "browserify-shim": "^3.8.2",
@@ -69,7 +70,6 @@
     "gulp-util": "^3.0.3",
     "merge-stream": "^0.1.7",
     "pretty-hrtime": "^1.0.0",
-    "q": "^1.1.2",
     "reactify": "^1.0.0",
     "reqwest": "^1.1.5",
     "sassify": "^0.5.2",
@@ -90,6 +90,7 @@
     "leaflet",
     "qwest",
     "bluebird",
-    "page"
+    "page",
+    "store"
   ]
 }

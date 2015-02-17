@@ -23,6 +23,7 @@ var MainLayout       = require('./ui/MainLayout');
 var controller       = require('./controller');
 var mapController    = require('map-controller');
 var statusController = require('status-controller');
+var Store            = require('store');
 
 L.Icon.Default.imagePath = '/images';
 
@@ -36,11 +37,17 @@ window.React  = React;
 window.moment = moment;
 window.api    = api;
 
-// TODO: load saved settings to state from localStorage
+function syncWithLocalStorage (binding, keys) {
+  [].concat(keys).forEach(key => {
+    binding.addListener(key, () => {
+      Store.set(key, rootBinding.get(key));
+    });
+  });
+}
 
 var AppState = {
   cityConfig: {},
-  currentCity: 'surgut',
+  currentCity: '',
   lang: 'ru',
   pageView: 'map', // default view is map
   search: {
@@ -77,6 +84,10 @@ var AppState = {
   status: ''
 };
 
+AppState.currentCity = Store.get('currentCity') || 'surgut';
+AppState.lang = Store.get('lang') || 'ru';
+AppState.search.queryHistory = Store.get('search.queryHistory') || [];
+
 var Ctx = M.createContext({
   initialState: AppState,
   initialMetaState: {},
@@ -92,6 +103,8 @@ var rootBinding = window.rootBinding = Ctx.getBinding();
 controller.init(rootBinding);
 mapController.init(rootBinding);
 statusController.init(rootBinding.sub('status'));
+
+syncWithLocalStorage(rootBinding, ['currentCity', 'lang', 'search.queryHistory']);
 
 window.controller = controller;
 window.mapController = mapController;

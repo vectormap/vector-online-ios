@@ -6,6 +6,7 @@ var translator    = require('i18n/translator');
 var page          = require('page');
 var mapController = require('map-controller');
 var status        = require('status-controller');
+var Store         = require('store');
 
 var imm = Imm.fromJS;
 var {List} = Imm;
@@ -253,7 +254,8 @@ var Controller = {
         bSearch.set('item', imm(item));
         setSearchView('item');
         status.clear();
-      }).error(status.error);
+      })
+      .catch(status.error);
   },
 
   loadNextPage () {
@@ -354,10 +356,12 @@ var Controller = {
           history = history.remove(queryIndex);
         }
 
-        return history.unshift(query);
+        history = history.unshift(query);
       } else {
-        return List.of(query);
+        history = List.of(query);
       }
+
+      return history;
     });
   },
 
