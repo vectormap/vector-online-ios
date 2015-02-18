@@ -388,10 +388,23 @@ var Controller = {
 
   switchCity (cityAlias) {
     // rootBinding.set('currentCity', cityAlias);
-    mapController.reset();
+    this.reset();
     page(`/city/${cityAlias}/view/map`);
     page.len = 0;
-    page.callbacks = [];
+    // page.callbacks = [];
+  },
+
+  reset () {
+    mapController.reset();
+    rootBinding.sub('search')
+      .clear('view.name')
+      .clear('type')
+      .clear('query')
+      .clear('itemId')
+      .clear('item')
+      .set('results', Imm.List());
+
+    this.resetPages();
   },
 
   // router navigation ----------------------------------------------------------------------------

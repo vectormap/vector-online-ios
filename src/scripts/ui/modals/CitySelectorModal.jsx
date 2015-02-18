@@ -4,13 +4,13 @@ var controller = require('controller');
 
 var cx = React.addons.classSet;
 var {toggle} = M.Callback;
-var {t, switchCity} = controller;
+var {t} = controller;
 
 var CitySelectorModal = React.createClass({
   mixins: [M.Mixin],
 
-  switchCity (alias, toggleModal) {
-    switchCity(alias);
+  _switchCity (alias, toggleModal) {
+    controller.switchCity(alias);
     toggleModal();
   },
 
@@ -25,7 +25,7 @@ var CitySelectorModal = React.createClass({
 
     return (
       <div className={cls} key={`city-${name}`}
-        onClick={this.switchCity.bind(this, alias, toggleModal)}>
+        onClick={this._switchCity.bind(this, alias, toggleModal)}>
         {name}
       </div>
     );
