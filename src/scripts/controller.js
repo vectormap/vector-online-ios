@@ -378,7 +378,7 @@ var Controller = {
   },
 
   deleteHistoryItem (index) {
-    bSearch.update('queryHistory', history => history.remove(index));
+    bSearch.update(`queryHistory.${currentCity()}`, history => history.remove(index));
   },
 
   showCitySelectorModal () {
