@@ -18,6 +18,7 @@ var Modal = React.createClass({
       className: '',
       key: 'vmp-modal',
       header: true,
+      backdrop: true,
       transitionGroup: { // CSSTransitionGroup specific props
         transitionName: 'vmp-modal',
         component: 'div'
@@ -27,20 +28,26 @@ var Modal = React.createClass({
 
   render () {
     var {toggleBinding, header} = this.props;
+    var isActive = toggleBinding.get();
+    var backdropCls = cx({
+      'modal-backdrop active': isActive && this.props.backdrop
+    });
 
     return (
-      <CSSTransitionGroup {...this.props.transitionGroup}>
-        {toggleBinding.get() &&
-          <div className={cx('modal', this.props.className)} key={this.props.key}>
-            {header &&
-              <button className="button button-clear vmp-modal-close-button" onClick={toggle(toggleBinding)}>
-                <i className="ion-ios-close-outline vmp-modal-close-button-icon"></i>
-              </button>}
-            <div className="vmp-modal-body">
-              {this.props.children}
-            </div>
-          </div>}
-      </CSSTransitionGroup>
+      <div className={backdropCls}>
+        <CSSTransitionGroup {...this.props.transitionGroup}>
+          {isActive &&
+            <div className={cx('modal', this.props.className)} key={this.props.key}>
+              {header &&
+                <button className="button button-clear vmp-modal-close-button" onClick={toggle(toggleBinding)}>
+                  <i className="ion-ios-close-outline vmp-modal-close-button-icon"></i>
+                </button>}
+              <div className="vmp-modal-body">
+                {this.props.children}
+              </div>
+            </div>}
+        </CSSTransitionGroup>
+      </div>
     );
   }
 });

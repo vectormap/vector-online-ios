@@ -57,6 +57,7 @@ var MapPopup = React.createClass({
       <Modal
         binding={popupBinding}
         toggleBinding={popupToggleBinding}
+        backdrop={false}
         className={cx('vmp-map-popup-modal', modalSizeCls)}>
         {PopupContentView}
       </Modal>
