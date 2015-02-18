@@ -106,7 +106,11 @@ var en = {
   'measure.m': 'm',
   'measure.km': 'km',
 
-  'cancel': 'Cancel'
+  'cancel': 'Cancel',
+  'city': 'City',
+  'lang': 'Language',
+  'select_city_imperative': 'Choose a city',
+  'settings': 'Settings'
 };
 
 module.exports = en;

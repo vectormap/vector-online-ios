@@ -50,7 +50,7 @@ var AppState = {
   allCityConfigs: [],
   currentCity: '',
   lang: 'ru',
-  pageView: 'map', // default view is map
+  pageView: 'map', // map, search, bookmarks, settings
   search: {
     view: {
       name: '', // history, results, item, noResults, error

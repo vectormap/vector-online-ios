@@ -102,7 +102,11 @@ var az = {
   'measure.m' : 'm',
   'measure.km': 'km',
 
-  'cancel': 'Cancel'
+  'cancel': 'Cancel',
+  'city': 'Şəhər',
+  'lang': 'Dili',
+  'select_city_imperative': 'Şəhəri seçin',
+  'settings': 'Parametrlər'
 };
 
 module.exports = az;

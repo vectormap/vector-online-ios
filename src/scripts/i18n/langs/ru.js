@@ -13,7 +13,7 @@ var ru = {
                                       '<span class="highlight"><%= emailsCount %></span> электропочт. Все это доступно сейчас и бесплатно,',
                                       'воспользуйтесь поисковой строкой выше.'),
 
-  'card.splash.remember_we_have'  : 'Помните, что у нас еще есть',
+  'card.splash.remember_we_have'  : 'Помните, что у - еще есть',
   'card.splash.mobile_vector'     : 'Мобильный Вектор',
   'card.splash.for_android'       : 'Для Android устройств - легкий и быстрый',
   'card.splash.for_wp'            : 'Для Windows Phone - с оффлайн картой и справочником',
@@ -102,7 +102,11 @@ var ru = {
   'measure.m': 'м',
   'measure.km': 'км',
 
-  'cancel': 'Отмена'
+  'cancel': 'Отмена',
+  'city': 'Город',
+  'lang': 'Язык',
+  'select_city_imperative': 'Выбрать город',
+  'settings': 'Настройки'
 };
 
 module.exports = ru;

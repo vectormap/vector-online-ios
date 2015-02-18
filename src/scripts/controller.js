@@ -20,6 +20,12 @@ var bSearchQuery;
 var bSearchResults;
 var bSearchItem;
 
+const LANGS = [
+  {code: 'ru', name: 'Русский'},
+  {code: 'az', name: 'Azərbaycan'},
+  {code: 'en', name: 'English'}
+];
+
 var searchRouteTransitions = {
   'rubrics': 'rubric',
   'addresses': 'address'
@@ -405,6 +411,14 @@ var Controller = {
       .set('results', Imm.List());
 
     this.resetPages();
+  },
+
+  setLang (langCode) {
+    rootBinding.set('lang', langCode);
+  },
+
+  getLangs () {
+    return LANGS;
   },
 
   // router navigation ----------------------------------------------------------------------------

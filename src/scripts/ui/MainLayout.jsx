@@ -50,7 +50,6 @@ var MainLayout = React.createClass({
     var binding = this.getBinding();
     var currentPage = binding.get('pageView');
     var PageView = pageViews[currentPage].view;
-    var pageBinding = binding.sub(currentPage);
     var showSearchBar = currentPage === 'map' || currentPage === 'search';
 
     var tabs = pages.map(page => this.renderTab(page, currentPage));
@@ -62,7 +61,7 @@ var MainLayout = React.createClass({
           {showSearchBar &&
             <SearchBar binding={binding} />}
           <div className="view-container" nav-view-transition="ios" nav-view-direction="none">
-            <PageView binding={pageBinding} />
+            <PageView binding={binding} />
           </div>
 
           <ActiveModal binding={binding} />

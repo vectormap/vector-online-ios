@@ -19,15 +19,15 @@ var SearchView = React.createClass({
   mixins: [M.Mixin],
 
   resolveSearchView () {
-    var searchBinding = this.getBinding();
+    var searchBinding = this.getBinding().sub('search');
     var View = resolveView(searchViews, searchBinding, 'view.name');
 
     return View;
   },
 
   render () {
-    var View = this.resolveSearchView();
-    var searchBinding = this.getBinding();
+    var View = this.resolveSearchView() || SearchHistoryView;
+    var searchBinding = this.getBinding().sub('search');
 
     if (!View) {
       return null;

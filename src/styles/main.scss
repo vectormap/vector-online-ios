@@ -73,7 +73,7 @@ a {
   background-color: rgba(79, 173, 255, 0.43);
 }
 
-.vmp-list-item-activated {
+.vmp-list-item-activated, .item-content.vmp-list-item-activated {
   background-color: $energized;
 }
 
@@ -131,4 +131,8 @@ a {
 
 .vmp-scroll {
   overflow-y: scroll;
+}
+
+.vmp-uppercase-title {
+  text-transform: uppercase;
 }
