@@ -36,8 +36,8 @@ var SearchTabsView = React.createClass({
 
         return(
           <span className={cls} key={key} onTouchEnd={this.onTabClicked.bind(this, collection)}>
+            <span className="badge vmp-left-badge">{resultsCount}</span>
             <span>{collectionName}</span>
-            <span className="badge">{resultsCount}</span>
           </span>
         );
       }
