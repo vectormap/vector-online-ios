@@ -146,3 +146,7 @@ $ionicons-font-path: "./fonts" !default;
 .vmp-left-badge {
   margin-right: 2px;
 }
+
+.leaflet-top.leaflet-right {
+  @extend .has-header;
+}

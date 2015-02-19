@@ -45,6 +45,12 @@ var MapController = {
       attributionControl: false
     });
 
+    map.addControl(new L.Control.Zoom({
+      zoomInTitle: '',
+      zoomOutTitle: '',
+      position: 'topright',
+    }));
+
     L.tileLayer(AppConfig.map.tilesUrl, {
       minZoom: AppConfig.map.minZoom,
       maxZoom: AppConfig.map.maxZoom,
