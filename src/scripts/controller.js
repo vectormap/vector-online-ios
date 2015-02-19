@@ -153,8 +153,15 @@ var Controller = {
     });
   },
 
-  start () {
+  onFirstLaunch () {
+    if (rootBinding.get('firstLaunch')) {
+      rootBinding.set('firstLaunch', false);
+      this.showCitySelectorModal();
+    }
+  },
 
+  start () {
+    this.onFirstLaunch();
   },
 
   loadCityConfig (city) {
@@ -203,6 +210,11 @@ var Controller = {
       this.search('query', query);
     }
 
+  },
+
+  clearSearchQuery () {
+    bSearch.clear('query');
+    this.searchByQuery('');
   },
 
   tryToSetSearchHistoryView () {

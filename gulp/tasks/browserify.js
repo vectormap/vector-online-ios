@@ -31,6 +31,7 @@ gulp.task('browserify', function() {
 
     return bundler
       .external(externalLibs)
+      .require('./src/scripts/app.jsx', { expose: 'online-app'})
       .bundle()
       .on('error', handleErrors)
       .pipe(source('app.js'))

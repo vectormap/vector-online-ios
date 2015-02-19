@@ -18,5 +18,9 @@ gulp.task('copy', function() {
    .src('src/styles/fonts/**/*')
    .pipe(gulp.dest('build/fonts'));
 
-  return merge(html, styles, images, fonts);
+  var appLoader = gulp
+   .src('src/scripts/app-loader.js')
+   .pipe(gulp.dest('build'));
+
+  return merge(html, styles, images, fonts, appLoader);
 });

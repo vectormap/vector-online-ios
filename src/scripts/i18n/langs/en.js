@@ -79,7 +79,7 @@ var en = {
   'card.addresses'                : 'Addresses',
   'card.street'                   : 'Street',
   'card.streets'                  : 'Streets',
-  'card.select_city'              : 'Select the city',
+  'card.select_city'              : 'Choose the city',
   'card.increase_org_effectiveness': 'Get the most out of your advertising',
   'card.load_more'                : 'Load more',
 
@@ -109,7 +109,7 @@ var en = {
   'cancel': 'Cancel',
   'city': 'City',
   'lang': 'Language',
-  'select_city_imperative': 'Choose a city',
+  'select_city_imperative': 'Choose the city',
   'settings': 'Settings'
 };
 

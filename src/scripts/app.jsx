@@ -13,17 +13,18 @@ M.Callback.toggle = function (binding, subpath) {
   };
 };
 
-var _                = require('lodash');
-var React            = require('react/addons');
-var Imm              = require('immutable');
-var moment           = require('moment');
-var L                = require('leaflet');
-var api              = require('api');
-var MainLayout       = require('./ui/MainLayout');
-var controller       = require('./controller');
-var mapController    = require('map-controller');
-var statusController = require('status-controller');
-var Store            = require('store');
+var _                    = require('lodash');
+var React                = require('react/addons');
+var Imm                  = require('immutable');
+var moment               = require('moment');
+var L                    = require('leaflet');
+var api                  = require('api');
+var MainLayout           = require('./ui/MainLayout');
+var controller           = require('./controller');
+var mapController        = require('map-controller');
+var statusController     = require('status-controller');
+var Store                = require('store');
+var injectTapEventPlugin = require("react-tap-event-plugin");
 
 L.Icon.Default.imagePath = '/images';
 
@@ -83,12 +84,14 @@ var AppState = {
     }
   },
   status: '',
-  modal: ''
+  modal: '' // citySelector, noConnection
 };
 
 AppState.currentCity = Store.get('currentCity') || 'surgut';
 AppState.lang = Store.get('lang') || 'ru';
 AppState.search.queryHistory = Store.get('search.queryHistory') || {};
+AppState.firstLaunch = Store.get('firstLaunch') === undefined;
+
 
 var Ctx = M.createContext({
   initialState: AppState,
@@ -102,14 +105,11 @@ var Ctx = M.createContext({
 window.Ctx = Ctx; // for debug
 var rootBinding = window.rootBinding = Ctx.getBinding();
 
-controller.init(rootBinding);
-mapController.init(rootBinding);
-statusController.init(rootBinding.sub('status'));
-
-syncWithLocalStorage(rootBinding, ['currentCity', 'lang', 'search.queryHistory']);
+syncWithLocalStorage(rootBinding, ['firstLaunch', 'currentCity', 'lang', 'search.queryHistory']);
 
 window.controller = controller;
 window.mapController = mapController;
+
 
 var App = React.createClass({
   mixins: [M.Mixin],
@@ -123,6 +123,16 @@ var App = React.createClass({
 
 var Bootstrap = Ctx.bootstrap(App);
 
-React.initializeTouchEvents(true);
-React.render(<Bootstrap />, document.getElementById('root'));
 
+module.exports = {
+  start () {
+    controller.init(rootBinding);
+    mapController.init(rootBinding);
+    statusController.init(rootBinding.sub('status'));
+    controller.start();
+
+    injectTapEventPlugin();
+    React.initializeTouchEvents(true);
+    React.render(<Bootstrap />, document.getElementById('root'));
+  }
+};
