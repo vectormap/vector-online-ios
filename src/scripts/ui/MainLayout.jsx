@@ -51,16 +51,21 @@ var MainLayout = React.createClass({
     var currentPage = binding.get('pageView');
     var PageView = pageViews[currentPage].view;
     var showSearchBar = currentPage === 'map' || currentPage === 'search';
-
     var tabs = pages.map(page => this.renderTab(page, currentPage));
+    var containerCls = cx({
+      'pane': currentPage !== 'map'
+    });
+    var pageContainerCls = cx({
+      'view-container': currentPage !== 'map'
+    });
 
     return (
       <div>
         <MapView binding={binding.sub('map')} />
-        <div className="view-container" nav-view-transition="ios" nav-view-direction="none" key={`lang-${binding.get('lang')}`}>
+        <div className={containerCls} key={`lang-${binding.get('lang')}`}>
           {showSearchBar &&
             <SearchBar binding={binding} />}
-          <div className="view-container" nav-view-transition="ios" nav-view-direction="none">
+          <div className={pageContainerCls}>
             <PageView binding={binding} />
           </div>
 
