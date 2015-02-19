@@ -1,10 +1,10 @@
 .vmp-modal-enter {
   @include translate3d(0, 100%, 0);
-  @include transition(all cubic-bezier(.1, .7, .1, 1) 400ms);
 }
 
 .vmp-modal-enter.vmp-modal-enter-active {
   @include translate3d(0, 0, 0);
+  @include transition(all cubic-bezier(.1, .7, .1, 1) 400ms);
 }
 
 .vmp-modal-leave {
