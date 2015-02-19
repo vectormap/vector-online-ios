@@ -23,10 +23,6 @@ $ionicons-font-path: "./fonts" !default;
 @import './ui-elements';
 @import './map-popups';
 
-a {
-  cursor: pointer;
-}
-
 .item-desc {
   float: none;
   display: block;
@@ -135,4 +131,14 @@ a {
 
 .vmp-uppercase-title {
   text-transform: uppercase;
+}
+
+.Bouncefix {
+  overflow-y: auto;
+  overflow-x: hidden;
+  // -webkit-overflow-scrolling: touch;
+}
+
+.vmp-search-clear-btn {
+  font-size: 14pt;
 }

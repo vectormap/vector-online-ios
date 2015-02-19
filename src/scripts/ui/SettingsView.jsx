@@ -18,11 +18,11 @@ var SettingsView = React.createClass({
       });
 
       return (
-        <div className="item item-complex" onClick={setLang.bind(controller, l.code)}>
-          <div className={langCls}>
+        <div className="item item-complex" key={`lang-${l.code}`} onTouchTap={setLang.bind(controller, l.code)}>
+          <a className={langCls}>
             <span className="badge badge-positive vmp-uppercase-title">{l.code}</span>
             <span>{l.name}</span>
-          </div>
+          </a>
         </div>
       );
     });
@@ -33,13 +33,13 @@ var SettingsView = React.createClass({
           <h1 className="title">{t('settings')}</h1>
         </div>
         <div className="list has-header">
-          <div className="item item-divider">
+          <a className="item item-divider">
             <span>{t('city')}</span>
-          </div>
-          <div className="item vmp-list-item" onClick={controller.showCitySelectorModal}>
+          </a>
+          <a className="item vmp-list-item" onTouchTap={controller.showCitySelectorModal}>
             <span>{cityName}</span>
             <span className="item-note">{t('select_city_imperative')}</span>
-          </div>
+          </a>
           <div className="item item-divider">
             <span>{t('lang')}</span>
           </div>

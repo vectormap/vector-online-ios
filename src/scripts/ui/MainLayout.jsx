@@ -40,7 +40,7 @@ var MainLayout = React.createClass({
     });
 
     return (
-      <a className={cls} key={`tab-page-${page}`} onClick={controller.navToPage.bind(controller, page)}>
+      <a className={cls} key={`tab-page-${page}`} onTouchEnd={controller.navToPage.bind(controller, page)}>
         <i className={`icon ${icon}`}></i>
       </a>
     );

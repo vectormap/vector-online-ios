@@ -35,7 +35,7 @@ var SearchTabsView = React.createClass({
         var key = `tab-${collection}`;
 
         return(
-          <span className={cls} key={key} onClick={this.onTabClicked.bind(this, collection)}>
+          <span className={cls} key={key} onTouchEnd={this.onTabClicked.bind(this, collection)}>
             <span>{collectionName}</span>
             <span className="badge">{resultsCount}</span>
           </span>

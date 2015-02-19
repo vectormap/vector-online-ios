@@ -27,7 +27,7 @@ var ItemsListView = React.createClass({
     }
 
     return (
-      <a className="item vmp-list-item" key={key} onClick={onItemClicked}>
+      <a className="item vmp-list-item" key={key} onTouchTap={onItemClicked}>
         <span>{title}</span>
         <span className="item-desc">{subtitle}</span>
       </a>
@@ -49,7 +49,7 @@ var ItemsListView = React.createClass({
             <a className="item vmp-center">
               <button
                 className="button button-small button-outline button-positive"
-                onClick={loadNextPage.bind(controller)}
+                onTouchTap={loadNextPage.bind(controller)}
               >
                 {t('card.load_more')}
               </button>

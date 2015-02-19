@@ -24,10 +24,10 @@ var CitySelectorModal = React.createClass({
     });
 
     return (
-      <div className={cls} key={`city-${name}`}
-        onClick={this._switchCity.bind(this, alias, toggleModal)}>
+      <a className={cls} key={`city-${name}`}
+        onTouchTap={this._switchCity.bind(this, alias, toggleModal)}>
         {name}
-      </div>
+      </a>
     );
   },
 
@@ -44,7 +44,7 @@ var CitySelectorModal = React.createClass({
         <div className="bar bar-header disable-user-behavior">
           <h1 className="title">{t('card.select_city')}</h1>
           <div className="buttons">
-            <button className="button button-clear" onClick={toggleModal}>{t('cancel')}</button>
+            <button className="button button-clear" onTouchEnd={toggleModal}>{t('cancel')}</button>
           </div>
         </div>
         <div className="has-header scroll-content vmp-scroll scroll-overflow">
