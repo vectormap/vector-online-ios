@@ -78,6 +78,12 @@ var Controller = {
 
     page.redirect('/', `/city/${currentCity()}/view/map`);
 
+    // fix: https://github.com/visionmedia/page.js/issues/18
+    if (window.cordova) {
+      page({ dispatch: false}); // turn off auto dispatching
+      page('/'); // force trigger the initial root page
+    }
+
     // All routes will flow through the base '/city/:city/(.*)?' route
     page('/city/:city/(.*)?', (ctx, next) => {
       var {city} = ctx.params;
