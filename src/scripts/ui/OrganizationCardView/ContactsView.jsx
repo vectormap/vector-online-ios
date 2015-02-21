@@ -1,6 +1,7 @@
 var React = require('react');
 var M = require('morearty');
 var {contactHref} = require('models/ContactModel');
+var {openUrl} = require('utils');
 
 var iconsMap = {
   'email': 'email',
@@ -22,12 +23,15 @@ var ContactsView = React.createClass({
     var key = `contact-${type}-${int_id}`;
 
     return (
-      <a href={href} className="item item-icon-left vmp-list-item" key={key}>
+      <div
+        className="item item-icon-left vmp-list-item" key={key}
+        onTouchTap={() => openUrl(href)}
+      >
         <i className={`icon ion-ios-${icon}-outline`}></i>
         <span>{alias}</span>
         {owner &&
           <span className="item-desc">{owner}</span>}
-      </a>
+      </div>
     );
   },
 

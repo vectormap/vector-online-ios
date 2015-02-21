@@ -23,4 +23,8 @@ module.exports = {
 
     return '{' + uuid + '}';
   },
+
+  openUrl (href) {
+    window.open(href, '_system', '');
+  }
 };
