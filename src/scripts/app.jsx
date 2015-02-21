@@ -26,7 +26,7 @@ var statusController     = require('status-controller');
 var Store                = require('store');
 var injectTapEventPlugin = require("react-tap-event-plugin");
 
-L.Icon.Default.imagePath = '/images';
+L.Icon.Default.imagePath = 'images';
 
 require('moment/locale/ru');
 
@@ -60,6 +60,7 @@ var AppState = {
     type: '', // query, address, rubric
     query: '',
     itemId : '',
+    itemCollection: '',
     results: [],
     item: null,
     queryHistory: {}, // save search history by city: {surgut: [...], ...}

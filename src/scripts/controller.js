@@ -10,9 +10,8 @@ var status        = require('status-controller');
 var imm = Imm.fromJS;
 var {List} = Imm;
 var {Catalog}  = Api;
-var {
-  prepareSearchResults
-} = require('./models/SearchModel');
+var {prepareSearchResults} = require('./models/SearchModel');
+var {result} = Api;
 
 var rootBinding;
 var bSearch;
@@ -126,8 +125,8 @@ var Controller = {
       this.loadItem(collection, id);
     });
 
-    page.exit('/city/:city/view/search/query/(.*)?', (context, next) => {
-      console.log(`exiting from 'search/query/(.*)?' route, saving search '${bSearch.get('query')}'`);
+    page.exit('/city/:city/view/search/query/:query?', (context, next) => {
+      console.log(`exiting from 'search/query/:query?' route, saving search '${bSearch.get('query')}'`);
       this.saveSearchQuery();
       next();
     });
@@ -146,7 +145,7 @@ var Controller = {
   },
 
   attachListeners () {
-    rootBinding.addListener('pageView', () => {
+    rootBinding.addListener('pageView', (changes) => {
       if (rootBinding.get('pageView') !== 'map') {
         rootBinding.set('map.popup.open', false);
       }
@@ -165,7 +164,6 @@ var Controller = {
   },
 
   loadCityConfig (city) {
-    // debugger;
     if (city === rootBinding.get('cityConfig.city.alias')) {
       return;
     }
@@ -271,9 +269,15 @@ var Controller = {
   loadItem (collection, itemId) {
     status.loading();
 
-    return P.resolve(
-      Catalog.getFromCollection(currentCity(), collection, itemId, {coords: false})).then(item => {
-        bSearch.set('item', imm(item));
+    var itemPromise = Catalog.getFromCollection(currentCity(), collection, itemId, {coords: false});
+
+    return P.resolve(itemPromise).then(item => {
+        bSearch
+          .set('item', imm(item))
+          .set('type', 'item')
+          .set('itemCollection', collection)
+          .set('itemId', (result(item)[0] || {}).int_id);
+
         setSearchView('item');
         status.clear();
       })
@@ -343,17 +347,6 @@ var Controller = {
     return _hasNextPage(result, currentPage);
   },
 
-  resetPages () {
-    bSearch.set('pages', imm({
-      query: {
-        organizations: 1,
-        addresses: 1,
-        rubrics: 1
-      },
-      byItemType: 1
-    }));
-  },
-
   hasSearchResults () {
     var results = bSearch.get('results');
     var resultsCount = results && results.reduce(
@@ -420,15 +413,33 @@ var Controller = {
 
   reset () {
     mapController.reset();
-    rootBinding.sub('search')
+    bSearch
       .clear('view.name')
-      .clear('type')
+      .clear('type');
+
+    this.resetSearchData();
+  },
+
+  resetSearchData () {
+    bSearch
       .clear('query')
-      .clear('itemId')
       .clear('item')
+      .clear('itemId')
+      .clear('itemCollection')
       .set('results', Imm.List());
 
     this.resetPages();
+  },
+
+  resetPages () {
+    bSearch.set('pages', imm({
+      query: {
+        organizations: 1,
+        addresses: 1,
+        rubrics: 1
+      },
+      byItemType: 1
+    }));
   },
 
   setLang (langCode) {
@@ -454,6 +465,13 @@ var Controller = {
       var route = '/view/search';
       var searchType = bSearch.get('type');
       var query = bSearch.get('query');
+      var itemId = bSearch.get('itemId');
+      var itemCollection = bSearch.get('itemCollection');
+
+      if (searchType === 'item') {
+        this.navToSearchByItem(itemCollection, itemId);
+        return;
+      }
 
       if (searchType) {
         route += `/${searchType}`;
