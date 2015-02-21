@@ -36,7 +36,7 @@ $ionicons-font-path: "./fonts" !default;
 
 .leaflet-container {
   cursor: auto;
-  background: url('/images/vmp_map_back.png');
+  background: url('./images/vmp_map_back.png');
 }
 
 .vmp-search-bar {
@@ -149,4 +149,28 @@ $ionicons-font-path: "./fonts" !default;
 
 .leaflet-top.leaflet-right {
   @extend .has-header;
+}
+
+.vmp-map-marker {
+  background-image: url('images/marker-icon.png');
+  background-size: 40px, 53px;
+}
+
+.vmp-map-marker-premium {
+  background-image: url('images/marker-icon-premium.png');
+  background-size: 40px, 53px;
+}
+
+@media
+(-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {
+  .vmp-map-marker {
+    background-image: url('images/marker-icon@2x.png');
+    background-size: 40px, 53px;
+  }
+
+  .vmp-map-marker-premium {
+    background-image: url('images/marker-icon-premium@2x.png');
+    background-size: 40px, 53px;
+  }
 }

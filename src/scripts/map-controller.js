@@ -16,18 +16,16 @@ var popupBinding;
 
 const PRETTY_ZOOM = 16;
 
-var markerIcon = L.icon({
-  iconUrl: '/images/marker-icon.png',
-  iconRetinaUrl: '/images/marker-icon@2x.png',
+var markerIcon = L.divIcon({
   iconSize: [40, 53],
   iconAnchor: [21, 48],
+  className: 'vmp-map-marker'
 });
 
-var markerIconPremium = L.icon({
-  iconUrl: '/images/marker-icon-premium.png',
-  iconRetinaUrl: '/images/marker-icon-premium@2x.png',
+var markerIconPremium = L.divIcon({
   iconSize: [40, 53],
   iconAnchor: [21, 48],
+  className: 'vmp-map-marker-premium'
 });
 
 var markersLayer = L.layerGroup();
