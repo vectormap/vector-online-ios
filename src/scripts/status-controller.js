@@ -21,6 +21,7 @@ var StatusController = {
 
   error (err) {
     setStatus(imm(err));
+    console.log(err, err.stack);
   },
 
   clear () {

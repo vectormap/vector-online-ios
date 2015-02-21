@@ -24,7 +24,7 @@ var DepartmentsView = React.createClass({
         <a
           className="item item-icon-left vmp-list-item vmp-item-divider"
           key={`address-${address.int_id}`}
-          onTouchTap={onAddressClicked}
+          onClick={onAddressClicked}
         >
           <i className="icon ion-ios-home-outline"></i>
           <span>{addressLine}</span>

@@ -26,9 +26,8 @@ var OrganizationCard = React.createClass({
     // </div>
 
     return (
-      <div className="pane" nav-view="active">
-
-        <div className="list vmp-list">
+      <div className="pane vmp-list" nav-view="active">
+        <div className="list">
           <div className="item vmp-list-item vmp-title">
             <span>{org.get('title')}</span>
           </div>
