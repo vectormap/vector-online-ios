@@ -47,8 +47,8 @@ var CitySelectorModal = React.createClass({
             <button className="button button-clear" onTouchEnd={toggleModal}>{t('cancel')}</button>
           </div>
         </div>
-        <div className="has-header scroll-content vmp-scroll scroll-overflow">
-          <div className="list scroll overflow-scroll">
+        <div className="has-header scroll-content vmp-scroll overflow-scroll">
+          <div className="list">
             {cities && cities.toJS()}
           </div>
         </div>
