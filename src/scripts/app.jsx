@@ -1,15 +1,19 @@
 var M = require('morearty');
 
-// TODO: push to Morearty repo
-M.Callback.toggle = function (binding, subpath) {
+M.Util.toggleBinding = function (binding, subpath) {
   var args = M.Util.resolveArgs(
     arguments,
     function (x) { return x instanceof M.Binding ? 'binding' : null; }, '?subpath'
   );
 
+  var value = args.binding.get(args.subpath);
+  args.binding.set(args.subpath, !value);
+};
+
+// TODO: push to Morearty repo
+M.Callback.toggle = function (binding, subpath) {
   return function () {
-    var value = args.binding.get(args.subpath);
-    args.binding.set(args.subpath, !value);
+    M.Util.toggleBinding(binding, subpath);
   };
 };
 

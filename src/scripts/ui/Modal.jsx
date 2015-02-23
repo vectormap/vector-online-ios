@@ -3,7 +3,6 @@ var M     = require('morearty');
 
 var {CSSTransitionGroup} = React.addons;
 var cx = React.addons.classSet;
-var {toggle} = M.Callback;
 
 var Modal = React.createClass({
   mixins: [M.Mixin],
@@ -14,7 +13,6 @@ var Modal = React.createClass({
 
   getDefaultProps() {
     return {
-      title: '',
       className: '',
       key: 'vmp-modal',
       header: true,
@@ -27,8 +25,8 @@ var Modal = React.createClass({
   },
 
   render () {
-    var {toggleBinding, header} = this.props;
-    var isActive = toggleBinding.get();
+    var {toggleBinding: modalTriggerBinding, header} = this.props;
+    var isActive = modalTriggerBinding.get();
     var backdropCls = cx({
       'modal-backdrop active': isActive && this.props.backdrop
     });
@@ -39,7 +37,10 @@ var Modal = React.createClass({
           {isActive &&
             <div className={cx('modal', this.props.className)} key={this.props.key}>
               {header &&
-                <button className="button button-clear vmp-modal-close-button" onClick={toggle(toggleBinding)}>
+                <button
+                  className="button button-clear vmp-modal-close-button"
+                  onTouchEnd={e => {e.preventDefault(); M.Util.toggleBinding(modalTriggerBinding);}}
+                >
                   <i className="ion-ios-close-outline vmp-modal-close-button-icon"></i>
                 </button>}
               <div className="vmp-modal-body">
