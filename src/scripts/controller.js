@@ -62,7 +62,7 @@ function collectionResultsIndex (collection) {
 }
 
 function _hasNextPage (result, currentPage) {
-  return result && (currentPage < result.getIn(['data', 'page_count']));
+  return result && (currentPage < result.data.page_count);
 }
 
 var Controller = {
@@ -308,7 +308,7 @@ var Controller = {
       searchPromise = Catalog.search(currentCity(), collection, q, {page: nextPage, suggest: true});
     } else {
       var itemType = searchType;
-      var itemId = bSearch.get('query');
+      var itemId = bSearch.get('itemId');
 
       pageBinding = bSearch.sub(`pages.byItemType`);
       resultsBinding = bSearch.sub('results.0.data.result');
@@ -344,7 +344,7 @@ var Controller = {
       result = results.get(0);
     }
 
-    return _hasNextPage(result, currentPage);
+    return _hasNextPage(result.toJS(), currentPage);
   },
 
   hasSearchResults () {
