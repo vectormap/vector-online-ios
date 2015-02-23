@@ -53,7 +53,7 @@ var MapController = {
       minZoom: AppConfig.map.minZoom,
       maxZoom: AppConfig.map.maxZoom,
       detectRetina: true,
-      updateWhenIdle: false
+      // updateWhenIdle: false
     }).addTo(map);
 
     markersLayer.addTo(map);
