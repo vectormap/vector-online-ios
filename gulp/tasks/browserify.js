@@ -35,7 +35,7 @@ gulp.task('browserify', function() {
       .bundle()
       .on('error', handleErrors)
       .pipe(source('app.js'))
-      .pipe(gulp.dest('./build/'))
+      .pipe(gulp.dest('./build/online-app'))
 			.on('end', bundleLogger.end);
 	};
 

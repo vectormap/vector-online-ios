@@ -24,7 +24,7 @@ gulp.task('browserify-external-libs', function() {
       .bundle()
       .on('error', handleErrors)
       .pipe(source('external-libs-bundle.js'))
-      .pipe(gulp.dest('./build'))
+      .pipe(gulp.dest('./build/online-app'))
       .on('end', bundleLogger.end);
   };
 

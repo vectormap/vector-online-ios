@@ -23,7 +23,7 @@ gulp.task('sass', function () {
     .pipe(prefix())
     // .pipe(filter('**/*.css'))
     .pipe(concat('app.css'))
-    .pipe(gulp.dest('./build/'))
+    .pipe(gulp.dest('./build/online-app'))
     .pipe(browserSync.reload({stream:true}))
     .on('error', handleErrors)
     ;

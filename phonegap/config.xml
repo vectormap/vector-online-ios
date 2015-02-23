@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.phonegap.helloworld" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+    <name>Vector Online</name>
+    <description>
+      Vector Online iOS client
+    </description>
+    <author email="mbektimirov@vmp.ru" href="http://vmp.ru">
+      Vector Team
+    </author>
+    <feature name="debug-server" required="true">
+        <param name="domain" value="http://localhost:8080" />
+        <param name="key" value="vector-online" />
+    </feature>
+    <content src="index_cordova.html" />
+    <preference name="permissions" value="none" />
+    <preference name="orientation" value="default" />
+    <preference name="target-device" value="universal" />
+    <preference name="fullscreen" value="false" />
+
+    <preference name="webviewbounce" value="false" />
+    <preference name="DisallowOverscroll" value="true" />
+    <preference name="disallowOverscroll" value="true" />
+    <preference name="UIWebViewBounce" value="false" />
+
+    <preference name="StatusBarOverlaysWebView" value="false" />
+    <preference name="StatusBarStyle" value="black" />
+    <preference name="StatusBarBackgroundColor" value="#f8f8f8" />
+
+    <preference name="prerendered-icon" value="true" />
+    <preference name="stay-in-webview" value="false" />
+    <!-- <preference name="ios-statusbarstyle" value="black-translucent" /> -->
+    <preference name="detect-data-types" value="true" />
+    <preference name="exit-on-suspend" value="false" />
+    <preference name="show-splash-screen-spinner" value="true" />
+    <preference name="auto-hide-splash-screen" value="true" />
+    <preference name="disable-cursor" value="false" />
+    <icon src="icon.png" />
+
+    <gap:plugin name="org.apache.cordova.network-information" />
+    <gap:plugin name="org.apache.cordova.console" />
+    <gap:plugin name="org.apache.cordova.statusbar" />
+    <gap:plugin name="org.apache.cordova.inappbrowser" />
+
+    <!-- <icon gap:platform="ios" height="57" src="www/res/icon/ios/icon-57.png" width="57" />
+    <icon gap:platform="ios" height="72" src="www/res/icon/ios/icon-72.png" width="72" />
+    <icon gap:platform="ios" height="114" src="www/res/icon/ios/icon-57-2x.png" width="114" />
+    <icon gap:platform="ios" height="144" src="www/res/icon/ios/icon-72-2x.png" width="144" /> -->
+
+    <icon gap:platform="ios" width="120" height="120" src="www/res/icon/ios/Icon-60@2x.png" />
+    <icon gap:platform="ios" width="180" height="180" src="www/res/icon/ios/Icon-60@3x.png" />
+    <icon gap:platform="ios" width="76" height="76" src="www/res/icon/ios/Icon-76.png" />
+    <icon gap:platform="ios" width="152" height="152" src="www/res/icon/ios/Icon-76@2x.png" />
+    <icon gap:platform="ios" width="40" height="40" src="www/res/icon/ios/Icon-Small-40.png" />
+    <icon gap:platform="ios" width="80" height="80" src="www/res/icon/ios/Icon-Small-40@2x.png" />
+    <icon gap:platform="ios" width="120" height="120" src="www/res/icon/ios/Icon-Small-40@3x.png" />
+
+    <gap:splash gap:platform="ios" height="480" src="www/res/screen/ios/screen-iphone-portrait.png" width="320" />
+    <gap:splash gap:platform="ios" height="960" src="www/res/screen/ios/screen-iphone-portrait-2x.png" width="640" />
+    <gap:splash gap:platform="ios" height="1136" src="www/res/screen/ios/screen-iphone-portrait-568h-2x.png" width="640" />
+    <gap:splash gap:platform="ios" height="1024" src="www/res/screen/ios/screen-ipad-portrait.png" width="768" />
+    <gap:splash gap:platform="ios" height="768" src="www/res/screen/ios/screen-ipad-landscape.png" width="1024" />
+    <access origin="*" />
+
+    <feature name="StatusBar">
+        <param name="ios-package" value="CDVStatusBar" onload="true" />
+    </feature>
+</widget>

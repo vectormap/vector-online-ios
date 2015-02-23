@@ -95,5 +95,11 @@
     "page",
     "store",
     "react-tap-event-plugin"
+  ],
+  "cordovaPlugins": [
+    "org.apache.cordova.console",
+    "org.apache.cordova.statusbar",
+    "org.apache.cordova.inappbrowser",
+    "org.apache.cordova.network-information"
   ]
 }

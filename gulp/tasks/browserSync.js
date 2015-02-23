@@ -4,9 +4,9 @@ var url = require('url');
 var path = require('path');
 
 gulp.task('browserSync', ['build'], function() {
-	browserSync.init(['build/**/*.js', 'index.html'], {
+	browserSync.init(['build/online-app/**/*.js', 'index.html'], {
 		server: {
-			baseDir: ['build'],
+			baseDir: ['build/online-app'],
       routes: {
         // '/node_modules': '../node_modules'
       },
