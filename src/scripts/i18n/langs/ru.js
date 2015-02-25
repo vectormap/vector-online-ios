@@ -78,6 +78,8 @@ var ru = {
   'card.select_city'              : 'Выберите город',
   'card.increase_org_effectiveness': 'Повысить эффективность организации',
   'card.load_more'                : 'Загрузить еще',
+  'card.add_to_favorites'         : 'Добавить в избранное',
+  'card.remove_from_favorites'    : 'Удалить из избранного',
 
   // geocoding/templates/popups*
   'geo.area'                      : 'Район',
@@ -106,7 +108,8 @@ var ru = {
   'city': 'Город',
   'lang': 'Язык',
   'select_city_imperative': 'Выбрать город',
-  'settings': 'Настройки'
+  'settings': 'Настройки',
+  'favorites': 'Избранное'
 };
 
 module.exports = ru;

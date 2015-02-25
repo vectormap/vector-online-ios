@@ -21,7 +21,7 @@ var DepartmentsView = React.createClass({
 
     return (
       <div key={`department-${int_id}`}>
-        <a
+        <div
           className="item item-icon-left vmp-list-item vmp-item-divider"
           key={`address-${address.int_id}`}
           onClick={onAddressClicked}
@@ -29,7 +29,7 @@ var DepartmentsView = React.createClass({
           <i className="icon ion-ios-home-outline"></i>
           <span>{addressLine}</span>
           <span className="item-desc">{address.office}</span>
-        </a>
+        </div>
 
         <ContactsView binding={departmentBinding.sub('contact')} />
       </div>

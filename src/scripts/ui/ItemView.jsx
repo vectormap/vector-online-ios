@@ -10,11 +10,11 @@ var ItemView = React.createClass({
   mixins: [M.Mixin],
 
   render: function() {
-    var collection = this.getBinding().get('item.collection');
+    var collection = this.getBinding('item').get('collection');
     var View = itemVeiws[collection];
 
     return (
-      <View binding={this.getBinding().sub('item')} />
+      <View binding={this.getBinding()} />
     );
   }
 

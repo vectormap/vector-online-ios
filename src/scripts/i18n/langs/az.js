@@ -77,7 +77,9 @@ var az = {
   'card.streets'                  : 'Küçələr',
   'card.select_city'              : 'Şəhəri seçin',
   'card.increase_org_effectiveness': 'Təşkilatın əffektliliyini artırmag',
-  'card.load_more'                : 'Load more', // TODO: translate to az
+  'card.load_more'                : 'Load more',
+  'card.add_to_favorites'         : 'Add to favorites',
+  'card.remove_from_favorites': 'Remove from favorites',
 
   // geocoding/templates/popups*
   'geo.area'                      : 'Rayon',
@@ -106,7 +108,8 @@ var az = {
   'city': 'Şəhər',
   'lang': 'Dili',
   'select_city_imperative': 'Şəhəri seçin',
-  'settings': 'Parametrlər'
+  'settings': 'Parametrlər',
+  'favorites': 'Favorites'
 };
 
 module.exports = az;

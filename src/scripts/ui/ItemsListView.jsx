@@ -27,7 +27,7 @@ var ItemsListView = React.createClass({
     }
 
     return (
-      <a className="item vmp-list-item" key={key} onTouchTap={onItemClicked}>
+      <a className="item vmp-list-item" key={key} onTouchTap={e => {e.preventDefault(); onItemClicked();}}>
         <span>{title}</span>
         <span className="item-desc">{subtitle}</span>
       </a>

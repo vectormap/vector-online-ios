@@ -82,6 +82,8 @@ var en = {
   'card.select_city'              : 'Choose the city',
   'card.increase_org_effectiveness': 'Get the most out of your advertising',
   'card.load_more'                : 'Load more',
+  'card.add_to_favorites'         : 'Add to favorites',
+  'card.remove_from_favorites'    : 'Remove from favorites',
 
   // geocoding/templates/popups*
   'geo.area'                      : 'District',
@@ -110,7 +112,8 @@ var en = {
   'city': 'City',
   'lang': 'Language',
   'select_city_imperative': 'Choose the city',
-  'settings': 'Settings'
+  'settings': 'Settings',
+  'favorites': 'Favorites'
 };
 
 module.exports = en;

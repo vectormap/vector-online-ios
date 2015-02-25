@@ -8,7 +8,7 @@ var mapController = require('map-controller');
 var status        = require('status-controller');
 
 var imm = Imm.fromJS;
-var {List} = Imm;
+var {List, Map: _Map} = Imm;
 var {Catalog}  = Api;
 var {prepareSearchResults} = require('./models/SearchModel');
 var {result} = Api;
@@ -448,6 +448,50 @@ var Controller = {
 
   getLangs () {
     return LANGS;
+  },
+
+  getBookmarks () {
+    return rootBinding.get(`bookmarks.${currentCity()}`);
+  },
+
+  addOrgToBookmarks (org) {
+    if (!org) {
+      return;
+    }
+
+    rootBinding.update(`bookmarks.${currentCity()}`, bookmarks => {
+      bookmarks = bookmarks || List();
+
+      return bookmarks.push(_Map({
+        orgId: org.get('int_id'),
+        orgTitle: org.get('title')
+      }));
+    });
+  },
+
+  removeOrgFromBookmarks (org) {
+    if (!org) {
+      return;
+    }
+
+    rootBinding.update(`bookmarks.${currentCity()}`, bookmarks => {
+      var index = this.findOrgBookmarkIndex(org);
+
+      return bookmarks.remove(index);
+    });
+  },
+
+  findOrgBookmarkIndex (org) {
+    if (org) {
+      var bookmarks = rootBinding.get(`bookmarks.${currentCity()}`);
+
+      return bookmarks && bookmarks.findIndex(
+        b => b.get('orgId') === org.get('int_id'));
+    }
+  },
+
+  isOrgInBookmarks (org) {
+    return this.findOrgBookmarkIndex(org) >= 0;
   },
 
   // router navigation ----------------------------------------------------------------------------

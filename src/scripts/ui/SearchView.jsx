@@ -4,8 +4,9 @@ var ItemView          = require('./ItemView');
 var ErrorView         = require('./ErrorView');
 var SearchResultsView = require('./SearchResultsView');
 var SearchHistoryView = require('./SearchHistoryView');
-var NoResultsView      = require('./NoResultsView');
+var NoResultsView     = require('./NoResultsView');
 var {resolveView}     = require('utils');
+var status            = require('status-controller');
 
 var searchViews = {
   'history': SearchHistoryView,
@@ -26,15 +27,22 @@ var SearchView = React.createClass({
   },
 
   render () {
-    var View = this.resolveSearchView() || SearchHistoryView;
+    var View = this.resolveSearchView();
     var searchBinding = this.getBinding().sub('search');
+    var binding = this.getBinding().get('search.view.name') === 'item' ?
+      {item: searchBinding.sub('item'), bookmarks: this.getBinding().sub('bookmarks')}
+      : searchBinding;
+
+    if (!View && !status.is('loading')) {
+      View = SearchHistoryView;
+    }
 
     if (!View) {
       return null;
     }
 
     return (
-      <View binding={searchBinding} />
+      <View binding={binding} />
     );
   }
 });

@@ -56,6 +56,7 @@ var AppState = {
   currentCity: '',
   lang: 'ru',
   pageView: 'map', // map, search, bookmarks, settings
+  bookmarks: {}, // {surgut: [{orgId: '', orgTitle: ''}, ...]}
   search: {
     view: {
       name: '', // history, results, item, noResults, error
@@ -92,11 +93,11 @@ var AppState = {
   modal: '' // citySelector, noConnection
 };
 
+AppState.firstLaunch = Store.get('firstLaunch') === undefined;
 AppState.currentCity = Store.get('currentCity') || 'surgut';
 AppState.lang = Store.get('lang') || 'ru';
 AppState.search.queryHistory = Store.get('search.queryHistory') || {};
-AppState.firstLaunch = Store.get('firstLaunch') === undefined;
-
+AppState.bookmarks = Store.get('bookmarks') || {};
 
 var Ctx = M.createContext({
   initialState: AppState,
@@ -110,7 +111,9 @@ var Ctx = M.createContext({
 window.Ctx = Ctx; // for debug
 var rootBinding = window.rootBinding = Ctx.getBinding();
 
-syncWithLocalStorage(rootBinding, ['firstLaunch', 'currentCity', 'lang', 'search.queryHistory']);
+syncWithLocalStorage(rootBinding, [
+  'firstLaunch', 'currentCity', 'lang', 'search.queryHistory', 'bookmarks'
+]);
 
 window.controller = controller;
 window.mapController = mapController;
