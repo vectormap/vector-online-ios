@@ -40,20 +40,24 @@ var MapController = {
   initMap (mapContainer) {
     map = L.map(mapContainer, {
       zoomControl: false,
-      attributionControl: false
+      attributionControl: false,
+      // inertiaDeceleration: 10000,
+      inertiaMaxSpeed: 6000,
+      // zoomAnimation: false,
+      markerZoomAnimation: false
     });
 
     map.addControl(new L.Control.Zoom({
       zoomInTitle: '',
       zoomOutTitle: '',
-      position: 'topright',
+      position: 'topright'
     }));
 
     L.tileLayer(AppConfig.map.tilesUrl, {
       minZoom: AppConfig.map.minZoom,
       maxZoom: AppConfig.map.maxZoom,
       detectRetina: true,
-      // updateWhenIdle: false
+      updateWhenIdle: false
     }).addTo(map);
 
     markersLayer.addTo(map);
