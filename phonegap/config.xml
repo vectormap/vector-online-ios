@@ -26,6 +26,9 @@
     <preference name="StatusBarStyle" value="black" />
     <preference name="StatusBarBackgroundColor" value="#f8f8f8" />
 
+    <preference name="SplashScreen" value="screen" />
+    <preference name="SplashScreenDelay" value="10000" />
+
     <preference name="prerendered-icon" value="true" />
     <preference name="stay-in-webview" value="false" />
     <!-- <preference name="ios-statusbarstyle" value="black-translucent" /> -->
@@ -34,17 +37,12 @@
     <preference name="show-splash-screen-spinner" value="true" />
     <preference name="auto-hide-splash-screen" value="true" />
     <preference name="disable-cursor" value="false" />
-    <icon src="icon.png" />
 
     <gap:plugin name="org.apache.cordova.network-information" />
     <gap:plugin name="org.apache.cordova.console" />
     <gap:plugin name="org.apache.cordova.statusbar" />
     <gap:plugin name="org.apache.cordova.inappbrowser" />
-
-    <!-- <icon gap:platform="ios" height="57" src="www/res/icon/ios/icon-57.png" width="57" />
-    <icon gap:platform="ios" height="72" src="www/res/icon/ios/icon-72.png" width="72" />
-    <icon gap:platform="ios" height="114" src="www/res/icon/ios/icon-57-2x.png" width="114" />
-    <icon gap:platform="ios" height="144" src="www/res/icon/ios/icon-72-2x.png" width="144" /> -->
+    <gap:plugin name="org.apache.cordova.splashscreen" />
 
     <icon gap:platform="ios" width="120" height="120" src="www/res/icon/ios/Icon-60@2x.png" />
     <icon gap:platform="ios" width="180" height="180" src="www/res/icon/ios/Icon-60@3x.png" />
@@ -54,14 +52,30 @@
     <icon gap:platform="ios" width="80" height="80" src="www/res/icon/ios/Icon-Small-40@2x.png" />
     <icon gap:platform="ios" width="120" height="120" src="www/res/icon/ios/Icon-Small-40@3x.png" />
 
-    <gap:splash gap:platform="ios" height="480" src="www/res/screen/ios/screen-iphone-portrait.png" width="320" />
-    <gap:splash gap:platform="ios" height="960" src="www/res/screen/ios/screen-iphone-portrait-2x.png" width="640" />
-    <gap:splash gap:platform="ios" height="1136" src="www/res/screen/ios/screen-iphone-portrait-568h-2x.png" width="640" />
-    <gap:splash gap:platform="ios" height="1024" src="www/res/screen/ios/screen-ipad-portrait.png" width="768" />
-    <gap:splash gap:platform="ios" height="768" src="www/res/screen/ios/screen-ipad-landscape.png" width="1024" />
+    <!--
+    320x480(2x) ->   640x960: screens/Default@2x~iphone.png
+    320x568(2x) ->  640x1136: screens/Default-568h@2x~iphone.png
+    375x667(2x) ->  750x1334: screens/Default-667h@2x~iphone.png
+    414x736(3x) -> 1242x2208: screens/Default-736h@3x~iphone.png
+    768x1024(1x) ->  768x1024: screens/Default-Portrait~ipad.png
+    1024x768(1x) ->  1024x768: screens/Default-Landscape~ipad.png
+    768x1024(2x) -> 1536x2048: screens/Default-Portrait@2x~ipad.png
+    1024x768(2x) -> 2048x1536: screens/Default-Landscape@2x~ipad.png
+     -->
+
+    <gap:splash gap:platform="ios" width="640" height="960"   src="www/res/screen/ios/Default@2x~iphone.png" />
+    <gap:splash gap:platform="ios" width="640" height="1136"  src="www/res/screen/ios/Default-568h@2x~iphone.png" />
+    <gap:splash gap:platform="ios" width="750" height="1334"  src="www/res/screen/ios/Default-667h@2x~iphone.png" />
+    <gap:splash gap:platform="ios" width="1242" height="2208" src="www/res/screen/ios/Default-736h@3x~iphone.png" />
+    <gap:splash gap:platform="ios" width="768" height="1024" src="www/res/screen/ios/Default-Portrait~ipad.png" />
+    <gap:splash gap:platform="ios" width="1024" height="768" src="www/res/screen/ios/Default-Landscape~ipad.png" />
+    <gap:splash gap:platform="ios" width="1536" height="2048" src="www/res/screen/ios/Default-Portrait@2x~ipad.png" />
+    <gap:splash gap:platform="ios" width="2048" height="1536" src="www/res/screen/ios/Default-Landscape@2x~ipad.png" />
+
+
     <access origin="*" />
 
-    <feature name="StatusBar">
+    <!-- <feature name="StatusBar">
         <param name="ios-package" value="CDVStatusBar" onload="true" />
-    </feature>
+    </feature> -->
 </widget>

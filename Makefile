@@ -7,12 +7,16 @@ pg-clean:
 
 pg-build: pg-init
 	gulp browserify-external-libs build
-	cp -r build/online-app/* build/phonegap/www/
+	make pg-copy-app
 	cd build/phonegap && phonegap build
 
 pg-emulate:
 	cd build/phonegap && phonegap emulate ios
 
-# pg-copy-app:
+pg-device:
+	cd build/phonegap && phonegap run ios --device # --release
 
-# .PHONY: phonegap
+pg-copy-app:
+	cp -r build/online-app/* build/phonegap/www/
+
+.PHONY: phonegap
