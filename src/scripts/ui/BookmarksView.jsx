@@ -12,17 +12,18 @@ var SettingsView = React.createClass({
     var orgId = bookmark.get('orgId');
 
     return (
-      <div className="item item-icon-left item-icon-right" key={orgId}>
-        <span className="icon ion-ios-star vmp-fav-highlight"></span>
-        <span
-          className="vmp-active-text vmp-list-item"
-          onTouchTap={onTouch(navToSearchByItem, controller, 'organizations', orgId)}
-        >
+      <div
+        className="item item-icon-left item-icon-right"
+        key={orgId}
+        onTouchTap={onTouch(navToSearchByItem, controller, 'organizations', orgId)}
+      >
+        <span className="icon inactive ion-ios-star vmp-fav-highlight"></span>
+        <span className="vmp-active-text vmp-list-item">
           {bookmark.get('orgTitle')}
         </span>
         <span
           className="icon ion-ios-close-empty"
-          onTouchTap={removeOrgFromBookmarks.bind(controller, _Map({int_id: orgId}))}></span>
+          onTouchTap={onTouch(removeOrgFromBookmarks, controller, _Map({int_id: orgId}))}></span>
       </div>
     );
   },
