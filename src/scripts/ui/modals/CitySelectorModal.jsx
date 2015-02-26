@@ -24,10 +24,10 @@ var CitySelectorModal = React.createClass({
     });
 
     return (
-      <a className={cls} key={`city-${name}`}
+      <div className={cls} key={`city-${name}`}
         onTouchTap={this._switchCity.bind(this, alias, toggleModal)}>
         {name}
-      </a>
+      </div>
     );
   },
 

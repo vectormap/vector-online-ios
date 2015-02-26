@@ -2,7 +2,8 @@ var React = require('react/addons');
 var M = require('morearty');
 var controller = require('controller');
 var {t, getBookmarks, navToSearchByItem, removeOrgFromBookmarks} = controller;
-var {List, Map} = require('immutable');
+var {List, Map: _Map} = require('immutable');
+var {onTouch} = require('utils');
 
 var SettingsView = React.createClass({
   mixins: [M.Mixin],
@@ -15,13 +16,13 @@ var SettingsView = React.createClass({
         <span className="icon ion-ios-star vmp-fav-highlight"></span>
         <span
           className="vmp-active-text vmp-list-item"
-          onTouchTap={navToSearchByItem.bind(controller, 'organizations', orgId)}
+          onTouchTap={onTouch(navToSearchByItem, controller, 'organizations', orgId)}
         >
           {bookmark.get('orgTitle')}
         </span>
         <span
           className="icon ion-ios-close-empty"
-          onTouchTap={removeOrgFromBookmarks.bind(controller, Map({int_id: orgId}))}></span>
+          onTouchTap={removeOrgFromBookmarks.bind(controller, _Map({int_id: orgId}))}></span>
       </div>
     );
   },
@@ -35,7 +36,7 @@ var SettingsView = React.createClass({
           <h1 className="title">{t('favorites')}</h1>
         </div>
         <div className="list has-header">
-          {bookmarks && bookmarks.toJS()}
+          {bookmarks.toJS()}
         </div>
       </div>
     );

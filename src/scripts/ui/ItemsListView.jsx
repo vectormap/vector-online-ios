@@ -3,6 +3,7 @@ var M = require('morearty');
 var models = require('models');
 var collections = require('models/collections');
 var status = require('status-controller');
+var {onTouch} = require('utils');
 
 var controller = require('controller');
 var {
@@ -27,10 +28,10 @@ var ItemsListView = React.createClass({
     }
 
     return (
-      <a className="item vmp-list-item" key={key} onTouchTap={e => {e.preventDefault(); onItemClicked();}}>
+      <div className="item vmp-list-item" key={key} onTouchTap={onTouch(onItemClicked)}>
         <span>{title}</span>
         <span className="item-desc">{subtitle}</span>
-      </a>
+      </div>
     );
   },
 

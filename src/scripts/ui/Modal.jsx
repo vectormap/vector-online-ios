@@ -3,6 +3,8 @@ var M     = require('morearty');
 
 var {CSSTransitionGroup} = React.addons;
 var cx = React.addons.classSet;
+var {onTouch} = require('utils');
+var {toggle} = M.Callback;
 
 var Modal = React.createClass({
   mixins: [M.Mixin],
@@ -39,7 +41,7 @@ var Modal = React.createClass({
               {header &&
                 <button
                   className="button button-clear vmp-modal-close-button"
-                  onTouchEnd={e => {e.preventDefault(); M.Util.toggleBinding(modalTriggerBinding);}}
+                  onTouchEnd={onTouch(toggle(modalTriggerBinding))}
                 >
                   <i className="ion-ios-close-outline vmp-modal-close-button-icon"></i>
                 </button>}

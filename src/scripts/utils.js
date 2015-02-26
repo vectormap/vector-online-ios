@@ -26,5 +26,13 @@ module.exports = {
 
   openUrl (href) {
     window.open(href, '_system', '');
+  },
+
+  onTouch (callback, context, ...args) {
+    return e => {
+      e.preventDefault();
+      e.stopPropagation();
+      callback.apply(context, args);
+    };
   }
 };

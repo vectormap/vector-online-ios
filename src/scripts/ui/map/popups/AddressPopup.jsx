@@ -3,6 +3,7 @@ var M = require('morearty');
 var {formatAddress} = require('models/AddressModel');
 var controller = require('controller');
 var {t, navToSearchByItem} = controller;
+var {onTouch} = require('utils');
 
 var AddressPopup = React.createClass({
   mixins: [M.Mixin],
@@ -63,7 +64,7 @@ var AddressPopup = React.createClass({
             <div className="vmp-center vmp-map-popup-row vmp-map-popup-button">
               <button
                 className="button button-small button-outline button-positive"
-                onTouchEnd={navToSearchByItem.bind(controller, 'addresses', address.int_id)}
+                onTouchEnd={onTouch(navToSearchByItem, controller, 'addresses', address.int_id)}
                 >
                 {`${t('geo.show_orgs')} (${address.orgs_count})`}
               </button>
