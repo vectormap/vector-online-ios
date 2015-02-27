@@ -1,22 +1,32 @@
-pg-init:
+init:
 	cp -r phonegap build
 	-cd build/phonegap && phonegap platform add ios
 
-pg-clean:
+clean:
 	rm -rf build/phonegap
 
-pg-build: pg-init
-	gulp browserify-external-libs build
-	make pg-copy-app
+build: init
 	cd build/phonegap && phonegap build
 
-pg-emulate:
-	cd build/phonegap && phonegap emulate ios
+build-all: init
+	gulp browserify-external-libs build
+	make copy-app
+	cd build/phonegap && phonegap build
 
-pg-device:
+emulate: copy-app
+	cd build/phonegap && phonegap build &&  phonegap emulate ios
+
+device: copy-app
+	#-pkill lldb
 	cd build/phonegap && phonegap run ios --device # --release
 
-pg-copy-app:
+copy-app:
 	cp -r build/online-app/* build/phonegap/www/
+
+install-plugins:
+	cd build/phonegap && node ./scripts/install_plugins.js
+
+rm-plugins:
+	cd build/phonegap && node ./scripts/rm_plugins.js
 
 .PHONY: phonegap
