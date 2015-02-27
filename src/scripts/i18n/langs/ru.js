@@ -109,7 +109,9 @@ var ru = {
   'lang': 'Язык',
   'select_city_imperative': 'Выбрать город',
   'settings': 'Настройки',
-  'favorites': 'Избранное'
+  'favorites': 'Избранное',
+  'connection_not_available': 'Отсутствует подключение к интернету',
+  'try_again': 'Попробовать еще раз'
 };
 
 module.exports = ru;

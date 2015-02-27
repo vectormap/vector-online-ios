@@ -168,14 +168,23 @@ var Controller = {
       return;
     }
 
-    return Api
-      .getCityConfig(city)
+    return P.resolve(Api.getCityConfig(city))
       .then(config => {
         rootBinding.set('cityConfig', imm(config));
         rootBinding.set('currentCity', config.city.alias);
         mapController.updateMap();
       })
       .catch(status.error);
+  },
+
+  loadAllCityConfigs () {
+    status.loading();
+
+    P.resolve(Api.getAllCityConfigs()).then(cityConfigs => {
+      rootBinding.set('allCityConfigs', imm(cityConfigs));
+      status.clear();
+    })
+    .catch(status.error);
   },
 
   onSearchFocused () {
@@ -393,14 +402,8 @@ var Controller = {
   },
 
   showCitySelectorModal () {
-    status.loading();
     rootBinding.set('modal', 'citySelector');
-
-    P.resolve(Api.getAllCityConfigs()).then(cityConfigs => {
-      rootBinding.set('allCityConfigs', imm(cityConfigs));
-      status.clear();
-    })
-    .catch(status.error);
+    this.loadAllCityConfigs();
   },
 
   switchCity (cityAlias) {

@@ -1,11 +1,12 @@
-var M             = require('morearty');
-var React         = require('react/addons');
-var SearchBar     = require('./SearchBar');
-var MapView       = require('./map/MapView');
-var SearchView    = require('./SearchView');
-var BookmarksView = require('./BookmarksView');
-var SettingsView  = require('./SettingsView');
-var ActiveModal   = require('./ActiveModal');
+var M                 = require('morearty');
+var React             = require('react/addons');
+var SearchBar         = require('./SearchBar');
+var MapView           = require('./map/MapView');
+var SearchView        = require('./SearchView');
+var BookmarksView     = require('./BookmarksView');
+var SettingsView      = require('./SettingsView');
+var ActiveModal       = require('./ActiveModal');
+var NoConnectionModal = require('./modals/NoConnectionModal');
 
 var cx = React.addons.classSet;
 var pages = ['map', 'search', 'bookmarks', 'settings'];
@@ -70,6 +71,8 @@ var MainLayout = React.createClass({
           </div>
 
           <ActiveModal binding={binding} />
+          <NoConnectionModal binding={binding} />
+
           <div className="tabs tabs-icon-only disable-user-behavior vmp-tabs">
             {tabs}
           </div>

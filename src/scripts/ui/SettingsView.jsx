@@ -1,7 +1,7 @@
 var React = require('react/addons');
 var M = require('morearty');
 var controller = require('controller');
-var {setLang, t} = controller;
+var {setLang, t, showCitySelectorModal} = controller;
 var cx = React.addons.classSet;
 
 var SettingsView = React.createClass({
@@ -36,7 +36,7 @@ var SettingsView = React.createClass({
           <a className="item item-divider">
             <span>{t('city')}</span>
           </a>
-          <a className="item vmp-list-item" onTouchTap={controller.showCitySelectorModal}>
+          <a className="item vmp-list-item" onTouchTap={showCitySelectorModal.bind(controller)}>
             <span>{cityName}</span>
             <span className="item-note">{t('select_city_imperative')}</span>
           </a>

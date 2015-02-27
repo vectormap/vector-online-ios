@@ -17,18 +17,19 @@ M.Callback.toggle = function (binding, subpath) {
   };
 };
 
-var _                    = require('lodash');
-var React                = require('react/addons');
-var Imm                  = require('immutable');
-var moment               = require('moment');
-var L                    = require('leaflet');
-var api                  = require('api');
-var MainLayout           = require('./ui/MainLayout');
-var controller           = require('./controller');
-var mapController        = require('map-controller');
-var statusController     = require('status-controller');
-var Store                = require('store');
-var injectTapEventPlugin = require("react-tap-event-plugin");
+var _                        = require('lodash');
+var React                    = require('react/addons');
+var Imm                      = require('immutable');
+var moment                   = require('moment');
+var L                        = require('leaflet');
+var api                      = require('api');
+var MainLayout               = require('./ui/MainLayout');
+var controller               = require('./controller');
+var mapController            = require('map-controller');
+var statusController         = require('status-controller');
+var networkMonitorController = require('network-monitor-controller');
+var Store                    = require('store');
+var injectTapEventPlugin     = require("react-tap-event-plugin");
 
 L.Icon.Default.imagePath = 'images';
 
@@ -90,14 +91,15 @@ var AppState = {
     }
   },
   status: '',
-  modal: '' // citySelector, noConnection
+  noConnection: false, // show NoConnectionModal if connection is absent
+  modal: '' // citySelector
 };
 
-AppState.firstLaunch = Store.get('firstLaunch') === undefined;
-AppState.currentCity = Store.get('currentCity') || 'surgut';
-AppState.lang = Store.get('lang') || 'ru';
+AppState.firstLaunch         = Store.get('firstLaunch') === undefined;
+AppState.currentCity         = Store.get('currentCity') || 'surgut';
+AppState.lang                = Store.get('lang') || 'ru';
 AppState.search.queryHistory = Store.get('search.queryHistory') || {};
-AppState.bookmarks = Store.get('bookmarks') || {};
+AppState.bookmarks           = Store.get('bookmarks') || {};
 
 var Ctx = M.createContext({
   initialState: AppState,
@@ -137,6 +139,8 @@ module.exports = {
     controller.init(rootBinding);
     mapController.init(rootBinding);
     statusController.init(rootBinding.sub('status'));
+    networkMonitorController.init(rootBinding);
+
     controller.start();
 
     injectTapEventPlugin();

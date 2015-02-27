@@ -9,17 +9,6 @@ var {onTouch} = require('utils');
 var SearchHistoryView = React.createClass({
   mixins: [M.Mixin],
 
-
-  fillSearchFieldWithHistoryItem (e, query) {
-    e.stopPropagation();
-    setSearchQuery(query);
-  },
-
-  deleteHistoryItem (e, index) {
-    e.stopPropagation();
-    deleteHistoryItem(index);
-  },
-
   renderHistoryItem (query, i) {
     return (
       <div
@@ -27,9 +16,9 @@ var SearchHistoryView = React.createClass({
         key={`search-history-${i}`}
         onTouchTap={onTouch(searchByQuery, controller, query)}
       >
-        <span className="icon ion-ios-close-empty" onTouchTap={e => this.deleteHistoryItem(e, i)}></span>
+        <span className="icon ion-ios-arrow-thin-up" onTouchTap={onTouch(setSearchQuery, controller, query)}></span>
         <span className="vmp-active-text vmp-list-item">{query}</span>
-        <span className="icon ion-ios-arrow-thin-up" onTouchTap={e => this.fillSearchFieldWithHistoryItem(e, query)}></span>
+        <span className="icon ion-ios-close-empty" onTouchTap={onTouch(deleteHistoryItem, controller, i)}></span>
       </div>
     );
   },

@@ -113,7 +113,9 @@ var en = {
   'lang': 'Language',
   'select_city_imperative': 'Choose the city',
   'settings': 'Settings',
-  'favorites': 'Favorites'
+  'favorites': 'Favorites',
+  'connection_not_available': 'Internet connection is not available',
+  'try_again': 'Try again'
 };
 
 module.exports = en;

@@ -2,11 +2,9 @@ var React = require('react');
 var M = require('morearty');
 var Modal = require('./Modal');
 var CitySelectorModal = require('./modals/CitySelectorModal');
-var NoConnectionModal = require('./modals/NoConnectionModal');
 
 var modals = {
-  'citySelector': CitySelectorModal,
-  'noConnection': NoConnectionModal
+  'citySelector': CitySelectorModal
 };
 
 var ActiveModal = React.createClass({

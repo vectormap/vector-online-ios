@@ -109,7 +109,9 @@ var az = {
   'lang': 'Dili',
   'select_city_imperative': 'Şəhəri seçin',
   'settings': 'Parametrlər',
-  'favorites': 'Favorites'
+  'favorites': 'Favorites',
+  'connection_not_available': 'Internet connection is not available',
+  'try_again': 'Try again'
 };
 
 module.exports = az;
