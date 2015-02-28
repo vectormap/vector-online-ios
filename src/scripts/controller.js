@@ -65,6 +65,23 @@ function _hasNextPage (result, currentPage) {
   return result && (currentPage < result.data.page_count);
 }
 
+function detectLang () {
+  return new P(resolve => {
+    if (navigator.globalization) {
+      navigator.globalization.getPreferredLanguage(
+        ({value = ''}) => {
+          value.indexOf('en') >= 0 ? resolve('en') : resolve('ru');
+        },
+        err => {
+          resolve('ru');
+        });
+    } else {
+      resolve('ru');
+    }
+  });
+
+}
+
 var Controller = {
   init (binding) {
     rootBinding    = binding;
@@ -154,8 +171,14 @@ var Controller = {
 
   onFirstLaunch () {
     if (rootBinding.get('firstLaunch')) {
+      console.log('[First launch]');
+
       rootBinding.set('firstLaunch', false);
-      this.showCitySelectorModal();
+
+      detectLang().then(lang => {
+        rootBinding.set('lang', lang);
+        this.showCitySelectorModal();
+      });
     }
   },
 
