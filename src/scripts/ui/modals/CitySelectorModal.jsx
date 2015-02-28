@@ -5,6 +5,7 @@ var controller = require('controller');
 var cx = React.addons.classSet;
 var {toggle} = M.Callback;
 var {t} = controller;
+var {onTouch} = require('utils');
 
 var CitySelectorModal = React.createClass({
   mixins: [M.Mixin],
@@ -25,7 +26,7 @@ var CitySelectorModal = React.createClass({
 
     return (
       <div className={cls} key={`city-${name}`}
-        onTouchTap={this._switchCity.bind(this, alias, toggleModal)}>
+        onTouchTap={onTouch(this._switchCity.bind(this, alias, toggleModal))}>
         {name}
       </div>
     );
