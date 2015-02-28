@@ -5,7 +5,7 @@ init:
 clean:
 	rm -rf build/phonegap
 
-build: init
+build: 
 	cd build/phonegap && phonegap build
 
 build-all: init
@@ -29,4 +29,4 @@ install-plugins:
 rm-plugins:
 	cd build/phonegap && node ./scripts/rm_plugins.js
 
-.PHONY: phonegap
+.PHONY: phonegap build
