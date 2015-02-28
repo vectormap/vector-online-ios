@@ -3,12 +3,32 @@ var M = require('morearty');
 var ContactsView = require('./ContactsView');
 var DepartmentsView = require('./DepartmentsView');
 var controller = require('controller');
+var {List} = require('immutable');
+var {onTouch} = require('utils');
 
-var {addOrgToBookmarks, isOrgInBookmarks, removeOrgFromBookmarks, t} = controller;
+var {addOrgToBookmarks, removeOrgFromBookmarks, t, navToSearchByItem} = controller;
 var cx = React.addons.classSet;
 
 var OrganizationCard = React.createClass({
   mixins: [M.Mixin],
+
+  renderRubrics (rubrics = List()) {
+    return rubrics.map((r, i) => {
+      var id = r.get('int_id');
+      var isLast = i === rubrics.size - 1;
+
+      return (
+        <span
+          className="positive vmp-active-text vmp-list-item"
+          onTouchTap={onTouch(navToSearchByItem, controller, 'rubrics', id)}
+          key={`rubric-${id}`}
+        >
+          {r.get('name')}
+          {!isLast && <span>, </span>}
+        </span>
+      );
+    });
+  },
 
   render () {
     var orgBinding = this.getBinding('item').sub('data.result.0');
@@ -33,6 +53,8 @@ var OrganizationCard = React.createClass({
       favOnClick = addOrgToBookmarks.bind(controller, org);
     }
 
+    var rubrics = this.renderRubrics(org.get('rubric'));
+
     // for context ads
     // <div dangerouslySetInnerHTML={{__html: 'First &middot; Second'}} />
 
@@ -53,12 +75,12 @@ var OrganizationCard = React.createClass({
             </div>
 
             <ContactsView binding={commonContactsBinding} />
+            <DepartmentsView binding={orgBinding.sub('department')} organization={org.toJS()} />
 
-            <div className="item item-text">
-              [TODO] Справочники, разработка программного обеспечения
+            <div className="item item-text vmp-rubrics-item">
+              {rubrics.toJS()}
             </div>
 
-            <DepartmentsView binding={orgBinding.sub('department')} organization={org.toJS()} />
           </div>
         </div>
       </div>
