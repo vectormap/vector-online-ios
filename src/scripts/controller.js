@@ -70,7 +70,7 @@ function detectLang () {
     if (navigator.globalization) {
       navigator.globalization.getPreferredLanguage(
         ({value = ''}) => {
-          value.indexOf('en') >= 0 ? resolve('en') : resolve('ru');
+          value.toLowerCase().indexOf('ru') >= 0 ? resolve('ru') : resolve('en');
         },
         err => {
           resolve('ru');
