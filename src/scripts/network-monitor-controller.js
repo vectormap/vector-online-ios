@@ -14,12 +14,12 @@ var NetworkMonitorController = {
     rootBinding = binding;
     noConnectionBinding = binding.sub('noConnection');
 
-    document.addEventListener("offline", () => {
+    document.addEventListener('offline', () => {
       console.log('I am offline');
       rootBinding.set('noConnection', true);
     }, false);
 
-    document.addEventListener("online", () => {
+    document.addEventListener('online', () => {
       console.log('I am online');
       rootBinding.set('noConnection', false);
       reload();

@@ -190,6 +190,32 @@ $ionicons-font-path: "./fonts" !default;
   padding-top: 0;
 }
 
-.vmp-rubrics-item {
+.vmp-rubrics-item, .vmp-schedule {
   line-height: 23px;
+}
+
+.vmp-cell-weekday {
+  width: 38px;
+}
+
+.vmp-cell-main-time {
+  width: 125px;
+}
+
+.vmp-schedule-break-desc {
+  margin-left: 70px;
+}
+
+.vmp-schedule-current-day-row {
+  @extend .positive;
+  font-weight: bold;
+}
+
+.vmp-schedule-table {
+  border-top: none;
+  padding-top: 0;
+}
+
+.vmp-schedule-flow-desc {
+  font-size: 10pt;
 }

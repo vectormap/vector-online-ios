@@ -7,7 +7,7 @@ function _get (url, data) {
   return qwest.get(url, data, {
     responseType: 'json',
     cache: true,
-    retries: 1,
+    retries: 3,
     timeout: 3000
   });
 }

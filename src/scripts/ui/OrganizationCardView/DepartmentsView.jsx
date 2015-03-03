@@ -1,6 +1,7 @@
 var React = require('react');
 var M = require('morearty');
 var ContactsView = require('./ContactsView');
+var ScheduleView = require('./ScheduleView');
 var controller = require('controller');
 var {formatAddress, isValidAddress} = require('models/AddressModel');
 var {navToMapWithPopup} = controller;
@@ -32,6 +33,7 @@ var DepartmentsView = React.createClass({
         </div>
 
         <ContactsView binding={departmentBinding.sub('contact')} />
+        <ScheduleView binding={departmentBinding.sub('schedule')} departmentId={int_id} />
       </div>
     );
   },
