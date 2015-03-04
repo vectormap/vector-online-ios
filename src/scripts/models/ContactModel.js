@@ -1,4 +1,5 @@
 var _ = require('lodash');
+var {getCityConfig} = require('controller');
 
 var contactHrefs = {
   desktop: {
@@ -23,6 +24,12 @@ var contactHrefs = {
 var ContactModel = {
   contactHref (contact, platform = 'desktop') {
     var hrefValue = (contact.value || '').replace('http://', '');
+    var phonePrefix = (getCityConfig() && getCityConfig().getIn(['city', 'phone_prefix'])) || '';
+
+    if (contact.type === 'phone' && hrefValue.length > 4 && hrefValue.length <= 7) {
+      hrefValue = phonePrefix + hrefValue;
+    }
+
     var href = contactHrefs[platform][contact.type].replace('%s', hrefValue);
 
     return href;
