@@ -23,7 +23,7 @@ function formatHours ({begin, end} = {}) {
   begin = moment.utc(begin).format('HH:mm');
   end = moment.utc(end).format('HH:mm');
 
-  return `${begin} — ${end}`;
+  return `${begin}—${end}`;
 }
 
 var ScheduleModel = {
@@ -53,11 +53,11 @@ var ScheduleModel = {
         }
 
         if (schedule.mode === 'Free') {
-          mainTime = 'Выходной';
+          mainTime = t('card.schedule.day_off');
         }
 
         if (isFlow) {
-          mainTime = 'Свободный график';
+          mainTime = t('card.schedule.free');
         }
 
         scheduleInfo = {

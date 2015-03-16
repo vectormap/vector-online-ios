@@ -199,11 +199,11 @@ $ionicons-font-path: "./fonts" !default;
 }
 
 .vmp-cell-main-time {
-  width: 125px;
+  width: 110px;
 }
 
 .vmp-schedule-break-desc {
-  margin-left: 70px;
+  margin-left: 56px;
 }
 
 .vmp-schedule-current-day-row {
@@ -218,4 +218,12 @@ $ionicons-font-path: "./fonts" !default;
 
 .vmp-schedule-flow-desc {
   font-size: 10pt;
+}
+
+.vmp-schedule-current {
+  font-size: 12pt;
+
+  &.open {
+    // padding-bottom: 3px;
+  }
 }

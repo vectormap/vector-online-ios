@@ -1,6 +1,7 @@
 var _ = require('lodash');
 var React = require('react/addons');
 var M = require('morearty');
+var {t} = require('controller');
 
 var cx = React.addons.classSet;
 var {
@@ -52,11 +53,15 @@ var ScheduleView = React.createClass({
     var currentScheduleItem            = this.renderSchedule({mainTime, breakTime});
     var showTableMeta                  = this.getBinding().meta('showTable');
     var showTable                      = showTableMeta.get();
+    var currentCls = cx({
+      'item item-icon-left item-icon-right vmp-list-item vmp-schedule-current': true,
+      'open': showTable
+    });
 
     return (
       <div>
         <div
-          className="item item-icon-left item-icon-right vmp-list-item"
+          className={currentCls}
           onTouchTap={isDaily ? null : toggle(showTableMeta)}
         >
           <i className="icon ion-ios-time-outline"></i>
@@ -66,10 +71,10 @@ var ScheduleView = React.createClass({
           <span>{currentScheduleItem}</span>
           <div className="item-desc">
             {!isDaily &&
-              <span>Сегодня</span>}
+              <span>{t('today')}</span>}
 
             {breakTime &&
-              <span className="vmp-schedule-break-desc">Обед</span>}
+              <span className="vmp-schedule-break-desc">{t('card.schedule.lunch_time')}</span>}
           </div>
           {!isDaily &&
             <i

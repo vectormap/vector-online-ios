@@ -24,7 +24,7 @@ var NoConnectionModal = React.createClass({
           <div className="content has-header">
             <div className="card">
               <div className="item item-text-wrap vmp-center">
-                <span className="vmp-title">Проверьте подключение к интернету</span>
+                <span className="vmp-title">{t('check_internet_connection')}</span>
               </div>
               <div className="item try-again vmp-center">
                 <button className="button button-small button-outline button-positive" onTouchTap={tryToConnect}>

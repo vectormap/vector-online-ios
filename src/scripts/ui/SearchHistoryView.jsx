@@ -2,7 +2,7 @@ var React = require('react');
 var M = require('morearty');
 var controller = require('controller');
 var {
-  setSearchQuery, deleteHistoryItem, searchByQuery, getCurrentSearchHistory
+  setSearchQuery, deleteHistoryItem, searchByQuery, getCurrentSearchHistory, t
 } = controller;
 var {onTouch} = require('utils');
 
@@ -27,7 +27,7 @@ var SearchHistoryView = React.createClass({
     return (
       <div className="card">
         <div className="item item-text-wrap vmp-center">
-          <span className="vmp-title">Здесь будет храниться ваша история поиска</span>
+          <span className="vmp-title">{t('search_history_info')}</span>
         </div>
       </div>
     );

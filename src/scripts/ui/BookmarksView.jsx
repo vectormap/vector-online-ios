@@ -32,12 +32,22 @@ var SettingsView = React.createClass({
     var bookmarks = (getBookmarks() || List()).map(this.renderBookmark);
 
     return (
-      <div className="pane vmp-list overflow-scroll">
+      <div className="pane">
         <div className="bar-stable bar bar-header disable-user-behavior">
           <h1 className="title">{t('favorites')}</h1>
         </div>
-        <div className="list has-header">
-          {bookmarks.toJS()}
+
+        {bookmarks.size === 0 &&
+          <div className="content card has-header">
+            <div className="item item-text-wrap vmp-center">
+              <span className="vmp-title">{t('bookmarks_info')}</span>
+            </div>
+          </div>}
+
+        <div className="vmp-list overflow-scroll">
+          <div className="list has-header">
+            {bookmarks.toJS()}
+          </div>
         </div>
       </div>
     );
