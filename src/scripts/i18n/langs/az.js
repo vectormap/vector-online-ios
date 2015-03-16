@@ -37,6 +37,8 @@ var az = {
   'card.schedule.free'            : 'Sərbəst qrafik',
   'card.schedule.round_the_clock' : '24 saat',
   'card.schedule.nonstop'         : 'Fasiləsiz',
+  'card.schedule.day_off'         : 'Day off',
+  'card.schedule.lunch_time'      : 'Lunchtime',
 
   // infocard/templates/search.html
   'card.search.try_to_search_hint': 'Nə isə axtarmağa cəhd edin',
@@ -76,10 +78,10 @@ var az = {
   'card.street'                   : 'Küçə',
   'card.streets'                  : 'Küçələr',
   'card.select_city'              : 'Şəhəri seçin',
-  'card.increase_org_effectiveness': 'Təşkilatın əffektliliyini artırmag',
+  'card.increase_org_effectiveness': 'Təşkilatın effektliliyini artırmag',
   'card.load_more'                : 'Load more',
   'card.add_to_favorites'         : 'Add to favorites',
-  'card.remove_from_favorites': 'Remove from favorites',
+  'card.remove_from_favorites'    : 'Remove from favorites',
 
   // geocoding/templates/popups*
   'geo.area'                      : 'Rayon',
@@ -111,7 +113,10 @@ var az = {
   'settings': 'Parametrlər',
   'favorites': 'Favorites',
   'connection_not_available': 'Internet connection is not available',
-  'try_again': 'Try again'
+  'check_internet_connection': 'Check your internet connection',
+  'try_again': 'Try again',
+  'search_history_info': 'Your search history will be saved here',
+  'bookmarks_info': 'You have not added any organization to favorites'
 };
 
 module.exports = az;

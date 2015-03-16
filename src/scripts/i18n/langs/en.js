@@ -41,6 +41,8 @@ var en = {
   'card.schedule.free'            : 'Flexible hours',
   'card.schedule.round_the_clock' : '24 hours a day',
   'card.schedule.nonstop'         : 'Without a break',
+  'card.schedule.day_off'         : 'Day off',
+  'card.schedule.lunch_time'      : 'Обед',
 
   // infocard/templates/search.html
   'card.search.try_to_search_hint': 'Try to search for something',
@@ -79,7 +81,7 @@ var en = {
   'card.addresses'                : 'Addresses',
   'card.street'                   : 'Street',
   'card.streets'                  : 'Streets',
-  'card.select_city'              : 'Choose the city',
+  'card.select_city'              : 'Choose a city',
   'card.increase_org_effectiveness': 'Get the most out of your advertising',
   'card.load_more'                : 'Load more',
   'card.add_to_favorites'         : 'Add to favorites',
@@ -111,11 +113,14 @@ var en = {
   'cancel': 'Cancel',
   'city': 'City',
   'lang': 'Language',
-  'select_city_imperative': 'Choose the city',
+  'select_city_imperative': 'Choose a city',
   'settings': 'Settings',
   'favorites': 'Favorites',
-  'connection_not_available': 'Internet connection is not available',
-  'try_again': 'Try again'
+  'connection_not_available': 'Connection is not available',
+  'check_internet_connection': 'Check your internet connection',
+  'try_again': 'Try again',
+  'search_history_info': 'Your search history will be saved here',
+  'bookmarks_info': 'You have not added any organization to favorites'
 };
 
 module.exports = en;

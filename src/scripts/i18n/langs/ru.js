@@ -37,6 +37,8 @@ var ru = {
   'card.schedule.free'            : 'Свободный график',
   'card.schedule.round_the_clock' : 'Круглосуточно',
   'card.schedule.nonstop'         : 'Без перерыва',
+  'card.schedule.day_off'         : 'Выходной',
+  'card.schedule.lunch_time'      : 'Обед',
 
   // infocard/templates/search.html
   'card.search.try_to_search_hint': 'Попробуйте что-нибудь поискать',
@@ -110,8 +112,12 @@ var ru = {
   'select_city_imperative': 'Выбрать город',
   'settings': 'Настройки',
   'favorites': 'Избранное',
-  'connection_not_available': 'Отсутствует подключение к интернету',
-  'try_again': 'Попробовать еще раз'
+  'connection_not_available': 'Отсутствует подключение',
+  'check_internet_connection': 'Проверьте подключение к интернету',
+  'try_again': 'Попробовать еще раз',
+  'today': 'Сегодня',
+  'search_history_info': 'Здесь будет храниться ваша история поиска',
+  'bookmarks_info': 'Вы еще не добавили ни одной организации в избранное'
 };
 
 module.exports = ru;
