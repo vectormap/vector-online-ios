@@ -29,7 +29,9 @@ var mapController            = require('map-controller');
 var statusController         = require('status-controller');
 var networkMonitorController = require('network-monitor-controller');
 var Store                    = require('store');
-var injectTapEventPlugin     = require("react-tap-event-plugin");
+var injectTapEventPlugin     = require('react-tap-event-plugin');
+var U                        = require('utils');
+var analytics                = require('analytics');
 
 L.Icon.Default.imagePath = 'images';
 
@@ -49,6 +51,20 @@ function syncWithLocalStorage (binding, keys) {
       Store.set(key, rootBinding.get(key));
     });
   });
+}
+
+function initUserSession () {
+  var userId = Store.get('user-id');
+  var sessionId = U.UUID();
+
+  if (!userId) {
+    userId = U.UUID();
+    Store.set('user-id', userId);
+  }
+
+  Store.set('session-id', sessionId);
+
+  return {userId, sessionId};
 }
 
 var AppState = {
@@ -95,6 +111,7 @@ var AppState = {
   modal: '' // citySelector
 };
 
+AppState.session             = initUserSession();
 AppState.firstLaunch         = Store.get('firstLaunch') === undefined;
 AppState.currentCity         = Store.get('currentCity') || 'surgut';
 AppState.lang                = Store.get('lang') || 'ru';
@@ -136,6 +153,9 @@ var Bootstrap = Ctx.bootstrap(App);
 
 module.exports = {
   start () {
+    analytics.startTrackerWithId('UA-25890037-3');
+    analytics.trackView('Vector Online iOS start');
+
     controller.init(rootBinding);
     mapController.init(rootBinding);
     statusController.init(rootBinding.sub('status'));

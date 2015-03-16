@@ -6,12 +6,15 @@ var translator    = require('i18n/translator');
 var page          = require('page');
 var mapController = require('map-controller');
 var status        = require('status-controller');
+var stat          = require('stat-tracker');
+var AddressModel  = require('models/AddressModel');
 
 var imm = Imm.fromJS;
 var {List, Map: _Map} = Imm;
 var {Catalog}  = Api;
 var {prepareSearchResults} = require('./models/SearchModel');
 var {result} = Api;
+var {withOrg} = stat;
 
 var rootBinding;
 var bSearch;
@@ -275,6 +278,8 @@ var Controller = {
     if (searchType === 'query') {
       var query = queryOrItemId;
 
+      stat.search.query('name', {name: query});
+
       bSearch.set('query', query);
       // standard search by query string
       searchPromise = Catalog.searchAll(currentCity(), query, {suggest: true});
@@ -304,16 +309,22 @@ var Controller = {
     var itemPromise = Catalog.getFromCollection(currentCity(), collection, itemId, {coords: false});
 
     return P.resolve(itemPromise).then(item => {
-        bSearch
-          .set('item', imm(item))
-          .set('type', 'item')
-          .set('itemCollection', collection)
-          .set('itemId', (result(item)[0] || {}).int_id);
+      var _result = result(item)[0] || {};
 
-        setSearchView('item');
-        status.clear();
-      })
-      .catch(status.error);
+      if (collection === 'organizations') {
+        stat.card.open('org', withOrg(_result));
+      }
+
+      bSearch
+        .set('item', imm(item))
+        .set('type', 'item')
+        .set('itemCollection', collection)
+        .set('itemId', _result.int_id);
+
+      setSearchView('item');
+      status.clear();
+    })
+    .catch(status.error);
   },
 
   loadNextPage () {
@@ -520,6 +531,14 @@ var Controller = {
     return this.findOrgBookmarkIndex(org) >= 0;
   },
 
+  getCityConfig () {
+    return rootBinding.toJS('cityConfig');
+  },
+
+  getSession () {
+    return rootBinding.toJS('session');
+  },
+
   // router navigation ----------------------------------------------------------------------------
 
   navToPage (page) {
@@ -571,6 +590,13 @@ var Controller = {
   },
 
   navToMapWithPopup ({latlng, addressId, address, organization, marker}) {
+    if (address && organization) {
+      stat.card.clickAddress('address', withOrg(organization, {
+        adr_id: address.int_id,
+        address: AddressModel.formatAddress(address)
+      }));
+    }
+
     this.navToPage('map');
     mapController.showPopup({latlng, addressId, orgData: {address, organization}, marker});
   },
