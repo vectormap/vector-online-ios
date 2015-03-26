@@ -86,6 +86,7 @@ var en = {
   'card.load_more'                : 'Load more',
   'card.add_to_favorites'         : 'Add to favorites',
   'card.remove_from_favorites'    : 'Remove from favorites',
+  'card.sibling.hint'             : 'Proposals of other organizations',
 
   // geocoding/templates/popups*
   'geo.area'                      : 'District',

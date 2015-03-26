@@ -104,7 +104,25 @@ var OrgModel = {
     }
 
     return '';
+  },
+
+  getSibling: function (org) {
+    var siblingIndex = 0;
+    var sibling = {};
+
+    if (org.sibling && org.sibling.length > 0) {
+      siblingIndex = _.random(0, org.sibling.length - 1);
+      sibling = org.sibling[siblingIndex];
+
+      return {
+        orgId: sibling.id,
+        orgTitle: sibling.title,
+        text: sibling.text
+      };
+    }
+
   }
+
 };
 
 module.exports = OrgModel;

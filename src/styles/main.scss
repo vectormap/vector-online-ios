@@ -22,6 +22,7 @@ $ionicons-font-path: "./fonts" !default;
 @import './vmp-modal';
 @import './ui-elements';
 @import './map-popups';
+@import './variables';
 
 .item-desc {
   float: none;
@@ -226,4 +227,43 @@ $ionicons-font-path: "./fonts" !default;
   &.open {
     // padding-bottom: 3px;
   }
+}
+
+.vmp-org-special {
+  border-left: 5px solid $org-premium;
+}
+
+.vmp-org-sibling {
+  line-height: 22px;
+  background: $sibling-bg;
+  padding: 2px 9px;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.3);
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.vmp-org-sibling p {
+  color: black;
+  font-size: 15px;
+}
+
+.vmp-sibling-text {
+  white-space: normal;
+}
+
+.vmp-org-sibling p:nth-child(2) {
+  color: $vmp-base-color;
+  font-weight: bold;
+}
+
+.vmp-org-sibling .hint {
+  color: $sibling-hint;
+  padding: 4px 0;
+  font-size: 10pt;
+}
+
+.vmp-org-sibling .vmp-org-title {
+  color: $sibling-org-title;
+  font-weight: bold;
+  font-size: 14px;
 }

@@ -82,6 +82,7 @@ var ru = {
   'card.load_more'                : 'Загрузить еще',
   'card.add_to_favorites'         : 'Добавить в избранное',
   'card.remove_from_favorites'    : 'Удалить из избранного',
+  'card.sibling.hint'             : 'Предложения других организаций',
 
   // geocoding/templates/popups*
   'geo.area'                      : 'Район',

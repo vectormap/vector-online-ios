@@ -1,9 +1,10 @@
-var React = require('react');
-var M = require('morearty');
-var models = require('models');
+var React       = require('react/addons');
+var M           = require('morearty');
+var models      = require('models');
 var collections = require('models/collections');
-var status = require('status-controller');
-var {onTouch} = require('utils');
+var status      = require('status-controller');
+var {onTouch}   = require('utils');
+var cx          = React.addons.classSet;
 
 var controller = require('controller');
 var {
@@ -21,6 +22,11 @@ var ItemsListView = React.createClass({
     var key = `item-${collection}-${item.int_id}`;
     var onItemClicked;
 
+    var itemCls = cx({
+      'item vmp-list-item': true,
+      'vmp-org-special': collection === 'organizations' && item.adv
+    });
+
     if (collection === 'addresses') {
       onItemClicked = navToMapWithPopup.bind(controller, {addressId: item.int_id, marker: true});
     } else {
@@ -28,7 +34,7 @@ var ItemsListView = React.createClass({
     }
 
     return (
-      <div className="item vmp-list-item" key={key} onTouchTap={onTouch(onItemClicked)}>
+      <div className={itemCls} key={key} onTouchTap={onTouch(onItemClicked)}>
         <span>{title}</span>
         <span className="item-desc">{subtitle}</span>
       </div>
