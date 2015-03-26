@@ -566,8 +566,10 @@ var Controller = {
         route += `/${searchType}`;
       }
 
-      if (query) {
+      if (searchType === 'query') {
         route += `/${query}`;
+      } else {
+        route += `/${itemId}`;
       }
 
       navigate(route);
