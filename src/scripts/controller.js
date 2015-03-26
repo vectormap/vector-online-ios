@@ -85,6 +85,14 @@ function detectLang () {
 
 }
 
+function blurSearchInput () {
+  var input = document.getElementById('vmp-search-input');
+
+  if (input) {
+    input.blur();
+  }
+}
+
 var Controller = {
   init (binding) {
     rootBinding    = binding;
@@ -124,6 +132,10 @@ var Controller = {
 
       console.log('view route', `/city/:city/view/${view}/`, '->');
 
+      if (view !== 'search') {
+        blurSearchInput();
+      }
+
       setPageView(view);
       next();
     });
@@ -135,6 +147,10 @@ var Controller = {
       console.log('search route', `/city/${city}/view/search/${type}/${queryOrItemId}`);
 
       this.search(type, queryOrItemId);
+
+      if (type !== 'query') {
+        blurSearchInput();
+      }
     });
 
     page('/city/:city/view/search/item/:collection/:id', ctx => {
@@ -143,6 +159,7 @@ var Controller = {
       console.log('item route', `/city/${city}/item/${collection}/${id}/`);
 
       this.loadItem(collection, id);
+      blurSearchInput();
     });
 
     page.exit('/city/:city/view/search/query/:query?', (context, next) => {
@@ -225,6 +242,11 @@ var Controller = {
 
       navigate(`/view/search/query`);
     }
+  },
+
+  onSearchEnter (event) {
+    blurSearchInput();
+    this.onSearchTyped(event);
   },
 
   onSearchTyped (event) {

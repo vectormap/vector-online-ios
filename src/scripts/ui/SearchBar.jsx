@@ -5,7 +5,7 @@ var status     = require('status-controller');
 
 var cx = React.addons.classSet;
 var {
-  onSearchTyped, onSearchFocused, navBack, hasNavHistory, t, clearSearchQuery
+  onSearchTyped, onSearchFocused, navBack, hasNavHistory, t, clearSearchQuery, onSearchEnter
 } = controller;
 
 var SearchBar = React.createClass({
@@ -21,8 +21,6 @@ var SearchBar = React.createClass({
       'icon': true
     });
 
-    var _onSearchTyped = onSearchTyped.bind(controller);
-
     return (
       <div className="">
         <div className="bar bar-header item-input-inset">
@@ -33,11 +31,11 @@ var SearchBar = React.createClass({
             />}
           <label className="item-input-wrapper">
             <i className={searchIcon}></i>
-            <M.DOM.input type="search" name="search" id="search-in"
+            <M.DOM.input type="search" name="search" id="vmp-search-input"
               placeholder={t('card.search')}
               value={query}
-              onChange={_onSearchTyped}
-              onKeyPress={M.Callback.onEnter(_onSearchTyped)}
+              onChange={onSearchTyped.bind(controller)}
+              onKeyPress={M.Callback.onEnter(onSearchEnter.bind(controller))}
               onFocus={onSearchFocused.bind(controller)}
             />
             {query &&
