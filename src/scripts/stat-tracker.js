@@ -94,7 +94,7 @@ var StatTracker = {
       r_id: 10121,
       rubric: 'rubric name'
     }*/
-    clickRubric: stat('card.rubric', 'click'),
+    clickRubric: stat('card.rubric', 'click')
 
     /*{
       adv: true | false,

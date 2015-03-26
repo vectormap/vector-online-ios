@@ -12,7 +12,7 @@ gulp.task('browserify', function() {
 	var bundler = browserify({
     cache: {}, packageCache: {}, fullPaths: true,
 		entries: ['./src/scripts/app.jsx'],
-		extensions: ['.js', '.jsx', /*'.css', '.scss'*/],
+		extensions: ['.js', '.jsx' /*'.css', '.scss'*/],
 		debug: false, //!gulp.env.production, // enable source maps
     //global: true, // global transforms
     paths: ['./src/scripts'],
