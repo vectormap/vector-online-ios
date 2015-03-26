@@ -68,7 +68,7 @@ var OrganizationCard = React.createClass({
           <div className="list has-header">
             <div
               className="item item-icon-left vmp-list-item vmp-active-text"
-              onTouchTap={favOnClick}
+              onTouchTap={onTouch(favOnClick)}
             >
               <i className={starCls}></i>
               <span>{favText}</span>

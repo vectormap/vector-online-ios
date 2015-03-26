@@ -1,7 +1,8 @@
-var _ = require('lodash');
-var React = require('react/addons');
-var M = require('morearty');
-var {t} = require('controller');
+var _         = require('lodash');
+var React     = require('react/addons');
+var M         = require('morearty');
+var {t}       = require('controller');
+var {onTouch} = require('utils');
 
 var cx = React.addons.classSet;
 var {
@@ -62,7 +63,7 @@ var ScheduleView = React.createClass({
       <div>
         <div
           className={currentCls}
-          onTouchTap={isDaily ? null : toggle(showTableMeta)}
+          onTouchTap={isDaily ? null : onTouch(toggle(showTableMeta))}
         >
           <i className="icon ion-ios-time-outline"></i>
           {isDaily && weekDay &&
