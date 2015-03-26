@@ -61,12 +61,12 @@ var ScheduleModel = {
         }
 
         scheduleInfo = {
-            weekDay: trWeekDay(schedule.day),
-            mainTime,
-            breakTime: formatHours(schedule.break),
-            isCurrentWeekDay: moment().weekday() === schedule.day,
-            isFlow
-          };
+          weekDay: trWeekDay(schedule.day),
+          mainTime,
+          breakTime: formatHours(schedule.break),
+          isCurrentWeekDay: moment().weekday() === Number(schedule.day) - 1,
+          isFlow
+        };
       }
 
       return scheduleInfo;
@@ -79,7 +79,7 @@ var ScheduleModel = {
     if (scheduleInfo.length === 1) {
       return scheduleInfo[0];
     } else {
-      return scheduleInfo[weekDay - 1];
+      return scheduleInfo[weekDay];
     }
   }
 
