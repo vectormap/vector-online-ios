@@ -66,7 +66,7 @@ var MapController = {
   },
 
   bindMapEvents () {
-    map.on('click', e => this.showPopup({latlng: e.latlng}));
+    map.on('click', e => this.showPopup({latlng: e.latlng, marker: true}));
   },
 
   updateMap () {
