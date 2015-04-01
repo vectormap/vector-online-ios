@@ -27,20 +27,21 @@
   "homepage": "http://online.vmp.ru",
   "dependencies": {
     "backbone": "^1.1.2",
-    "bluebird": "^2.9.14",
-    "immutable": "~3.6.x",
-    "ionic": "^1.3.17",
+    "bluebird": "^2.9.21",
+    "immutable": "~3.7.x",
+    "ionic": "^1.3.18",
     "leaflet": "^0.7.3",
-    "lodash": "^3.5.0",
+    "leaflet.locatecontrol": "^0.40.0",
+    "lodash": "^3.6.0",
     "moment": "^2.9.0",
-    "morearty": "^0.7.11",
+    "morearty": "^0.7.12",
     "morearty-sync": "*",
     "page": "^1.6.1",
-    "qwest": "^1.5.9",
+    "qwest": "^1.5.10",
     "react": "^0.13.1",
     "react-bouncefix": "^1.0.3",
     "react-spinner": "^0.2.1",
-    "react-tap-event-plugin": "^0.1.4",
+    "react-tap-event-plugin": "^0.1.6",
     "store": "^1.3.17",
     "superagent": "^1.1.0",
     "superagent-bluebird-promise": "^2.0.0"
@@ -49,7 +50,7 @@
     "aliasify": "^1.7.2",
     "babel": "^4.7.16",
     "babelify": "^5.0.4",
-    "browser-sync": "^2.4.0",
+    "browser-sync": "^2.5.0",
     "browserify": "^9.0.3",
     "browserify-shim": "^3.8.3",
     "connect": "^3.3.5",
@@ -80,7 +81,7 @@
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "vinyl-transform": "1.0.0",
-    "watchify": "^2.6.0"
+    "watchify": "^3.1.0"
   },
   "externalLibs": [
     "lodash",
@@ -97,7 +98,8 @@
     "store",
     "react-tap-event-plugin",
     "superagent",
-    "superagent-bluebird-promise"
+    "superagent-bluebird-promise",
+    "leaflet.locatecontrol"
   ],
   "cordovaPlugins": [
     "org.apache.cordova.console",
@@ -106,6 +108,8 @@
     "org.apache.cordova.network-information",
     "org.apache.cordova.splashscreen",
     "org.apache.cordova.globalization",
-    "https://github.com/danwilson/google-analytics-plugin.git"
+    "https://github.com/danwilson/google-analytics-plugin.git",
+    "org.apache.cordova.geolocation",
+    "org.apache.cordova.device-orientation"
   ]
 }
