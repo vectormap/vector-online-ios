@@ -1,0 +1,22 @@
+@import './locate-control';
+
+.leaflet-control-container {
+  .leaflet-control-zoom.leaflet-bar.leaflet-control {
+    a {
+      font-size: 30pt;
+      line-height: 35px;
+      width: 40px;
+      height: 40px;
+    }
+
+    .leaflet-control-zoom-in:before {
+      @extend .ion;
+      content: $ionicon-var-ios-plus-empty;
+    }
+
+    .leaflet-control-zoom-out:before {
+      @extend .ion;
+      content: $ionicon-var-ios-minus-empty;
+    }
+  }
+}

@@ -1,0 +1,52 @@
+.leaflet-touch .leaflet-control-locate, .leaflet-control-locate {
+  border: none;
+  box-shadow: none;
+  background-clip: padding-box;
+
+  .leaflet-bar-part.leaflet-bar-part-single {
+    border-bottom: none;
+    border-radius: 24px;
+    width: 42px;
+    height: 42px;
+    border: none;
+    font-size: 42px;
+
+    span {
+      @extend .vmp-gps-icon;
+      @extend .vmp-gps-icon.not-fixed;
+    }
+  }
+
+  &.requesting {
+    .leaflet-bar-part.leaflet-bar-part-single span {
+      background: none;
+    }
+  }
+
+  &.active {
+    .leaflet-bar-part.leaflet-bar-part-single {
+      // background: $locate-control-active;
+      background: $locate-control-active;
+    }
+
+    &.following .leaflet-bar-part.leaflet-bar-part-single span {
+      @extend .vmp-gps-icon.fixed;
+    }
+  }
+}
+
+.vmp-gps-icon {
+  width: 42px;
+  height: 42px;
+  background-repeat: no-repeat;
+  background-size: 42px 42px;
+  display: inline-block;
+
+  &.fixed {
+    background-image: url(./images/gps-fixed.svg);
+  }
+
+  &.not-fixed {
+    background-image: url(./images/gps-not-fixed.svg);
+  }
+}

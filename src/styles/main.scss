@@ -23,6 +23,7 @@ $ionicons-font-path: "./fonts" !default;
 @import './ui-elements';
 @import './map-popups';
 @import './variables';
+@import './controls';
 
 .item-desc {
   float: none;
@@ -134,12 +135,6 @@ $ionicons-font-path: "./fonts" !default;
   text-transform: uppercase;
 }
 
-.Bouncefix {
-  overflow-y: auto;
-  overflow-x: hidden;
-  // -webkit-overflow-scrolling: touch;
-}
-
 .vmp-search-clear-btn {
   font-size: 14pt;
 }
@@ -240,30 +235,39 @@ $ionicons-font-path: "./fonts" !default;
   box-shadow: 0px 0px 10px rgba(0,0,0,0.3);
   border-radius: 2px;
   cursor: pointer;
-}
 
-.vmp-org-sibling p {
-  color: black;
-  font-size: 15px;
+  p {
+    color: black;
+    font-size: 15px;
+  }
+
+  p:nth-child(2) {
+    color: $vmp-base-color;
+    font-weight: bold;
+  }
+
+  .hint {
+    color: $sibling-hint;
+    padding: 4px 0;
+    font-size: 10pt;
+  }
+
+  .vmp-org-title {
+    color: $sibling-org-title;
+    font-weight: bold;
+    font-size: 14px;
+  }
 }
 
 .vmp-sibling-text {
   white-space: normal;
 }
 
-.vmp-org-sibling p:nth-child(2) {
-  color: $vmp-base-color;
-  font-weight: bold;
+.vmp-compass-marker {
+  @extend .ion-navigate;
+  font-size: 42px;
+  transform-origin: 22px 28px;
+  color: $compass-marker;
 }
 
-.vmp-org-sibling .hint {
-  color: $sibling-hint;
-  padding: 4px 0;
-  font-size: 10pt;
-}
-
-.vmp-org-sibling .vmp-org-title {
-  color: $sibling-org-title;
-  font-weight: bold;
-  font-size: 14px;
 }

@@ -1,10 +1,12 @@
-var _          = require('lodash');
-var L          = require('leaflet');
-var {GeoCoder} = require('api');
-var AppConfig  = require('config');
-var imm        = require('immutable').fromJS;
-var P          = require('bluebird');
-var status     = require('status-controller');
+var _             = require('lodash');
+var L             = require('leaflet');
+var {GeoCoder}    = require('api');
+var AppConfig     = require('config');
+var imm           = require('immutable').fromJS;
+var P             = require('bluebird');
+var status        = require('status-controller');
+
+require('leaflet.locatecontrol');
 
 var {isValidCoords} = require('models/AddressModel');
 var {Catalog} = require('api');
@@ -13,6 +15,8 @@ var map;
 var rootBinding;
 var mapBinding;
 var popupBinding;
+var locationControl;
+var compassWatchId;
 
 const PRETTY_ZOOM = 16;
 
@@ -28,7 +32,50 @@ var markerIconPremium = L.divIcon({
   className: 'vmp-map-marker-premium'
 });
 
+var setLocationView = function ({latlng}) {
+  map.setView(latlng, PRETTY_ZOOM);
+};
+
+var CompassMarker = L.Marker.extend({
+  initialize (latlng, options) {
+    options = _.extend(options, {
+      icon: L.divIcon({
+        className: 'vmp-compass-marker',
+        iconAnchor: [23, 26]
+      })
+    });
+
+    L.Marker.prototype.initialize.call(this, latlng, options);
+    this.on('click', setLocationView);
+  }
+});
+
+var CircleMarker = L.CircleMarker.extend({
+  initialize (latlng, options) {
+    L.CircleMarker.prototype.initialize.call(this, latlng, options);
+    this.on('click', setLocationView);
+  }
+});
+
+var compassMarker = function (latlng, options) {
+  return navigator.compass ?
+      new CompassMarker(latlng, options) : new CircleMarker(latlng, options);
+};
+
 var markersLayer = L.layerGroup();
+
+function setRotationToTransform (transform = '', angle, measure) {
+  angle = Math.round(angle);
+  var rotation = `rotate(${angle}${measure})`;
+
+  if (transform.indexOf('rotate') < 0) {
+    transform += ' ' + rotation;
+  } else {
+    transform = transform.replace(/rotate\(.*\)/, rotation);
+  }
+
+  return transform;
+}
 
 var MapController = {
   init (_rootBinding) {
@@ -50,6 +97,8 @@ var MapController = {
     map.addControl(new L.Control.Zoom({
       zoomInTitle: '',
       zoomOutTitle: '',
+      zoomInText: '',
+      zoomOutText: '',
       position: 'topright'
     }));
 
@@ -62,11 +111,78 @@ var MapController = {
 
     markersLayer.addTo(map);
 
+    locationControl = L.control.locate({
+      position: 'topright',
+      follow: true,
+      keepCurrentZoomLevel: true,
+      stopFollowingOnDrag: true,
+      remainActive: true,
+      showPopup: false,
+      // icon: '',
+      iconLoading: 'ion-load-b vmp-anim-spin',
+      markerStyle: {
+        radius: 15
+      },
+      markerClass: compassMarker,
+
+      onLocationError: err => {
+        console.log('location error:', err);
+      },
+
+      onLocationOutsideMapBounds: control => {
+        control.stop();
+        console.log('location error: Location Outside Map Bounds');
+      }
+    }).addTo(map);
+
+    // window.locationControl = locationControl;
+    // window.setRotationToTransform = setRotationToTransform;
+
     this.bindMapEvents();
   },
 
   bindMapEvents () {
     map.on('click', e => this.showPopup({latlng: e.latlng, marker: true}));
+
+    map.on('startfollowing', () => {
+      console.log('startfollowing');
+      this.watchCompass();
+    });
+
+    map.on('stopfollowing', () => {
+      console.log('stopfollowing');
+      L.DomUtil.removeClass(locationControl._container, 'following');
+
+      if (navigator.compass) {
+        navigator.compass.clearWatch(compassWatchId);
+        console.log('clearWatch', compassWatchId);
+      }
+    });
+  },
+
+  watchCompass () {
+    if (!navigator.compass) {
+      return;
+    }
+
+    compassWatchId = navigator.compass.watchHeading(
+      heading => {
+        if (locationControl && locationControl._marker) {
+          var magneticHeading = heading.magneticHeading - 45;
+
+          locationControl._marker._icon.style.webkitTransform = setRotationToTransform(
+            locationControl._marker._icon.style.webkitTransform, magneticHeading, 'deg');
+        }
+      },
+      compassError => {
+        console.log('compass error', compassError);
+      },
+      {
+        frequency: 100
+      }
+    );
+
+    console.log('compassWatchId', compassWatchId);
   },
 
   updateMap () {
@@ -168,6 +284,7 @@ var MapController = {
 
   setMapView (latlng, zoomToLocation) {
     if (isValidCoords(latlng)) {
+      locationControl._stopFollowing();
       map.setView(latlng, zoomToLocation ? PRETTY_ZOOM : undefined);
     }
   },
