@@ -5,7 +5,7 @@ init:
 clean:
 	rm -rf build/phonegap
 
-build: 
+build:
 	cd build/phonegap && phonegap build
 
 build-all: init
@@ -33,7 +33,7 @@ release:
 	gulp browserify-external-libs build
 	make copy-app
 	uglifyjs build/online-app/external-libs-bundle.js -cm > build/phonegap/www/external-libs-bundle.js
-	uglifyjs build/online-app/app.js -cm > build/phonegap/www/app.js
+	uglifyjs build/online-app/app.js -c drop_console=true -m > build/phonegap/www/app.js
 	cssmin build/online-app/app.css > build/phonegap/www/app.css
 	cd build/phonegap && phonegap build ios --device
 
