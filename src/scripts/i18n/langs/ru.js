@@ -104,6 +104,12 @@ var ru = {
   'map.control.ruller.click_to_start' : 'Кликните для начала измерения',
   'map.control.ruller.click_to_finish': 'Кликните на последней точке для завершения',
 
+  'map.control.location.map_is_tracking_your_location': 'Карта следует за вашим местоположением',
+  'map.control.location.location_tracking_disabled'   : 'Следование за местоположением отключено',
+  'map.control.location.enable_location_in_settings'  : 'Включите определение местоположения в системных настройках Вектора',
+  'map.control.location.we_cant_find_you'             : 'Мы не можем вас найти',
+  'map.control.location.location_out_of_city'         : 'Вы находитесь за пределами города',
+
   'measure.m': 'м',
   'measure.km': 'км',
 

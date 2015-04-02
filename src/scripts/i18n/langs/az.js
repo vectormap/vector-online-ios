@@ -37,8 +37,8 @@ var az = {
   'card.schedule.free'            : 'Sərbəst qrafik',
   'card.schedule.round_the_clock' : '24 saat',
   'card.schedule.nonstop'         : 'Fasiləsiz',
-  'card.schedule.day_off'         : 'Day off',
-  'card.schedule.lunch_time'      : 'Lunchtime',
+  'card.schedule.day_off'         : 'Istirahət günü',
+  'card.schedule.lunch_time'      : 'Nahar',
 
   // infocard/templates/search.html
   'card.search.try_to_search_hint': 'Nə isə axtarmağa cəhd edin',
@@ -79,10 +79,10 @@ var az = {
   'card.streets'                  : 'Küçələr',
   'card.select_city'              : 'Şəhəri seçin',
   'card.increase_org_effectiveness': 'Təşkilatın effektliliyini artırmag',
-  'card.load_more'                : 'Load more',
-  'card.add_to_favorites'         : 'Add to favorites',
-  'card.remove_from_favorites'    : 'Remove from favorites',
-  'card.sibling.hint'             : 'Proposals of other organizations',
+  'card.load_more'                : 'Yenidən yükləmək',
+  'card.add_to_favorites'         : 'Seçilmiş siyahıya əlavə etmək',
+  'card.remove_from_favorites'    : 'Seçilmiş siyahıdan silmək',
+  'card.sibling.hint'             : 'Digər təşkilatların təklifləri',
 
   // geocoding/templates/popups*
   'geo.area'                      : 'Rayon',
@@ -104,20 +104,27 @@ var az = {
   'map.control.ruller.click_to_start' : 'Olçməni başlamaq üçün klikləyin',
   'map.control.ruller.click_to_finish': 'Qurtarmaq üçün son nöqtəyə klikləyin',
 
+  'map.control.location.map_is_tracking_your_location': 'Xəritə sizin olduğunuz məkanda izləyir',
+  'map.control.location.location_tracking_disabled'   : 'Məkan izləmə söndürülür',
+  'map.control.location.enable_location_in_settings'  : 'Məkan təyin etməni Vektor sistem parametrlərindən açın',
+  'map.control.location.we_cant_find_you'             : 'Biz sizi tapa bilmirik',
+  'map.control.location.location_out_of_city'         : 'Siz xəritədən kənarda yerləşirsiniz',
+
   'measure.m' : 'm',
   'measure.km': 'km',
 
-  'cancel': 'Cancel',
+  'cancel': 'Imtina etmək',
   'city': 'Şəhər',
   'lang': 'Dili',
   'select_city_imperative': 'Şəhəri seçin',
   'settings': 'Parametrlər',
-  'favorites': 'Favorites',
-  'connection_not_available': 'Internet connection is not available',
-  'check_internet_connection': 'Check your internet connection',
-  'try_again': 'Try again',
-  'search_history_info': 'Your search history will be saved here',
-  'bookmarks_info': 'You have not added any organization to favorites'
+  'favorites': 'Seçilmiş',
+  'connection_not_available': 'Bağlantı  yoxdu',
+  'check_internet_connection': 'Internet bağlantısını  yoxlayın',
+  'try_again': 'Yenidən cəhd edin',
+  'today': 'Bu gün',
+  'search_history_info': 'Burada sizin axtarış tarixçəniz yadda saxlanılacaq',
+  'bookmarks_info': 'Siz hələ seçilmiş siyahıya heç bir təşkilat əlavə etməmisiniz'
 };
 
 module.exports = az;

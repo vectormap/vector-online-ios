@@ -42,7 +42,7 @@ var en = {
   'card.schedule.round_the_clock' : '24 hours a day',
   'card.schedule.nonstop'         : 'Without a break',
   'card.schedule.day_off'         : 'Day off',
-  'card.schedule.lunch_time'      : 'Обед',
+  'card.schedule.lunch_time'      : 'Lunchtime',
 
   // infocard/templates/search.html
   'card.search.try_to_search_hint': 'Try to search for something',
@@ -108,6 +108,12 @@ var en = {
   'map.control.ruller.click_to_start' : 'Click to start measuring',
   'map.control.ruller.click_to_finish': 'Click on the last point to close path',
 
+  'map.control.location.map_is_tracking_your_location': 'The map is keeping track of your location',
+  'map.control.location.location_tracking_disabled'   : 'Keeping track of you location feature is turned off',
+  'map.control.location.enable_location_in_settings'  : 'Turn on keeping track of your location feature in the system settings of Vector',
+  'map.control.location.we_cant_find_you'             : 'We are not able to track your location',
+  'map.control.location.location_out_of_city'         : 'Your location is out of the city area',
+
   'measure.m': 'm',
   'measure.km': 'km',
 
@@ -120,6 +126,7 @@ var en = {
   'connection_not_available': 'Connection is not available',
   'check_internet_connection': 'Check your internet connection',
   'try_again': 'Try again',
+  'today': 'Today',
   'search_history_info': 'Your search history will be saved here',
   'bookmarks_info': 'You have not added any organization to favorites'
 };
