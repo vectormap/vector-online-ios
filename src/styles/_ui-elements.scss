@@ -22,6 +22,8 @@
 }
 
 .vmp-tabs {
+  z-index: 999999;
+
   .tab-item {
     color: $positive;
 
