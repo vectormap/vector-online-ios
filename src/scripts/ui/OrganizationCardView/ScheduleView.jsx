@@ -1,7 +1,6 @@
 var _         = require('lodash');
 var React     = require('react/addons');
 var M         = require('morearty');
-var {t}       = require('controller');
 var {onTouch} = require('utils');
 
 var cx = React.addons.classSet;
@@ -9,6 +8,7 @@ var {
   formatSchedule, getCurrentDaySchedule, isCurrentWeekDay
 } = require('models/ScheduleModel');
 var {toggle} = M.Callback;
+var {t, getCurrentLang} = require('controller');
 
 var ScheduleView = React.createClass({
   mixins: [M.Mixin],
@@ -58,6 +58,7 @@ var ScheduleView = React.createClass({
       'item item-icon-left item-icon-right vmp-list-item vmp-schedule-current': true,
       'open': showTable
     });
+    var lang = getCurrentLang();
 
     return (
       <div>
@@ -75,7 +76,9 @@ var ScheduleView = React.createClass({
               <span>{t('today')}</span>}
 
             {breakTime &&
-              <span className="vmp-schedule-break-desc">{t('card.schedule.lunch_time')}</span>}
+              <span className={cx('vmp-schedule-break-desc', lang)}>
+                {t('card.schedule.lunch_time')}
+              </span>}
           </div>
           {!isDaily &&
             <i

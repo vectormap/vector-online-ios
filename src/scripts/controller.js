@@ -509,6 +509,10 @@ var Controller = {
     return LANGS;
   },
 
+  getCurrentLang () {
+    return rootBinding.get('lang');
+  },
+
   getBookmarks () {
     return rootBinding.get(`bookmarks.${currentCity()}`);
   },

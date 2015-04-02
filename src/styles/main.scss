@@ -199,7 +199,17 @@ $ionicons-font-path: "./fonts" !default;
 }
 
 .vmp-schedule-break-desc {
-  margin-left: 56px;
+  &.ru {
+    margin-left: 56px;
+  }
+
+  &.az {
+    margin-left: 67px;
+  }
+
+  &.en {
+    margin-left: 74px;
+  }
 }
 
 .vmp-schedule-current-day-row {
