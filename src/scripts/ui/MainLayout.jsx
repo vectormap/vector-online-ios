@@ -7,6 +7,7 @@ var BookmarksView     = require('./BookmarksView');
 var SettingsView      = require('./SettingsView');
 var ActiveModal       = require('./ActiveModal');
 var NoConnectionModal = require('./modals/NoConnectionModal');
+var LocationInfoModal = require('./modals/LocationInfoModal');
 
 var cx = React.addons.classSet;
 var pages = ['map', 'search', 'bookmarks', 'settings'];
@@ -72,6 +73,7 @@ var MainLayout = React.createClass({
 
           <ActiveModal binding={binding} />
           <NoConnectionModal binding={binding} />
+          <LocationInfoModal binding={binding.sub('location')} />
 
           <div className="tabs tabs-icon-only disable-user-behavior vmp-tabs">
             {tabs}

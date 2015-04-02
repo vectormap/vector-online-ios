@@ -19,11 +19,29 @@ var Modal = React.createClass({
       key: 'vmp-modal',
       header: true,
       backdrop: true,
+      hideAfter: null,
       transitionGroup: { // CSSTransitionGroup specific props
         transitionName: 'vmp-modal',
         component: 'div'
       }
     };
+  },
+
+  getInitialState () {
+    return {};
+  },
+
+  componentDidUpdate () {
+    var {hideAfter, toggleBinding} = this.props;
+    var isActive = toggleBinding.get();
+
+    if (isActive) {
+      if (hideAfter && hideAfter > 0 && !this.state.timerId) {
+        this.state.timerId = setTimeout(toggle(toggleBinding), hideAfter);
+      }
+    } else {
+      this.state.timerId = null;
+    }
   },
 
   render () {

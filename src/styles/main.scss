@@ -270,4 +270,28 @@ $ionicons-font-path: "./fonts" !default;
   color: $compass-marker;
 }
 
+.vmp-location-modal {
+  top: calc(100% - 120px);
+  min-height: initial;
+  // height: 35px;
+  text-align: center;
+  background: none;
+  z-index: 11;
+
+  .location-info {
+    background: rgba(0,0,0,.7);
+    color: $energized;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 4px;
+    max-width: 350px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 7px;
+    padding-right: 7px;
+  }
+
+  &.vmp-modal-leave {
+    transform: translate3d(0, 120px, 0);
+  }
 }

@@ -77,6 +77,48 @@ function setRotationToTransform (transform = '', angle, measure) {
   return transform;
 }
 
+function showLocationModal ({status, error}) {
+  var content = '';
+  var errorText = '';
+  var {PositionError} = window;
+  var {t} = require('controller');
+
+  if (status === 'startfollowing') {
+    content = t('map.control.location.map_is_tracking_your_location');
+  }
+
+  if (status === 'stopfollowing') {
+    content = t('map.control.location.location_tracking_disabled');
+  }
+
+  if (error) {
+    if (PositionError) {
+      switch (error.code) {
+        case PositionError.PERMISSION_DENIED:
+          errorText = t('map.control.location.enable_location_in_settings');
+          break;
+
+        case PositionError.TIMEOUT:
+        case PositionError.POSITION_UNAVAILABLE:
+          errorText = t('map.control.location.we_cant_find_you');
+          break;
+
+        default:
+          errorText = error.message || error;
+      }
+    } else {
+      errorText = error;
+    }
+
+  }
+
+  rootBinding.sub('location')
+    .set('content', content)
+    .set('error', errorText);
+
+  rootBinding.set('location.infoModal', true);
+}
+
 var MapController = {
   init (_rootBinding) {
     rootBinding  = _rootBinding;
@@ -125,18 +167,15 @@ var MapController = {
       },
       markerClass: compassMarker,
 
-      onLocationError: err => {
-        console.log('location error:', err);
+      onLocationError: error => {
+        showLocationModal({error});
       },
 
       onLocationOutsideMapBounds: control => {
         control.stop();
-        console.log('location error: Location Outside Map Bounds');
+        showLocationModal({error: t('map.control.location.location_out_of_city')});
       }
     }).addTo(map);
-
-    // window.locationControl = locationControl;
-    // window.setRotationToTransform = setRotationToTransform;
 
     this.bindMapEvents();
   },
@@ -146,11 +185,13 @@ var MapController = {
 
     map.on('startfollowing', () => {
       console.log('startfollowing');
+      showLocationModal({status: 'startfollowing'});
       this.watchCompass();
     });
 
     map.on('stopfollowing', () => {
       console.log('stopfollowing');
+      showLocationModal({status: 'stopfollowing'});
       L.DomUtil.removeClass(locationControl._container, 'following');
 
       if (navigator.compass) {

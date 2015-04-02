@@ -108,7 +108,12 @@ var AppState = {
   },
   status: '',
   noConnection: false, // show NoConnectionModal if connection is absent
-  modal: '' // citySelector
+  modal: '', // citySelector
+  location: {
+    infoModal: false,
+    content: '',
+    error: ''
+  }
 };
 
 AppState.session             = initUserSession();
@@ -160,7 +165,6 @@ module.exports = {
     mapController.init(rootBinding);
     statusController.init(rootBinding.sub('status'));
     networkMonitorController.init(rootBinding);
-
     controller.start();
 
     injectTapEventPlugin();
