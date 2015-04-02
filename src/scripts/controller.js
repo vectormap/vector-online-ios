@@ -269,7 +269,7 @@ var Controller = {
 
   clearSearchQuery () {
     bSearch.clear('query');
-    this.searchByQuery('');
+    this.onSearchFocused();
   },
 
   tryToSetSearchHistoryView () {
