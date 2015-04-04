@@ -48,7 +48,7 @@ window.api    = api;
 function syncWithLocalStorage (binding, keys) {
   [].concat(keys).forEach(key => {
     binding.addListener(key, () => {
-      Store.set(key, rootBinding.get(key));
+      Store.set(key, rootBinding.toJS(key));
     });
   });
 }
