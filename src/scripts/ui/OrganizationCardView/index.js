@@ -60,39 +60,42 @@ var OrganizationCard = React.createClass({
 
     var rubrics = this.renderRubrics(org.get('rubric'));
 
+    // TODO: put extra div wrapper to be able to set key property (WTF !?!?!?)
     return (
       <div>
-        <div className="bar">
-          <h1 className="title vmp-org-title">{org.get('title')}</h1>
-        </div>
+        <div key={`organization-${org.get('int_id')}`}>
+          <div className="bar">
+            <h1 className="title vmp-org-title">{org.get('title')}</h1>
+          </div>
 
-        <div className="pane vmp-list overflow-scroll">
-          <div className="list has-header">
-            <div
-              className="item item-icon-left vmp-list-item vmp-active-text"
-              onTouchTap={onTouch(favOnClick)}
-            >
-              <i className={starCls}></i>
-              <span>{favText}</span>
-            </div>
-
-            <ContactsView binding={commonContactsBinding} />
-            <DepartmentsView binding={orgBinding.sub('department')} organization={orgRaw} />
-
-            <div className="item item-text vmp-rubrics-item">
-              {rubrics.toJS()}
-            </div>
-
-            {sibling &&
+          <div className="pane vmp-list overflow-scroll">
+            <div className="list has-header">
               <div
-                className="vmp-org-sibling vmp-list-item"
-                onTouchTap={onTouch(navToSearchByItem, controller, 'organizations', sibling.orgId)}
+                className="item item-icon-left vmp-list-item vmp-active-text"
+                onTouchTap={onTouch(favOnClick)}
               >
-                <div className="hint">{t('card.sibling.hint')}</div>
-                <div className="vmp-sibling-text" dangerouslySetInnerHTML={{__html: sibling.text}} />
-                <div className="vmp-org-title">{sibling.orgTitle}</div>
-              </div>}
+                <i className={starCls}></i>
+                <span>{favText}</span>
+              </div>
 
+              <ContactsView binding={commonContactsBinding} />
+              <DepartmentsView binding={orgBinding.sub('department')} organization={orgRaw} />
+
+              <div className="item item-text vmp-rubrics-item">
+                {rubrics.toJS()}
+              </div>
+
+              {sibling &&
+                <div
+                  className="vmp-org-sibling vmp-list-item"
+                  onTouchTap={onTouch(navToSearchByItem, controller, 'organizations', sibling.orgId)}
+                >
+                  <div className="hint">{t('card.sibling.hint')}</div>
+                  <div className="vmp-sibling-text" dangerouslySetInnerHTML={{__html: sibling.text}} />
+                  <div className="vmp-org-title">{sibling.orgTitle}</div>
+                </div>}
+
+            </div>
           </div>
         </div>
       </div>
