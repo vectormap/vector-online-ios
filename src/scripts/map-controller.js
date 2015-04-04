@@ -347,7 +347,10 @@ var MapController = {
 
   setMapView (latlng, zoomToLocation) {
     if (isValidCoords(latlng)) {
-      locationControl._stopFollowing();
+      if (locationControl._following) {
+        locationControl._stopFollowing();
+      }
+
       map.setView(latlng, zoomToLocation ? PRETTY_ZOOM : undefined);
     }
   },
