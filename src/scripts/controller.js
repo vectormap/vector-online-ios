@@ -261,7 +261,7 @@ var Controller = {
     navigateSilent(`/view/search/query/${query}`);
 
     if (!query) {
-      bSearch.set('query', query);
+      this.setSearchQuery(query);
       this.tryToSetSearchHistoryView();
     } else {
       this.search('query', query);
@@ -300,11 +300,11 @@ var Controller = {
     bSearch.set('type', searchType);
 
     if (searchType === 'query') {
-      var query = queryOrItemId;
+      var query = queryOrItemId || '';
 
       stat.search.query('name', {name: query});
 
-      bSearch.set('query', query);
+      this.setSearchQuery(query);
       // standard search by query string
       searchPromise = Catalog.searchAll(currentCity(), query, {suggest: true});
     } else {
@@ -451,7 +451,7 @@ var Controller = {
     });
   },
 
-  setSearchQuery (query) {
+  setSearchQuery (query = '') {
     bSearch.set('query', query);
   },
 
