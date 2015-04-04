@@ -2,6 +2,7 @@ var M          = require('morearty');
 var React      = require('react/addons');
 var controller = require('controller');
 var status     = require('status-controller');
+var {onTouch}  = require('utils');
 
 var cx = React.addons.classSet;
 var {
@@ -27,7 +28,7 @@ var SearchBar = React.createClass({
           {hasNavHistory() &&
             <a
               className="button icon-left ion-chevron-left button-clear button-positive vmp-back-button"
-              onTouchEnd={navBack.bind(controller)}
+              onTouchTap={onTouch(navBack, controller)}
             />}
           <label className="item-input-wrapper">
             <i className={searchIcon}></i>
