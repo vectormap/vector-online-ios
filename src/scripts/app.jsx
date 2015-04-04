@@ -146,6 +146,11 @@ window.mapController = mapController;
 var App = React.createClass({
   mixins: [M.Mixin],
 
+  componentDidMount () {
+    console.log('App componentDidMount');
+    controller.start();
+  },
+
   render: function () {
     return (
       <MainLayout binding={this.getBinding()} />
@@ -165,7 +170,6 @@ module.exports = {
     mapController.init(rootBinding);
     statusController.init(rootBinding.sub('status'));
     networkMonitorController.init(rootBinding);
-    controller.start();
 
     injectTapEventPlugin();
     React.initializeTouchEvents(true);
