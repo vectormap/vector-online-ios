@@ -636,7 +636,11 @@ var Controller = {
   },
 
   hasNavHistory () {
-    return page.len > 0;
+    // set 1 for cordova because page('/') was already triggered on start due to cordova bug
+    // (see https://github.com/visionmedia/page.js/issues/18 again)
+    var initialHistoryLength = window.cordova ? 1 : 0;
+
+    return page.len > initialHistoryLength;
   }
 
 };
