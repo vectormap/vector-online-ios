@@ -169,12 +169,18 @@ var Controller = {
     });
 
     page('*', () => console.log('Route: *'));
-
-    page.start({click: false});
-
-    window.page = page;
   },
 
+  start () {
+    this.onFirstLaunch();
+    this.startRouter();
+  },
+
+  startRouter () {
+    page.start({click: false});
+  },
+
+  // TODO: move translator out of controller
   t (key) {
     var lang = rootBinding.get('lang') || defaultLang;
 
@@ -200,10 +206,6 @@ var Controller = {
         this.showCitySelectorModal();
       });
     }
-  },
-
-  start () {
-    this.onFirstLaunch();
   },
 
   loadCityConfig (city) {
