@@ -33,14 +33,22 @@ var Modal = React.createClass({
 
   componentDidUpdate () {
     var {hideAfter, toggleBinding} = this.props;
+
+    if (!hideAfter || hideAfter <= 0) {
+      return;
+    }
+
     var isActive = toggleBinding.get();
 
     if (isActive) {
-      if (hideAfter && hideAfter > 0 && !this.state.timerId) {
-        this.state.timerId = setTimeout(toggle(toggleBinding), hideAfter);
+      if (this.state.timerId) {
+        clearTimeout(this.state.timerId);
       }
-    } else {
-      this.state.timerId = null;
+
+      this.state.timerId = setTimeout(() => {
+        toggleBinding.set(false);
+        this.state.timerId = null;
+      }, hideAfter);
     }
   },
 
