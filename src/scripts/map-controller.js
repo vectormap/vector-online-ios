@@ -283,8 +283,8 @@ var MapController = {
       P.resolve(geoDataPromise).then(geoData => {
         var result = geoData.data.result[0];
 
-        // skip area and roads
-        if (!result || result && (result.layer === 'area' || result.layer === 'axis')) {
+        // skip roads
+        if (!result || (result && result.layer === 'axis')) {
           this.closePopup();
           return;
         }
