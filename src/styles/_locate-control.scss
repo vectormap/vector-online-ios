@@ -58,3 +58,10 @@
     background-image: url(./images/gps-not-fixed-new.svg);
   }
 }
+
+.vmp-gps-location-point-icon {
+  width: 32px;
+  height: 32px;
+  background: url('./images/gps-location-point.svg') no-repeat;
+  background-size: 32px 32px;
+}

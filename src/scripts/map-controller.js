@@ -32,34 +32,44 @@ var markerIconPremium = L.divIcon({
   className: 'vmp-map-marker-premium'
 });
 
+var compassIcon = L.divIcon({
+  className: 'vmp-compass-marker',
+  iconAnchor: [23, 26]
+});
+
+var locationPointIcon = L.divIcon({
+  className: 'vmp-gps-location-point-icon',
+  iconSize: [32, 32],
+  iconAnchor: [16, 16]
+});
+
 var setLocationView = function ({latlng}) {
   map.setView(latlng, PRETTY_ZOOM);
 };
 
-var CompassMarker = L.Marker.extend({
-  initialize (latlng, options) {
+var LocationMarker = L.Marker.extend({
+  initialize (latlng, options = {}) {
     options = _.extend(options, {
-      icon: L.divIcon({
-        className: 'vmp-compass-marker',
-        iconAnchor: [23, 26]
-      })
+      icon: options.compass ? compassIcon : locationPointIcon
     });
 
     L.Marker.prototype.initialize.call(this, latlng, options);
     this.on('click', setLocationView);
+  },
+
+  setCompassIcon () {
+    this.setIcon(compassIcon);
+  },
+
+  setPointIcon () {
+    this.setIcon(locationPointIcon);
   }
 });
 
-var CircleMarker = L.CircleMarker.extend({
-  initialize (latlng, options) {
-    L.CircleMarker.prototype.initialize.call(this, latlng, options);
-    this.on('click', setLocationView);
-  }
-});
-
-var compassMarker = function (latlng, options) {
-  return navigator.compass ?
-      new CompassMarker(latlng, options) : new CircleMarker(latlng, options);
+var locationMarker = function (latlng, options) {
+  return new LocationMarker(
+    latlng, _.extend(options, {compass: !!navigator.compass})
+  );
 };
 
 var markersLayer = L.layerGroup();
@@ -127,6 +137,8 @@ var MapController = {
   },
 
   initMap (mapContainer) {
+    var {t} = require('controller');
+
     map = L.map(mapContainer, {
       zoomControl: false,
       attributionControl: false,
@@ -165,7 +177,7 @@ var MapController = {
       markerStyle: {
         radius: 15
       },
-      markerClass: compassMarker,
+      markerClass: locationMarker,
 
       onLocationError: error => {
         showLocationModal({error});
@@ -185,12 +197,22 @@ var MapController = {
 
     map.on('startfollowing', () => {
       console.log('startfollowing');
+
+      if (locationControl._marker) {
+        locationControl._marker.setCompassIcon();
+      }
+
       showLocationModal({status: 'startfollowing'});
       this.watchCompass();
     });
 
     map.on('stopfollowing', () => {
       console.log('stopfollowing');
+
+      if (locationControl._marker) {
+        locationControl._marker.setPointIcon();
+      }
+
       showLocationModal({status: 'stopfollowing'});
       L.DomUtil.removeClass(locationControl._container, 'following');
 
@@ -209,7 +231,7 @@ var MapController = {
     compassWatchId = navigator.compass.watchHeading(
       heading => {
         if (locationControl && locationControl._marker) {
-          var magneticHeading = heading.magneticHeading - 45;
+          var magneticHeading = heading.magneticHeading - 45; // icon angle correction
 
           locationControl._marker._icon.style.webkitTransform = setRotationToTransform(
             locationControl._marker._icon.style.webkitTransform, magneticHeading, 'deg');
@@ -227,9 +249,9 @@ var MapController = {
   },
 
   updateMap () {
-    var mapConfig = rootBinding.toJS('cityConfig.map');
+    var mapConfig        = rootBinding.toJS('cityConfig.map');
     var {lat, lng, zoom} = mapConfig.center;
-    var {bounds} = mapConfig;
+    var {bounds}         = mapConfig;
 
     map.setMaxBounds(L.latLngBounds(bounds.southWest, bounds.northEast));
     map.setView([lat, lng], zoom);
