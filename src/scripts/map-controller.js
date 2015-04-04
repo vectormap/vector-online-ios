@@ -241,7 +241,8 @@ var MapController = {
         console.log('compass error', compassError);
       },
       {
-        frequency: 100
+        frequency: 100,
+        filter: 10
       }
     );
 
