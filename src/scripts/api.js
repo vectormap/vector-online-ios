@@ -17,11 +17,11 @@ function get (city, cityRelativeApiUrl, data) {
     throw new Error('City must be defined');
   }
 
-  return _get(`http://api.vmp.ru/v1/city/${city}${cityRelativeApiUrl}`, data)
+  return _get(`http://api.vmp.ru/v1/city/${city}${cityRelativeApiUrl}`, data);
 }
 
 function getRoot (rootRelativeApiUrl, data) {
-  return _get(`http://api.vmp.ru/v1${rootRelativeApiUrl}`, data)
+  return _get(`http://api.vmp.ru/v1${rootRelativeApiUrl}`, data);
 }
 
 var Api = {
@@ -31,7 +31,7 @@ var Api = {
 
   GeoCoder: {
     getInfo (city, {lat, lng}, zoom = '') {
-      return get(city, `/geo/${lat}/${lng}/${zoom}`)
+      return get(city, `/geo/${lat}/${lng}/${zoom}`);
     }
   },
 
@@ -70,7 +70,7 @@ var Api = {
     },
 
     getFromCollection: function (city, collection, id, {coords, page = 0} = {}) {
-      return get(city, `/${collection}`, {ids: id, coords})
+      return get(city, `/${collection}`, {ids: id, coords});
     },
 
     getOrganizationsInAddress: function (addressId) {
@@ -93,7 +93,7 @@ var Api = {
       }
     */
     sendCommercialOffer: function (data) {
-      return post('/commercial_offer', {commercial_data: data});
+      // return post('/commercial_offer', {commercial_data: data});
     }
 
   }
