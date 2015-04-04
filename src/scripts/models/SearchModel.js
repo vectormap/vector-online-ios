@@ -34,7 +34,7 @@ var SearchModel = {
       }
 
       return result;
-    })
+    });
 
     return results;
   }

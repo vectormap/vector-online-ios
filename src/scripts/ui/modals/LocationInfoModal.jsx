@@ -10,8 +10,6 @@ var LocationInfoModal = React.createClass({
   render () {
     var text = this.getBinding().get('error') || this.getBinding().get('content');
 
-    console.log('LocationInfoModal', text);
-
     return (
       <Modal
         backdrop={false}

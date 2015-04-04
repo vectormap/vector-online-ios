@@ -7,6 +7,7 @@ var MapView = React.createClass({
   mixins: [M.Mixin],
 
   componentDidMount: function () {
+    console.log('MapView componentDidMount');
     mapController.initMap(this.refs.map.getDOMNode());
   },
 
