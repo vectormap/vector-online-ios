@@ -36,8 +36,14 @@ var MapPopup = React.createClass({
 
       if (bGeoData.get('collection') === 'geometries') {
         var LayerPopup = layerPopups[resultBinding.get('layer')];
+        var geometry = resultBinding.toJS();
 
         PopupContentView = LayerPopup && <LayerPopup binding={resultBinding} />;
+
+        if (geometry && geometry.layer === 'area' && geometry.semantic && !geometry.semantic.area) {
+          PopupContentView = null;
+        }
+
         modalSizeCls = 'popup-small';
       }
     } else if (bOrgData.get() && bOrgData.get().size > 0) {
@@ -54,13 +60,16 @@ var MapPopup = React.createClass({
     var {PopupContentView, modalSizeCls} = this.popupContentView();
 
     return (
-      <Modal
-        binding={popupBinding}
-        toggleBinding={popupToggleBinding}
-        backdrop={false}
-        className={cx('vmp-map-popup-modal', modalSizeCls)}>
-        {PopupContentView}
-      </Modal>
+      <div>
+        {PopupContentView &&
+          <Modal
+            binding={popupBinding}
+            toggleBinding={popupToggleBinding}
+            backdrop={false}
+            className={cx('vmp-map-popup-modal', modalSizeCls)}>
+            {PopupContentView}
+          </Modal>}
+      </div>
     );
   }
 });
