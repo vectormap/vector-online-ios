@@ -49,8 +49,14 @@ var ScheduleView = React.createClass({
     }
 
     var scheduleInfo                   = formatSchedule(schedule.toJS());
+    var currentDaySchedule             = getCurrentDaySchedule(scheduleInfo);
+
+    if (!currentDaySchedule) {
+      return null;
+    }
+
     var scheduleTable                  = this.renderSchedule(scheduleInfo);
-    var {weekDay, mainTime, breakTime, isDaily} = getCurrentDaySchedule(scheduleInfo);
+    var {weekDay, mainTime, breakTime, isDaily} = currentDaySchedule;
     var currentScheduleItem            = this.renderSchedule({mainTime, breakTime});
     var showTableMeta                  = this.getBinding().meta('showTable');
     var showTable                      = showTableMeta.get();
