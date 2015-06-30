@@ -93,6 +93,22 @@ function blurSearchInput () {
   }
 }
 
+function trackPageView (city) {
+  var {ga} = window;
+  var cityTracker;
+
+  if (ga) {
+    console.log('Track pageview', city);
+
+    cityTracker = ga.getByName && ga.getByName(city);
+    ga('send', 'pageview');
+
+    if (cityTracker) {
+      ga('${city}.send', 'pageview');
+    }
+  }
+}
+
 var Controller = {
   init (binding) {
     rootBinding    = binding;
@@ -112,54 +128,51 @@ var Controller = {
     }
 
     // All routes will flow through the base '/city/:city/(.*)?' route
-    page('/city/:city/(.*)?', (ctx, next) => {
-      var {city} = ctx.params;
-      var restRoute = ctx.params[0];
-
-      console.log('city route', `/city/${city}`, '->');
-      console.log('>>> rest route', restRoute);
-
-      // if (!restRoute) {
-      //   console.log('replacing view to map');
-      //   page.replace(`/city/${city}/view/map`, null, null, false);
-      // }
-
-      P.resolve(this.loadCityConfig(city)).then(next);
-    });
+    page('/city/:city/(.*)?', this.cityThroughRoute.bind(this));
+    page('/h/city/:city/(.*)?', this.cityThroughRoute.bind(this));
 
     page('/city/:city/view/:view/(.*)?', (ctx, next) => {
       var {view} = ctx.params;
 
-      console.log('view route', `/city/:city/view/${view}/`, '->');
+      this.routeToView(view, next);
+    });
 
-      if (view !== 'search') {
-        blurSearchInput();
-      }
+    page('/h/city/:city/card/show/(.*)?', (ctx, next) => {
+      var {view} = ctx.params;
 
-      setPageView(view);
-      next();
+      this.routeToView('search', next);
     });
 
     // search by type: query, address, rubric
     page('/city/:city/view/search/:type/:queryOrItemId', ctx => {
       var {city, type, queryOrItemId} = ctx.params;
 
-      console.log('search route', `/city/${city}/view/search/${type}/${queryOrItemId}`);
-
-      this.search(type, queryOrItemId);
-
-      if (type !== 'query') {
-        blurSearchInput();
-      }
+      this.searchByTypeRoute(city, type, queryOrItemId);
     });
 
     page('/city/:city/view/search/item/:collection/:id', ctx => {
       var {city, collection, id} = ctx.params;
 
-      console.log('item route', `/city/${city}/item/${collection}/${id}/`);
+      this.loadItemRoute(city, collection, id);
+    });
 
-      this.loadItem(collection, id);
-      blurSearchInput();
+    // map old vmp online routes for seo crawlers
+    page('/h/city/:city/card/show/organizations/:id', ctx => {
+      var {city, id} = ctx.params;
+
+      this.loadItemRoute(city, 'organizations', id);
+    });
+
+    page('/h/city/:city/card/show/rubrics/:id', ctx => {
+      var {city, id} = ctx.params;
+
+      this.searchByTypeRoute(city, 'rubric', id);
+    });
+
+    page('/h/city/:city/card/show/addresses/:id', ctx => {
+      var {city, id} = ctx.params;
+
+      this.searchByTypeRoute(city, 'address', id);
     });
 
     page.exit('/city/:city/view/search/query/:query?', (context, next) => {
@@ -170,6 +183,48 @@ var Controller = {
 
     page('*', () => console.log('Route: *'));
   },
+
+  cityThroughRoute (ctx, next) {
+    var {city} = ctx.params;
+    var restRoute = ctx.params[0];
+
+    console.log('city route', `/city/${city}`, '->');
+    console.log('>>> rest route', restRoute);
+
+    trackPageView(city);
+
+    P.resolve(this.loadCityConfig(city)).then(next);
+  },
+
+  loadItemRoute (city, collection, id) {
+    console.log('route by collection, city: %s, collection: %s, id: %s', city, collection, id);
+
+    this.loadItem(collection, id);
+    blurSearchInput();
+  },
+
+  searchByTypeRoute (city, type, queryOrItemId) {
+    console.log('search route', `/city/${city}/view/search/${type}/${queryOrItemId}`);
+
+    this.search(type, queryOrItemId);
+
+    if (type !== 'query') {
+      blurSearchInput();
+    }
+  },
+
+  routeToView (view, next) {
+    console.log('view route', `/city/:city/view/${view}/`, '->');
+
+    if (view !== 'search') {
+      blurSearchInput();
+    }
+
+    setPageView(view);
+    next();
+  },
+
+  // --------------------------------------------------------------------------------------
 
   start () {
     this.onFirstLaunch();

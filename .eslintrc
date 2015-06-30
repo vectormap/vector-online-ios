@@ -26,6 +26,6 @@
     "no-unused-expressions": 0,
     "new-cap": 0,
     "comma-spacing": [2, {"before": false, "after": true}],
-    "camelcase": false
+    "camelcase": 0
   }
 }

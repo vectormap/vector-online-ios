@@ -19,7 +19,7 @@ gulp.task('copy', function() {
    .pipe(gulp.dest('build/online-app/fonts'));
 
   var appLoader = gulp
-   .src('src/scripts/app-loader.js')
+   .src('src/scripts/mobile-app-loader.js')
    .pipe(gulp.dest('build/online-app'));
 
   return merge(html, styles, images, fonts, appLoader);

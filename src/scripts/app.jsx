@@ -28,7 +28,7 @@ var controller               = require('./controller');
 var mapController            = require('map-controller');
 var statusController         = require('status-controller');
 var networkMonitorController = require('network-monitor-controller');
-var Store                    = require('store');
+var Store                    = require('store-wrapper');
 var injectTapEventPlugin     = require('react-tap-event-plugin');
 var U                        = require('utils');
 var analytics                = require('analytics');
@@ -113,7 +113,9 @@ var AppState = {
     infoModal: false,
     content: '',
     error: ''
-  }
+  },
+
+  downloadLinksModal: true
 };
 
 AppState.session             = initUserSession();

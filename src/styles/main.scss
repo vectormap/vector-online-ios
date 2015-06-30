@@ -80,8 +80,6 @@ $ionicons-font-path: "./fonts" !default;
 }
 
 .vmp-center {
-  width: 100%;
-
   /* Firefox */
   display:-moz-box;
   -moz-box-pack:center;
@@ -304,4 +302,78 @@ $ionicons-font-path: "./fonts" !default;
   &.vmp-modal-leave {
     transform: translate3d(0, 120px, 0);
   }
+}
+
+.vmp-download-links-modal {
+  top: calc(100% - #{$tabs-height} - 70px);;
+  min-height: initial;
+  height: 70px;
+  text-align: center;
+  z-index: 11;
+  border: 1px solid $button-stable-border;
+  background-color: $stable;
+
+  .links {
+    .link {
+      width: 75px;
+      text-decoration: none;
+      color: black;
+
+      &:visited {
+        color: black;
+      }
+    }
+
+    .title {
+      text-align: center;
+    }
+
+    .close-btn {
+      position: absolute;
+      right: 0;
+      top: 14px;
+    }
+
+    .icon {
+      width: 75px;
+      height: 30px;
+      margin-right: 5px;
+
+
+      &.ios {
+        background: url('/images/platforms/ios.svg') no-repeat;
+        background-size: 30px 30px;
+        background-position: center;
+      }
+
+      &.android {
+        background: url('/images/platforms/android.svg') no-repeat;
+        background-size: 30px 30px;
+        background-position: center;
+      }
+
+      &.windows {
+        background: url('/images/platforms/windows.svg') no-repeat;
+        background-size: 30px 30px;
+        background-position: center;
+      }
+
+      &.linux {
+        background: url('/images/platforms/linux.svg') no-repeat;
+        background-size: 30px 30px;
+        background-position: center;
+      }
+
+      &.osx {
+        background: url('/images/platforms/osx.svg') no-repeat;
+        background-size: 30px 30px;
+        background-position: center;
+      }
+
+      &:hover {
+        transform: scale(1.07);
+      }
+    }
+  }
+
 }

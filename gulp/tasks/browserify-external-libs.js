@@ -23,7 +23,7 @@ gulp.task('browserify-external-libs', function() {
       .transform({global: true}, aliasify)
       .bundle()
       .on('error', handleErrors)
-      .pipe(source('external-libs-bundle.js'))
+      .pipe(source('mobile-external-libs-bundle.js'))
       .pipe(gulp.dest('./build/online-app'))
       .on('end', bundleLogger.end);
   };
