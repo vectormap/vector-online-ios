@@ -6,6 +6,7 @@ var handleErrors = require('../util/handleErrors');
 var source       = require('vinyl-source-stream');
 var babelify     = require('babelify');
 var externalLibs = require('../../package.json').externalLibs || [];
+var collapse     = require('bundle-collapser/plugin');
 
 gulp.task('browserify', function() {
 
@@ -17,7 +18,8 @@ gulp.task('browserify', function() {
     //global: true, // global transforms
     paths: ['./src/scripts'],
     fast: true,
-    detectGlobals: false
+    detectGlobals: false,
+    fullPaths: false
 	});
 
   bundler.transform(babelify.configure({
@@ -32,9 +34,10 @@ gulp.task('browserify', function() {
     return bundler
       .external(externalLibs)
       .require('./src/scripts/app.jsx', { expose: 'online-app'})
+      .plugin(collapse)
       .bundle()
       .on('error', handleErrors)
-      .pipe(source('online-mobile-app.js'))
+      .pipe(source('mobile-online-app.js'))
       .pipe(gulp.dest('./build/online-app'))
 			.on('end', bundleLogger.end);
 	};

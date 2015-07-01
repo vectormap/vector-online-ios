@@ -42,18 +42,13 @@ release-phonegap:
 
 release-web:
 	NODE_ENV=production gulp browserify-external-libs build
-	mkdir -p $(ONLINE_DIST)
-	cp -r $(ONLINE_APP)/fonts $(ONLINE_APP)/images $(ONLINE_APP)/leaflet.css  $(ONLINE_DIST)
-	 cp $(ONLINE_APP)/index.html $(ONLINE_DIST)/index-mobile.html
-	uglifyjs $(ONLINE_APP)/mobile-external-libs-bundle.js -cm > $(ONLINE_DIST)/mobile-external-libs-bundle.js
-	uglifyjs $(ONLINE_APP)/online-mobile-app.js -c drop_console=true -m > $(ONLINE_DIST)/online-mobile-app.js
-	uglifyjs $(ONLINE_APP)/mobile-app-loader.js -cm > $(ONLINE_DIST)/mobile-app-loader.js
-	cssmin $(ONLINE_APP)/online-mobile-app.css > $(ONLINE_DIST)/online-mobile-app.css
+	NODE_ENV=production gulp dist
+	mv $(ONLINE_DIST)/index.html $(ONLINE_DIST)/index-mobile.html
 
 pack:
 	cd $(ONLINE_APP) && zip -r mobile-vmp-online-dist.zip mobile-vmp-online-dist
 
 deploy:
-  scp build/online-app/mobile-vmp-online-dist.zip vmponline:/var/vmp
+	scp build/online-app/mobile-vmp-online-dist.zip vmponline:/var/vmp
 
 .PHONY: phonegap build

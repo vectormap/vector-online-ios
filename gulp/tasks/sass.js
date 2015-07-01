@@ -22,7 +22,7 @@ gulp.task('sass', function () {
     }))
     .pipe(prefix())
     // .pipe(filter('**/*.css'))
-    .pipe(concat('online-mobile-app.css'))
+    .pipe(concat('mobile-online-app.css'))
     .pipe(gulp.dest('./build/online-app'))
     .pipe(browserSync.reload({stream:true}))
     .on('error', handleErrors)
