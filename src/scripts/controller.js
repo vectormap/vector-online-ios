@@ -258,7 +258,12 @@ var Controller = {
 
       detectLang().then(lang => {
         rootBinding.set('lang', lang);
-        this.showCitySelectorModal();
+
+        // do not show city selector modal on frist launch in browsers
+        // as it is breaks seo crawlers
+        if (window.cordova) {
+          this.showCitySelectorModal();
+        }
       });
     }
   },
